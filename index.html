@@ -10,16 +10,15 @@
   <style>
     :root {
       --bg-deep: #05080e;
-      --bg-panel: rgba(10, 16, 26, 0.85);
-      --bg-card: rgba(16, 26, 42, 0.7);
-      --border-cyan: rgba(0, 240, 255, 0.25);
-      --border-glow: rgba(0, 240, 255, 0.6);
+      --bg-panel: rgba(10, 16, 26, 0.9);
+      --bg-card: rgba(13, 22, 36, 0.85);
+      --border-cyan: rgba(0, 240, 255, 0.3);
       --cyan: #00f0ff;
       --magenta: #ff0055;
       --amber: #ffaa00;
       --green: #00ff66;
-      --text-main: #d0d8e8;
-      --text-dim: #73829c;
+      --text-main: #d4e0f0;
+      --text-dim: #70819e;
       --font-body: 'Jost', sans-serif;
       --font-mono: 'Fira Code', monospace;
       --font-title: 'Orbitron', monospace;
@@ -34,10 +33,10 @@
       font-size: 18px;
       overflow-x: hidden;
       background-image: 
-        radial-gradient(circle at 15% 15%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 85% 85%, rgba(255, 0, 85, 0.04) 0%, transparent 40%),
-        linear-gradient(rgba(5, 8, 14, 0.95), rgba(5, 8, 14, 0.95)),
-        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.3) 2px, rgba(0, 0, 0, 0.3) 4px);
+        radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 0, 85, 0.04) 0%, transparent 40%),
+        linear-gradient(rgba(5, 8, 14, 0.94), rgba(5, 8, 14, 0.94)),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.35) 2px, rgba(0, 0, 0, 0.35) 4px);
       min-height: 100vh;
     }
 
@@ -49,7 +48,7 @@
       background: var(--bg-panel);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-cyan);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      box-shadow: 0 4px 25px rgba(0,0,0,0.7);
       padding: 10px 20px;
       display: flex;
       flex-wrap: wrap;
@@ -99,7 +98,8 @@
     .hud-controls {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .btn {
@@ -108,7 +108,7 @@
       color: var(--cyan);
       font-family: var(--font-mono);
       font-size: 12px;
-      padding: 6px 14px;
+      padding: 6px 12px;
       cursor: pointer;
       border-radius: 3px;
       display: inline-flex;
@@ -140,17 +140,17 @@
 
     /* Контейнер для чтения */
     main.reader-container {
-      max-width: 860px;
-      margin: 40px auto 100px auto;
-      padding: 0 25px;
+      max-width: 880px;
+      margin: 35px auto 100px auto;
+      padding: 0 20px;
     }
 
     article.chapter-view {
       background: var(--bg-card);
       border: 1px solid var(--border-cyan);
       border-radius: 4px;
-      padding: 45px 50px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      padding: 40px 45px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
       position: relative;
     }
     article.chapter-view::before {
@@ -166,48 +166,98 @@
       font-size: 13px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .chapter-title {
       font-family: var(--font-title);
-      font-size: 26px;
+      font-size: 25px;
       font-weight: 900;
       color: #fff;
-      margin-bottom: 30px;
-      text-shadow: 0 0 12px rgba(255,255,255,0.2);
+      margin-bottom: 25px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.2);
     }
 
     .chapter-content p {
-      margin-bottom: 1.5em;
+      margin-bottom: 1.4em;
       text-align: justify;
       hyphens: auto;
     }
     .chapter-content p:last-child { margin-bottom: 0; }
     .chapter-content blockquote {
-      margin: 25px 0;
-      padding: 15px 25px;
-      background: rgba(0, 240, 255, 0.05);
+      margin: 22px 0;
+      padding: 14px 20px;
+      background: rgba(0, 240, 255, 0.06);
       border-left: 3px solid var(--cyan);
       font-family: var(--font-mono);
       font-size: 14px;
-      color: #b8e9ff;
+      color: #bceeff;
+    }
+
+    /* БЛОК ИНТЕРАКТИВНОГО ВЫБОРА (ВЕТВЛЕНИЕ) */
+    .decision-panel {
+      margin-top: 40px;
+      padding: 25px;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--border-cyan);
+      border-radius: 4px;
+      box-shadow: inset 0 0 15px rgba(0,240,255,0.1);
+    }
+    .decision-label {
+      font-family: var(--font-title);
+      font-size: 13px;
+      color: var(--amber);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .decision-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .decision-btn {
+      background: rgba(0, 240, 255, 0.05);
+      border: 1px solid var(--border-cyan);
+      color: var(--text-main);
+      padding: 14px 18px;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      text-align: left;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.2s;
+      line-height: 1.5;
+    }
+    .decision-btn:hover {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--cyan);
+      color: #fff;
+      transform: translateX(4px);
+    }
+    .decision-btn strong {
+      color: var(--cyan);
+      display: block;
+      margin-bottom: 3px;
     }
 
     /* Навигация глав */
     .chapter-nav {
-      margin-top: 40px;
-      padding-top: 25px;
+      margin-top: 25px;
+      padding-top: 20px;
       border-top: 1px dashed rgba(255,255,255,0.15);
       display: flex;
       justify-content: space-between;
       gap: 15px;
     }
 
-    /* Модальное окно оглавления */
+    /* Модальные окна */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(3, 5, 10, 0.85);
+      background: rgba(3, 5, 10, 0.88);
       backdrop-filter: blur(8px);
       z-index: 200;
       display: none;
@@ -229,14 +279,14 @@
       overflow: hidden;
     }
     .modal-head {
-      padding: 15px 20px;
+      padding: 14px 18px;
       border-bottom: 1px solid var(--border-cyan);
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-family: var(--font-title);
       color: var(--cyan);
-      font-size: 16px;
+      font-size: 15px;
     }
     .modal-body {
       padding: 20px;
@@ -263,7 +313,7 @@
       color: #fff;
     }
 
-    /* Модальные окна мини-игр */
+    /* Мини-игры */
     .game-container {
       text-align: center;
       padding: 10px;
@@ -283,10 +333,7 @@
       margin: 0 auto;
       max-width: 100%;
       border-radius: 4px;
-      box-shadow: inset 0 0 20px rgba(0,240,255,0.2);
     }
-
-    /* Сетка взлома */
     .hack-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -304,10 +351,7 @@
       border-radius: 3px;
       transition: all 0.2s;
     }
-    .hack-cell:hover {
-      background: var(--cyan);
-      color: #000;
-    }
+    .hack-cell:hover { background: var(--cyan); color: #000; }
     .hack-cell.matched {
       border-color: var(--green);
       color: var(--green);
@@ -331,7 +375,7 @@
 </head>
 <body>
 
-  <!-- Верхняя строка HUD -->
+  <!-- Верхний HUD -->
   <header class="hud">
     <div class="brand">
       <div class="brand-title">АРХИВ ЧУЖИХ ВОСПОМИНАНИЙ</div>
@@ -345,7 +389,7 @@
     </div>
 
     <div class="hud-controls">
-      <button class="btn" id="btnAudioToggle" title="Музыкальный модуль">▶ LO-FI AUDIO</button>
+      <button class="btn" id="btnAudioToggle" title="Музыкальный модуль">▶ SOUNDTRACK</button>
       <button class="btn" id="btnAudioSwitch" title="Смена трека">♫ СМЕНА ТРЕКА</button>
       <button class="btn" id="btnMiniGameHack" title="Мини-игра взлома">⚡ ВЗЛОМ</button>
       <button class="btn btn-magenta" id="btnMiniGameFlight" title="Мини-игра челнока">🚀 ПОЛЕТ</button>
@@ -353,22 +397,27 @@
     </div>
   </header>
 
-  <!-- Основной контейнер книги -->
+  <!-- Читальный зал -->
   <main class="reader-container">
     <article class="chapter-view" id="chapterArticle">
       <div class="chapter-meta" id="chapMeta">// ХРОНИКА // СЕКТОР 0</div>
       <h1 class="chapter-title" id="chapTitle">ЗАГРУЗКА ДАННЫХ...</h1>
-      <div class="chapter-content" id="chapContent">
-        <!-- Текст главы генерируется скриптом -->
+      <div class="chapter-content" id="chapContent"></div>
+      
+      <!-- Блок интерактивного выбора пути -->
+      <div class="decision-panel" id="decisionBlock">
+        <div class="decision-label">⚡ ТАКТИЧЕСКИЙ ВЫБОР НЕТРАННЕРА:</div>
+        <div class="decision-options" id="decisionOptions"></div>
       </div>
+
       <div class="chapter-nav">
-        <button class="btn" id="btnPrevChap">◄ НАЗАД</button>
-        <button class="btn" id="btnNextChap">ВПЕРЕД ►</button>
+        <button class="btn" id="btnPrevChap">◄ ПРЕДЫДУЩАЯ</button>
+        <button class="btn" id="btnNextChap">СЛЕДУЮЩАЯ ►</button>
       </div>
     </article>
   </main>
 
-  <!-- Модальное окно: Оглавление -->
+  <!-- Оглавление -->
   <div class="modal-overlay" id="modalToc">
     <div class="modal-window">
       <div class="modal-head">
@@ -379,7 +428,7 @@
     </div>
   </div>
 
-  <!-- Модальное окно: Мини-игра ВЗЛОМ СЕТИ -->
+  <!-- Мини-игра ВЗЛОМ -->
   <div class="modal-overlay" id="modalHack">
     <div class="modal-window">
       <div class="modal-head">
@@ -388,7 +437,7 @@
       </div>
       <div class="modal-body">
         <div class="game-container">
-          <p style="font-size:13px; color:var(--text-dim);">Найдите и активируйте шестнадцатеричные блоки памяти в правильной последовательности, пока сторожевой ИИ не разорвал сессию.</p>
+          <p style="font-size:13px; color:var(--text-dim);">Активируйте шестнадцатеричные блоки памяти в правильной последовательности.</p>
           <div class="hack-target" id="hackTargetCode">TARGET: -- -- --</div>
           <div class="game-hud">
             <div>СТАТУС: <span id="hackStatus" style="color:var(--amber);">ОЖИДАНИЕ</span></div>
@@ -401,7 +450,7 @@
     </div>
   </div>
 
-  <!-- Модальное окно: Мини-игра ПОЛЕТ «АТЛАСА» СКВОЗЬ КВАНТОВЫЙ РАЗЛОМ -->
+  <!-- Мини-игра ПОЛЕТ КВАНТОВЫЙ РАЗЛОМ -->
   <div class="modal-overlay" id="modalFlight">
     <div class="modal-window" style="max-width: 680px;">
       <div class="modal-head">
@@ -416,7 +465,7 @@
           </div>
           <canvas id="flightCanvas" width="600" height="340"></canvas>
           <p style="font-size:12px; color:var(--text-dim); margin-top:10px;">
-            Управление: <b>Стрелки влево/вправо</b> или <b>A / D</b> на клавиатуре, либо касание по бокам экрана. Уклоняйтесь от орбитального мусора и квантовых сингулярностей!
+            Управление: <b>Стрелки влево/вправо</b> или <b>A / D</b> на клавиатуре, либо тапы по краям экрана.
           </p>
           <button class="btn btn-magenta" id="btnStartFlight" style="margin-top: 10px;">СТАРТ ПРЫЖКА</button>
         </div>
@@ -426,7 +475,7 @@
 
   <script>
     /* ========================================================
-       БАЗА ТЕКСТОВ ГЛАВ (ХРОНИКА SAINTMOOR: ГЛАВЫ 1 - 13)
+       БАЗА ГЛАВ С ИНТЕРАКТИВНЫМИ РАЗВИЛКАМИ
        ======================================================== */
     const bookChapters = [
       {
@@ -437,10 +486,14 @@
           <p>Вкус изопропилового спирта всегда предшествовал провалу в чужую жизнь. Холодный зажим с медными контактными лепестками привычно щелкнул у основания черепа, прижавшись к порту. Резина оголовья пахла застарелым потом и паленым текстолитом — рабочий инструмент Марка не знал санитарных норм, но безотказно срезал помехи в подпольных сетях вот уже четыре года.</p>
           <p>— Твоя температура ползет вверх, Марк. Тридцать семь и восемь. Дойдешь до сорока — я лично выдерну шину, и плевать мне на твои синапсы.</p>
           <p>Голос Элли звучал сухо, фоном, почти теряясь за ровным шелестом клавиш. На углу стола небрежно валялся пластиковый бейдж сотрудника Отдела сетевого аудита и кибербезопасности «Арго-Сис» — легальная жизнь Элли, о которой в этом подвале напоминали только идеальная выправка и привычка дублировать протоколы.</p>
-          <p>Марк провалился сквозь защитные слои. Вместо плоских таблиц и зашифрованных финансовых транзакций архитектура сети внезапно треснула, схлопнувшись в плотный, вязкий сенсорный поток. Ледокол вскрыл капсулу мнемо-слепка. Марк увидел мальчика лет шести со свежим шрамом над правой бровью и услышал надтреснутый голос мужчины: <em>«Забудь этот день. Забудь имя»</em>.</p>
+          <p>Марк провалился сквозь защитные слои. Вместо плоских таблиц и зашифрованных финансовых транзакций архитектура сети внезапно треснула, схлопнувшись в плотный, вязкий сенсорный поток. Ледокол вскрыл не архив документов — он пробил капсулу «мнемо-слепка». Марк увидел мальчика лет шести со свежим шрамом над правой бровью и услышал надтреснутый голос мужчины: <em>«Забудь этот день. Забудь имя»</em>.</p>
           <blockquote>СОВПАДЕНИЕ НЕЙРОПРОФИЛЯ: 99.8%<br>ИСПОЛНЯЕМЫЙ АРХИВ № 0-ВЕБЕР ОБНАРУЖЕН<br>СТАТУС: ПРИОРИТЕТ ЛИКВИДАЦИИ</blockquote>
           <p>Периметр схлопнулся за считанные секунды. Элли подожгла термитный патрон на стойке серверов, и они выскользнули в сырой технический коллектор ливневки под гул входящих в коридор конвертопланов зачистки.</p>
-        `
+        `,
+        choices: [
+          { text: "Вспомнить, как два года назад Элли спасла от выгорания синапсов", target: 1 },
+          { text: "Не отвлекаться и немедленно бежать в депо монорельса к схрону", target: 2 }
+        ]
       },
       {
         id: "ch1_5",
@@ -451,7 +504,24 @@
           <p>Их объединяла тайна: три года назад старший брат Элли, инженер-нейросетевик, растворился в стенах корпорации после перевода на проект «Мнемозина». Официальное заключение гласило: «Внезапный коллапс нейроразъема, тело кремировано».</p>
           <p>Перелом произошел во время рейда на узле Четвертого сектора. Высоковольтный импульс сторожевой программы выжег шейный биоинтерфейс Марка. Элли нарушила закон выживания и пришла лично: двенадцать часов на голом бетоне она хирургическим пинцетом вырезала обугленный узел из его затылочной кости, спасая парня от смерти.</p>
           <p><em>«Я не позволю этой конторе переработать в шлак еще одного человека на моих глазах»</em>, — сказала она тогда. Ни один из них не знал, что проект «Мнемозина» и разработка архива «0-Вебер» создавались в одних и тех же боксах закрытого сектора.</p>
-        `
+        `,
+        choices: [
+          { text: "Вернуться в настоящее: войти в депо монорельса на минус третьем", target: 2 }
+        ]
+      },
+      {
+        id: "ch2_pre",
+        meta: "// ГЛАВА 1. ЧАСТЬ 2 // МИНУС ТРЕТИЙ ЯРУС",
+        title: "ТЕНЕВОЙ ПЕРИМЕТР",
+        content: `
+          <p>Чугунный люк захлопнулся с гулким металлическим стоном. Элли с силой провернула стопорный вентиль, заблокировав засов. Сканирующий импульс ищейки вслепую скользнул по внешнему контуру шахты, но наткнулся на свинцовую гидроизоляцию и рассеялся.</p>
+          <p>Они добрались до служебного вагончика в отстойнике монорельса. Элли подключила медный шлейф диагноста к деке Марка: на экране высветился единственный несжатый фрагмент метаданных, отправленный старшим научным сотрудником Вебером.</p>
+          <p>— Человек из воспоминания... Это был автор проекта. И он носил мою фамилию, — прошептал Марк.</p>
+        `,
+        choices: [
+          { text: "Идти по следу платежа на черный рынок «Стек» к Харону", target: 3 },
+          { text: "Сначала взломать локальный шлюз депо через деку нетраннера", action: "hack", target: 3 }
+        ]
       },
       {
         id: "ch2",
@@ -461,7 +531,11 @@
           <p>След теневого заказа привел их на Пятый узел — в перегруженный базар контрабанды «Стек». Там старик Харон, скупщик черного трафика с янтарным бионическим глазом, передал им тяжелый кейс с биометрическим замком старого образца.</p>
           <p>— Старик Вебер велел отдать этот ключ, когда мальчик придет со своим токеном, — хрипел Харон. — Он укрылся в закрытой зоне карантина на минус пятом.</p>
           <p>Спуск в клети технического подъемника в ледяной мороз карантинного яруса закончился перед выжженными дверями лаборатории. Биометрический замок кейса считал отпечаток пальца Марка, открыв индукционный инжектор с янтарной жидкостью. А из-за дверей донесся глухой выстрел чистильщиков.</p>
-        `
+        `,
+        choices: [
+          { text: "Немедленно ввести янтарный инжектор и войти в лабораторию", target: 4 },
+          { text: "Позволить Элли провести тактическую разведку периметра", target: 4 }
+        ]
       },
       {
         id: "ch3",
@@ -471,7 +545,10 @@
           <p>Марк не колебался: прижал инжектор к шейному порту и вдавил спуск. Янтарная эмульсия обожгла сонную артерию ледяным пламенем. Криптографическая блокировка спала: он впервые ощутил всю топологию сетей напрямую через собственный разогнанный мозг.</p>
           <p>Войдя в лабораторию, Марк одними губами активировал встроенную команду «Забвение» — и тяжелые экзоскелеты чистильщиков заклинило от перегрузки рефлексов.</p>
           <p>Умирающий старший Вебер успел коснуться шрама на его брови: <em>«Ты не флешка, Марк. Ты ключ зажигания. В твоей голове — протокол полной десинхронизации системы. Мой настоящий сын погиб пятнадцать лет назад... я стер твое сиротское имя и дал тебе его лицо, чтобы вернуть людям свободу»</em>.</p>
-        `
+        `,
+        choices: [
+          { text: "Подняться на грузовом экспресс-лифте к высотному транслятору", target: 5 }
+        ]
       },
       {
         id: "ch4",
@@ -481,7 +558,10 @@
           <p>Локальная магистраль внизу оказалась перерублена. Единственный открытый шлюз трансляции находился на 200-м этаже — в центральной трансляционной игле «Арго-Сис».</p>
           <p>Поднявшись на грузовом экспресс-подъемнике на головокружительную высоту, Марк и Элли оказались под неоновым дождем Верхнего города. Патрульные дроны «Коршун» открыли огонь на поражение. Марк шагнул навстречу лазерам и послал в сырой воздух концентрированный микроволновой импульс «Забвения», разорвав вычислители машин.</p>
           <p>— Твои синапсы закипят! — кричала Элли, волоча его к гермодвери узла. Но путь назад был отрезан.</p>
-        `
+        `,
+        choices: [
+          { text: "Взломать шлюз аппаратной и начать широковещательную трансляцию", target: 6 }
+        ]
       },
       {
         id: "ch5",
@@ -490,7 +570,10 @@
         content: `
           <p>Внутри круглого аппаратного зала Марк вогнал оптоволоконный коннектор центральной антенны прямо в затылочный разъем. Элли подключила компромат проекта «Мнемозина».</p>
           <p>Двойной импульс ударил по частотам мегаполиса: рекламные гиганты погасли, миллионы персональных чипов освободились от принудительной синхронизации, а штурмовые конвертопланы потеряли боевую наводку. Но на мониторе медленно всплыло сообщение орбитального хаба «Атлант-9»: <em>«ПРОБУЖДЕНИЕ СУБЪЕКТОВ СЕРИИ ОМЕГА»</em>.</p>
-        `
+        `,
+        choices: [
+          { text: "Вскрыть орбитальный шлюз «Атланта-9» и найти остальных носителей", target: 7 }
+        ]
       },
       {
         id: "ch6",
@@ -499,7 +582,10 @@
         content: `
           <p>Элли вскрыла орбитальный шлюз. На голографической карте загорелись 17 янтарных меток по всему континенту. Марк был образцом «Ноль», а остальные шестнадцать несли в себе другие модули корпоративного контроля над людьми.</p>
           <p>Два образца просыпались прямо сейчас: Субъект-04 в порту Норд-Бей и Субъект-09 в столичном энергокластере. Принято решение немедленно двигаться на перехват Четвертого.</p>
-        `
+        `,
+        choices: [
+          { text: "Спешить на перехват в штормовой порт Норд-Бей к Четвертому", target: 8 }
+        ]
       },
       {
         id: "ch7",
@@ -508,7 +594,10 @@
         content: `
           <p>Кай, старший смены разгрузочных кранов в туманном порту Норд-Бей, внезапно почувствовал, как затылок взрывается огнем. Орбитальный спутник «Атлант-9» закачивал в его мозг модуль принудительной конвергенции сетей.</p>
           <p>Его воспоминания о детстве, штормах и запахе моря стирались на глазах. Докеры внизу замерли под воздействием его пробудившегося излучения, превращаясь в единый рой, а с неба уже заходил на посадку десантный транспорт Директората.</p>
-        `
+        `,
+        choices: [
+          { text: "Прорвать оцепление таможни и подняться на 40-метровый кран к Каю", target: 9 }
+        ]
       },
       {
         id: "ch8",
@@ -517,7 +606,10 @@
         content: `
           <p>Пробив ограждение порта машиной, Марк взбежал на 40-метровую вышку крана. Кай, уже потерявший контроль над собой, обрушил на него манипуляторы тяжелой техники.</p>
           <p>В отчаянном рывке Марк ударил открытым коннектором прямо в височный порт Кая. Столкнув холодный протокол орбиты с живыми воспоминаниями о шторме, Марк разорвал спутниковый захват: <em>«Ты не ретранслятор, Кай! Вспомни!»</em>. Четвертый пришел в себя. Теперь их было двое.</p>
-        `
+        `,
+        choices: [
+          { text: "Спуститься по желобу на пирс и захватить рейдовый катер «Шквал»", target: 10 }
+        ]
       },
       {
         id: "ch9",
@@ -526,7 +618,10 @@
         content: `
           <p>Уходя от огня десанта, герои сбросились по аварийному желобу к старому рейдовому катеру «Шквал». Выход из гавани был перекрыт бонами и экранопланами.</p>
           <p>Кай перехватил автоматику портовых кранов и обрушил многотонный контейнер прямо на нос вражеского штурмовика, открыв створные ворота залива. На деке вспыхнул сигнал Субъекта-09: мальчик Рен в энергокластере «Орион» подходил к критической точке синхронизации.</p>
-        `
+        `,
+        choices: [
+          { text: "Мчаться на полной скорости сквозь туман к энергокластеру «Орион»", target: 11 }
+        ]
       },
       {
         id: "ch10",
@@ -535,7 +630,10 @@
         content: `
           <p>Ледяные штольни энергокластера встретили их минусовой температурой. В центре зала криогенного теплообменника Рен корчился в луче орбитального спутника: корпорация принуждала его сбросить защитные клапаны и заморозить континент.</p>
           <p>Из лифта высыпали штурмовики спецподразделения «Цербер». Кай и Элли вступили в бой, а Марк рванул прямо в смертоносный столб света к Рену.</p>
-        `
+        `,
+        choices: [
+          { text: "Замкнуть оголенные разъемы и встретить орбитальный луч лицом к лицу", target: 12 }
+        ]
       },
       {
         id: "ch11",
@@ -544,7 +642,10 @@
         content: `
           <p>Кай вывернул патрубки жидкого азота, сковав экзоскелеты «Цербера» ледяной коркой. В это время Марк замкнул свой порт с портом Рена.</p>
           <p>Вместо гашения энергии Марк обратил криогенную дестабилизацию Рена зеркалом прямо по спутниковому лучу назад на «Атлант-9». На высоте 400 километров выгорели орбитальные приемники директоров. Рен был спасен, но Совет объявил фазу тотального уничтожения — «Орбитальная чистка».</p>
-        `
+        `,
+        choices: [
+          { text: "Уйти на минус восьмой горизонт в экранированные штольни «Ориона»", target: 13 }
+        ]
       },
       {
         id: "ch12",
@@ -553,7 +654,11 @@
         content: `
           <p>Кинетический вольфрамовый стержень с орбиты обратил наземные постройки «Ориона» в базальтовое месиво. Беглецы укрылись на минус восьмом горизонте под защитой магнитных руд.</p>
           <p>Тройной контур (Марк, Кай, Рен) раскрыл тайну старшего Вебера: Земля была лишь полигоном. На орбитальной верфи завершалось строительство трехкилометрового корабля «Ковчег Мнемозины», готового совершить квантовый прыжок к девственной экзопланете Эридан-4. На десятом горизонте шахты обнаружился законсервированный суборбитальный челнок «Атлас». Решено идти на перехват прямо в космос.</p>
-        `
+        `,
+        choices: [
+          { text: "Активировать турбины челнока «Атлас» и пойти на квантовый прорыв", target: 14 },
+          { text: "Перед стартом протестировать маневры в симуляторе прыжка", action: "flight", target: 14 }
+        ]
       },
       {
         id: "ch13",
@@ -563,13 +668,17 @@
           <p>Рен разогрел реакторы «Атласа», а Кай вырвал створы шахты мощнейшим импульсом. Челнок взмыл в стратосферу за секунду до удара кинетического снаряда по плато.</p>
           <p>На орбите «Ковчег Мнемозины» уже активировал кольца квантового двигателя. Марк перехватил протоколы стыковки и намертво приварил челнок к обшивке гиганта. Пространство треснуло, разорвав реальность на тысячи мерцающих волокон.</p>
           <p>Выход из прыжка обернулся падением сквозь чужую плотную атмосферу. Челнок пропахал грунт равнины, заросшей фиолетовыми кристаллическими деревьями под ультрамариновым небом с двумя янтарными лунами. Эридан-4. А на горизонте уже дымился аварийный корпус «Ковчега», где Совет директоров держал остальных тринадцать носителей «Омеги».</p>
-        `
+        `,
+        choices: [
+          { text: "Начать разведку периметра разбитого «Ковчега Мнемозины»", target: 14, alert: "Конец текущей книги. Ожидайте продолжения Главы 14!" },
+          { text: "Запустить деку и просканировать чужую биосферу Эридана-4", action: "hack", target: 14 }
+        ]
       }
     ];
 
     let currentChapterIndex = 0;
 
-    /* Инициализация отображения */
+    /* Отображение главы и интерактивных решений */
     function renderChapter(index) {
       if (index < 0 || index >= bookChapters.length) return;
       currentChapterIndex = index;
@@ -579,7 +688,37 @@
       document.getElementById('chapTitle').innerText = ch.title;
       document.getElementById('chapContent').innerHTML = ch.content;
 
-      // Обновление кнопок перехода
+      // Отрисовка интерактивных развилок
+      const decBox = document.getElementById('decisionOptions');
+      decBox.innerHTML = '';
+      if (ch.choices && ch.choices.length > 0) {
+        ch.choices.forEach(c => {
+          const btn = document.createElement('button');
+          btn.className = 'decision-btn';
+          btn.innerHTML = `<strong>▸ ВЫБОР ДЕЙСТВИЯ:</strong> ${c.text}`;
+          btn.onclick = () => {
+            if (c.alert) {
+              alert(c.alert);
+              return;
+            }
+            if (c.action === 'hack') {
+              modalHack.classList.add('open');
+              startHackGame();
+            } else if (c.action === 'flight') {
+              modalFlight.classList.add('open');
+              startFlightGame();
+            } else {
+              renderChapter(c.target);
+            }
+          };
+          decBox.appendChild(btn);
+        });
+        document.getElementById('decisionBlock').style.display = 'block';
+      } else {
+        document.getElementById('decisionBlock').style.display = 'none';
+      }
+
+      // Кнопки Назад / Вперед
       document.getElementById('btnPrevChap').disabled = (index === 0);
       document.getElementById('btnNextChap').disabled = (index === bookChapters.length - 1);
 
@@ -611,11 +750,13 @@
     document.getElementById('btnCloseToc').onclick = () => document.getElementById('modalToc').classList.remove('open');
 
     /* ========================================================
-       ПРОЦЕДУРНЫЙ АУДИОДВИЖОК WEB AUDIO API (LO-FI / SYNTH)
+       ОРИГИНАЛЬНЫЙ АУДИОДВИЖОК WEB AUDIO API:
+       ТРЕК 1: «HOLD MY HAND, MARK» (Lo-Fi даунтемпо 78 BPM)
+       ТРЕК 2: «RAIN ON THE CONCRETE» (Киберпанк Synth-Pop 120 BPM)
        ======================================================== */
     let audioCtx = null;
     let isPlaying = false;
-    let currentTrack = 0; // 0: Lo-Fi, 1: Synth-Wave
+    let currentTrack = 0; 
     let timerLoop = null;
 
     function initAudio() {
@@ -646,7 +787,7 @@
     function audioStep() {
       if (!isPlaying) return;
       if (currentTrack === 0) {
-        // Трек: Hold My Hand, Mark (Мягкий Lo-Fi)
+        // ОРИГИНАЛ: Hold My Hand, Mark (78 BPM Lo-Fi с глубоким басом)
         const bassNotes = [110, 98, 87, 82];
         const padNotes = [220, 261, 329, 392];
         const b = bassNotes[Math.floor(Math.random() * bassNotes.length)];
@@ -654,7 +795,7 @@
         playTone(b, 1.4, 'triangle', 0.12);
         playTone(p, 0.8, 'sine', 0.05);
       } else {
-        // Трек: Rain On The Concrete (Энергичный Synth-Pop)
+        // ОРИГИНАЛ: Rain On The Concrete (120 BPM Synth-Pop)
         const bassNotes = [130, 130, 164, 146];
         const leadNotes = [261, 329, 392, 523, 587];
         const b = bassNotes[Math.floor(Math.random() * bassNotes.length)];
@@ -670,11 +811,11 @@
       isPlaying = !isPlaying;
       if (isPlaying) {
         btnAudioToggle.classList.add('active');
-        btnAudioToggle.innerText = (currentTrack === 0) ? '⏸ LO-FI' : '⏸ SYNTH-POP';
-        timerLoop = setInterval(audioStep, (currentTrack === 0) ? 750 : 380);
+        btnAudioToggle.innerText = (currentTrack === 0) ? '⏸ HOLD MY HAND, MARK' : '⏸ RAIN ON THE CONCRETE';
+        timerLoop = setInterval(audioStep, (currentTrack === 0) ? 760 : 380);
       } else {
         btnAudioToggle.classList.remove('active');
-        btnAudioToggle.innerText = '▶ АУДИО';
+        btnAudioToggle.innerText = '▶ SOUNDTRACK';
         clearInterval(timerLoop);
       }
     };
@@ -683,13 +824,13 @@
       currentTrack = (currentTrack === 0) ? 1 : 0;
       if (isPlaying) {
         clearInterval(timerLoop);
-        btnAudioToggle.innerText = (currentTrack === 0) ? '⏸ LO-FI' : '⏸ SYNTH-POP';
-        timerLoop = setInterval(audioStep, (currentTrack === 0) ? 750 : 380);
+        btnAudioToggle.innerText = (currentTrack === 0) ? '⏸ HOLD MY HAND, MARK' : '⏸ RAIN ON THE CONCRETE';
+        timerLoop = setInterval(audioStep, (currentTrack === 0) ? 760 : 380);
       }
     };
 
     /* ========================================================
-       МИНИ-ИГРА №1: ВЗЛОМ СЕТИ «АРГО-СИС»
+       МИНИ-ИГРА №1: ВЗЛОМ СЕТИ («ДЕКА НЕТРАННЕРА»)
        ======================================================== */
     const modalHack = document.getElementById('modalHack');
     const hackGrid = document.getElementById('hackGrid');
@@ -709,7 +850,6 @@
       hackStatus.innerText = 'ПОДБОР ШИФРА...';
       hackStatus.style.color = 'var(--amber)';
 
-      // Формируем 3 целевых кода
       targetSeq = [
         hexPool[Math.floor(Math.random()*hexPool.length)],
         hexPool[Math.floor(Math.random()*hexPool.length)],
@@ -717,7 +857,6 @@
       ];
       hackTargetCode.innerText = `ЦЕЛЬ: ${targetSeq.join(' - ')}`;
 
-      // Заполняем сетку 5x3
       hackGrid.innerHTML = '';
       const gridItems = [...targetSeq];
       while(gridItems.length < 15) {
@@ -786,15 +925,11 @@
     window.addEventListener('keydown', e => keys[e.code] = true);
     window.addEventListener('keyup', e => keys[e.code] = false);
 
-    // Поддержка кликов по экрану для телефонов
     canvas.addEventListener('pointerdown', e => {
       const rect = canvas.getBoundingClientRect();
       const clickX = e.clientX - rect.left;
-      if (clickX < rect.width / 2) {
-        keys['ArrowLeft'] = true;
-      } else {
-        keys['ArrowRight'] = true;
-      }
+      if (clickX < rect.width / 2) keys['ArrowLeft'] = true;
+      else keys['ArrowRight'] = true;
     });
     window.addEventListener('pointerup', () => {
       keys['ArrowLeft'] = false;
@@ -819,7 +954,6 @@
     function flightLoop() {
       if (!isFlightRunning) return;
 
-      // Управление
       if (keys['ArrowLeft'] || keys['KeyA']) ship.x -= ship.speed;
       if (keys['ArrowRight'] || keys['KeyD']) ship.x += ship.speed;
       if (ship.x < 10) ship.x = 10;
@@ -828,7 +962,6 @@
       flightDist += 2;
       distDisplay.innerText = `${Math.min(flightDist, 1000)} / 1000m`;
 
-      // Спавн препятствий
       if (Math.random() < 0.06) {
         obstacles.push({
           x: Math.random() * (canvas.width - 40),
@@ -839,11 +972,9 @@
         });
       }
 
-      // Обновление и отрисовка
       ctx.fillStyle = '#03060c';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Звездные линии (квантовый эффект)
       ctx.strokeStyle = 'rgba(0, 240, 255, 0.15)';
       ctx.beginPath();
       for(let i=0; i<8; i++) {
@@ -852,7 +983,6 @@
       }
       ctx.stroke();
 
-      // Отрисовка челнока «Атлас»
       ctx.fillStyle = '#00f0ff';
       ctx.beginPath();
       ctx.moveTo(ship.x + ship.w / 2, ship.y);
@@ -862,18 +992,15 @@
       ctx.closePath();
       ctx.fill();
 
-      // Пламя маршевого двигателя Рена
       ctx.fillStyle = '#ffaa00';
       ctx.fillRect(ship.x + ship.w/2 - 3, ship.y + ship.h - 4, 6, 8 + Math.random()*6);
 
-      // Препятствия
       ctx.fillStyle = '#ff0055';
       for (let i = obstacles.length - 1; i >= 0; i--) {
         let obs = obstacles[i];
         obs.y += obs.speed;
         ctx.fillRect(obs.x, obs.y, obs.w, obs.h);
 
-        // Столкновение
         if (
           ship.x < obs.x + obs.w &&
           ship.x + ship.w > obs.x &&
@@ -902,7 +1029,6 @@
         }
       }
 
-      // Победа (достигли Эридана-4)
       if (flightDist >= 1000) {
         isFlightRunning = false;
         ctx.fillStyle = '#00ff66';
@@ -928,7 +1054,7 @@
     };
     btnStartFlight.onclick = startFlightGame;
 
-    // Первоначальный рендер Главы 1
+    // Старт с Главы 1
     renderChapter(0);
   </script>
 </body>
