@@ -10,9 +10,9 @@
   <style>
     :root {
       --bg-deep: #05080e;
-      --bg-panel: rgba(10, 16, 26, 0.9);
-      --bg-card: rgba(13, 22, 36, 0.85);
-      --border-cyan: rgba(0, 240, 255, 0.3);
+      --bg-panel: rgba(8, 14, 22, 0.92);
+      --bg-card: rgba(10, 18, 30, 0.88);
+      --border-cyan: rgba(0, 240, 255, 0.35);
       --cyan: #00f0ff;
       --magenta: #ff0055;
       --amber: #ffaa00;
@@ -25,6 +25,7 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
       background-color: var(--bg-deep);
       color: var(--text-main);
@@ -32,12 +33,22 @@
       line-height: 1.85;
       font-size: 18px;
       overflow-x: hidden;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(255, 0, 85, 0.04) 0%, transparent 40%),
-        linear-gradient(rgba(5, 8, 14, 0.94), rgba(5, 8, 14, 0.94)),
-        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.35) 2px, rgba(0, 0, 0, 0.35) 4px);
       min-height: 100vh;
+      position: relative;
+    }
+
+    /* ПОЛОСКИ ТЕРМИНАЛА (CRT SCANLINES EFFECT) */
+    body::before {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.45) 50%), 
+                  linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      z-index: 999;
+      background-size: 100% 4px, 6px 100%;
+      pointer-events: none;
+      opacity: 0.85;
     }
 
     /* Верхний HUD */
@@ -46,15 +57,15 @@
       top: 0;
       z-index: 100;
       background: var(--bg-panel);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border-cyan);
-      box-shadow: 0 4px 25px rgba(0,0,0,0.7);
+      box-shadow: 0 4px 25px rgba(0,0,0,0.8);
       padding: 10px 20px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
+      gap: 12px;
       font-family: var(--font-mono);
       font-size: 13px;
     }
@@ -137,8 +148,19 @@
       color: #fff;
       box-shadow: 0 0 12px var(--magenta);
     }
+    .btn-success {
+      border-color: var(--green);
+      color: #000;
+      background: var(--green);
+      box-shadow: 0 0 15px var(--green);
+      font-weight: 700;
+    }
+    .btn-success:hover {
+      background: #fff;
+      box-shadow: 0 0 20px #fff;
+    }
 
-    /* Контейнер для чтения */
+    /* Контейнер книги */
     main.reader-container {
       max-width: 880px;
       margin: 35px auto 100px auto;
@@ -150,7 +172,7 @@
       border: 1px solid var(--border-cyan);
       border-radius: 4px;
       padding: 40px 45px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.7);
       position: relative;
     }
     article.chapter-view::before {
@@ -193,11 +215,11 @@
       color: #bceeff;
     }
 
-    /* БЛОК ИНТЕРАКТИВНОГО ВЫБОРА (ВЕТВЛЕНИЕ) */
+    /* БЛОК ИНТЕРАКТИВНОГО ВЫБОРА */
     .decision-panel {
       margin-top: 40px;
       padding: 25px;
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0.55);
       border: 1px solid var(--border-cyan);
       border-radius: 4px;
       box-shadow: inset 0 0 15px rgba(0,240,255,0.1);
@@ -243,7 +265,7 @@
       margin-bottom: 3px;
     }
 
-    /* Навигация глав */
+    /* Навигация */
     .chapter-nav {
       margin-top: 25px;
       padding-top: 20px;
@@ -257,7 +279,7 @@
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(3, 5, 10, 0.88);
+      background: rgba(3, 5, 10, 0.9);
       backdrop-filter: blur(8px);
       z-index: 200;
       display: none;
@@ -313,7 +335,7 @@
       color: #fff;
     }
 
-    /* Мини-игры */
+    /* Игры */
     .game-container {
       text-align: center;
       padding: 10px;
@@ -404,7 +426,7 @@
       <h1 class="chapter-title" id="chapTitle">ЗАГРУЗКА ДАННЫХ...</h1>
       <div class="chapter-content" id="chapContent"></div>
       
-      <!-- Блок интерактивного выбора пути -->
+      <!-- Блок выбора решений -->
       <div class="decision-panel" id="decisionBlock">
         <div class="decision-label">⚡ ТАКТИЧЕСКИЙ ВЫБОР НЕТРАННЕРА:</div>
         <div class="decision-options" id="decisionOptions"></div>
@@ -428,7 +450,7 @@
     </div>
   </div>
 
-  <!-- Мини-игра ВЗЛОМ -->
+  <!-- Модальное окно ВЗЛОМА СЕТИ -->
   <div class="modal-overlay" id="modalHack">
     <div class="modal-window">
       <div class="modal-head">
@@ -444,13 +466,17 @@
             <div>ОШИБКИ: <span id="hackErrors" style="color:var(--magenta);">0 / 3</span></div>
           </div>
           <div class="hack-grid" id="hackGrid"></div>
-          <button class="btn" id="btnRestartHack" style="margin-top:10px;">ПЕРЕЗАГРУЗИТЬ БУФЕР</button>
+          
+          <div style="display:flex; justify-content:center; gap:10px; margin-top:15px; flex-wrap:wrap;">
+            <button class="btn" id="btnRestartHack">ПЕРЕЗАГРУЗИТЬ БУФЕР</button>
+            <button class="btn btn-success" id="btnHackProceed" style="display:none;">ПРОДОЛЖИТЬ СЮЖЕТ ►</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Мини-игра ПОЛЕТ КВАНТОВЫЙ РАЗЛОМ -->
+  <!-- Модальное окно ПОЛЕТА «АТЛАСА» -->
   <div class="modal-overlay" id="modalFlight">
     <div class="modal-window" style="max-width: 680px;">
       <div class="modal-head">
@@ -467,7 +493,10 @@
           <p style="font-size:12px; color:var(--text-dim); margin-top:10px;">
             Управление: <b>Стрелки влево/вправо</b> или <b>A / D</b> на клавиатуре, либо тапы по краям экрана.
           </p>
-          <button class="btn btn-magenta" id="btnStartFlight" style="margin-top: 10px;">СТАРТ ПРЫЖКА</button>
+          <div style="display:flex; justify-content:center; gap:10px; margin-top:12px; flex-wrap:wrap;">
+            <button class="btn btn-magenta" id="btnStartFlight">СТАРТ ПРЫЖКА</button>
+            <button class="btn btn-success" id="btnFlightProceed" style="display:none;">ВЫЙТИ К ЭРИДАНУ-4 ►</button>
+          </div>
         </div>
       </div>
     </div>
@@ -475,7 +504,7 @@
 
   <script>
     /* ========================================================
-       БАЗА ГЛАВ С ИНТЕРАКТИВНЫМИ РАЗВИЛКАМИ
+       БАЗА ГЛАВ С ПРЯМЫМИ ПЕРЕХОДАМИ И ВЫБОРАМИ
        ======================================================== */
     const bookChapters = [
       {
@@ -520,7 +549,7 @@
         `,
         choices: [
           { text: "Идти по следу платежа на черный рынок «Стек» к Харону", target: 3 },
-          { text: "Сначала взломать локальный шлюз депо через деку нетраннера", action: "hack", target: 3 }
+          { text: "Сначала взломать локальный шлюз депо через деку нетраннера [МИНИ-ИГРА]", action: "hack", nextTarget: 3 }
         ]
       },
       {
@@ -533,8 +562,7 @@
           <p>Спуск в клети технического подъемника в ледяной мороз карантинного яруса закончился перед выжженными дверями лаборатории. Биометрический замок кейса считал отпечаток пальца Марка, открыв индукционный инжектор с янтарной жидкостью. А из-за дверей донесся глухой выстрел чистильщиков.</p>
         `,
         choices: [
-          { text: "Немедленно ввести янтарный инжектор и войти в лабораторию", target: 4 },
-          { text: "Позволить Элли провести тактическую разведку периметра", target: 4 }
+          { text: "Немедленно ввести янтарный инжектор и войти в лабораторию", target: 4 }
         ]
       },
       {
@@ -656,8 +684,8 @@
           <p>Тройной контур (Марк, Кай, Рен) раскрыл тайну старшего Вебера: Земля была лишь полигоном. На орбитальной верфи завершалось строительство трехкилометрового корабля «Ковчег Мнемозины», готового совершить квантовый прыжок к девственной экзопланете Эридан-4. На десятом горизонте шахты обнаружился законсервированный суборбитальный челнок «Атлас». Решено идти на перехват прямо в космос.</p>
         `,
         choices: [
-          { text: "Активировать турбины челнока «Атлас» и пойти на квантовый прорыв", target: 14 },
-          { text: "Перед стартом протестировать маневры в симуляторе прыжка", action: "flight", target: 14 }
+          { text: "Запустить маршевые турбины «Атласа» и прорваться сквозь разлом [МИНИ-ИГРА]", action: "flight", nextTarget: 14 },
+          { text: "Сразу перейти к квантовому прыжку без ручного управления", target: 14 }
         ]
       },
       {
@@ -670,15 +698,15 @@
           <p>Выход из прыжка обернулся падением сквозь чужую плотную атмосферу. Челнок пропахал грунт равнины, заросшей фиолетовыми кристаллическими деревьями под ультрамариновым небом с двумя янтарными лунами. Эридан-4. А на горизонте уже дымился аварийный корпус «Ковчега», где Совет директоров держал остальных тринадцать носителей «Омеги».</p>
         `,
         choices: [
-          { text: "Начать разведку периметра разбитого «Ковчега Мнемозины»", target: 14, alert: "Конец текущей книги. Ожидайте продолжения Главы 14!" },
-          { text: "Запустить деку и просканировать чужую биосферу Эридана-4", action: "hack", target: 14 }
+          { text: "Разведка разбитого дредноута «Ковчег» (Ожидайте Главу 14)", target: 14, alert: "Конец текущего архива! Продолжение следует в Главе 14." }
         ]
       }
     ];
 
     let currentChapterIndex = 0;
+    let pendingNextChapter = null;
 
-    /* Отображение главы и интерактивных решений */
+    /* Рендер главы */
     function renderChapter(index) {
       if (index < 0 || index >= bookChapters.length) return;
       currentChapterIndex = index;
@@ -688,7 +716,7 @@
       document.getElementById('chapTitle').innerText = ch.title;
       document.getElementById('chapContent').innerHTML = ch.content;
 
-      // Отрисовка интерактивных развилок
+      // Отрисовка вариантов выбора
       const decBox = document.getElementById('decisionOptions');
       decBox.innerHTML = '';
       if (ch.choices && ch.choices.length > 0) {
@@ -702,9 +730,11 @@
               return;
             }
             if (c.action === 'hack') {
+              pendingNextChapter = (c.nextTarget !== undefined) ? c.nextTarget : (currentChapterIndex + 1);
               modalHack.classList.add('open');
               startHackGame();
             } else if (c.action === 'flight') {
+              pendingNextChapter = (c.nextTarget !== undefined) ? c.nextTarget : (currentChapterIndex + 1);
               modalFlight.classList.add('open');
               startFlightGame();
             } else {
@@ -718,7 +748,7 @@
         document.getElementById('decisionBlock').style.display = 'none';
       }
 
-      // Кнопки Назад / Вперед
+      // Кнопки Назад/Вперед
       document.getElementById('btnPrevChap').disabled = (index === 0);
       document.getElementById('btnNextChap').disabled = (index === bookChapters.length - 1);
 
@@ -730,7 +760,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /* Генерация списка оглавления */
+    /* Оглавление */
     const tocList = document.getElementById('tocList');
     bookChapters.forEach((ch, idx) => {
       const item = document.createElement('div');
@@ -745,14 +775,11 @@
 
     document.getElementById('btnPrevChap').onclick = () => renderChapter(currentChapterIndex - 1);
     document.getElementById('btnNextChap').onclick = () => renderChapter(currentChapterIndex + 1);
-
     document.getElementById('btnTocToggle').onclick = () => document.getElementById('modalToc').classList.add('open');
     document.getElementById('btnCloseToc').onclick = () => document.getElementById('modalToc').classList.remove('open');
 
     /* ========================================================
-       ОРИГИНАЛЬНЫЙ АУДИОДВИЖОК WEB AUDIO API:
-       ТРЕК 1: «HOLD MY HAND, MARK» (Lo-Fi даунтемпо 78 BPM)
-       ТРЕК 2: «RAIN ON THE CONCRETE» (Киберпанк Synth-Pop 120 BPM)
+       АУДИОМОДУЛЬ
        ======================================================== */
     let audioCtx = null;
     let isPlaying = false;
@@ -760,12 +787,8 @@
     let timerLoop = null;
 
     function initAudio() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
     }
 
     function playTone(freq, duration, type='sine', gainVal=0.1) {
@@ -774,10 +797,8 @@
       const gain = audioCtx.createGain();
       osc.type = type;
       osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
       gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start();
@@ -787,7 +808,6 @@
     function audioStep() {
       if (!isPlaying) return;
       if (currentTrack === 0) {
-        // ОРИГИНАЛ: Hold My Hand, Mark (78 BPM Lo-Fi с глубоким басом)
         const bassNotes = [110, 98, 87, 82];
         const padNotes = [220, 261, 329, 392];
         const b = bassNotes[Math.floor(Math.random() * bassNotes.length)];
@@ -795,7 +815,6 @@
         playTone(b, 1.4, 'triangle', 0.12);
         playTone(p, 0.8, 'sine', 0.05);
       } else {
-        // ОРИГИНАЛ: Rain On The Concrete (120 BPM Synth-Pop)
         const bassNotes = [130, 130, 164, 146];
         const leadNotes = [261, 329, 392, 523, 587];
         const b = bassNotes[Math.floor(Math.random() * bassNotes.length)];
@@ -830,13 +849,14 @@
     };
 
     /* ========================================================
-       МИНИ-ИГРА №1: ВЗЛОМ СЕТИ («ДЕКА НЕТРАННЕРА»)
+       МИНИ-ИГРА №1: ВЗЛОМ (С ПЕРЕХОДОМ В СЛЕДУЮЩУЮ ГЛАВУ)
        ======================================================== */
     const modalHack = document.getElementById('modalHack');
     const hackGrid = document.getElementById('hackGrid');
     const hackTargetCode = document.getElementById('hackTargetCode');
     const hackStatus = document.getElementById('hackStatus');
     const hackErrors = document.getElementById('hackErrors');
+    const btnHackProceed = document.getElementById('btnHackProceed');
 
     const hexPool = ['7A', '0F', 'E2', 'C4', '1B', '9D', '44', 'FF', '8C', '33'];
     let targetSeq = [];
@@ -846,6 +866,7 @@
     function startHackGame() {
       errorsCount = 0;
       currentInputSeq = [];
+      btnHackProceed.style.display = 'none';
       hackErrors.innerText = `${errorsCount} / 3`;
       hackStatus.innerText = 'ПОДБОР ШИФРА...';
       hackStatus.style.color = 'var(--amber)';
@@ -884,6 +905,7 @@
           playTone(900, 0.4, 'triangle', 0.15);
           hackStatus.innerText = 'ДОСТУП ПОЛУЧЕН // ШЛЮЗ ОТКРЫТ';
           hackStatus.style.color = 'var(--green)';
+          btnHackProceed.style.display = 'inline-block';
         }
       } else {
         playTone(150, 0.3, 'sawtooth', 0.15);
@@ -897,7 +919,16 @@
       }
     }
 
+    btnHackProceed.onclick = () => {
+      modalHack.classList.remove('open');
+      if (pendingNextChapter !== null) {
+        renderChapter(pendingNextChapter);
+        pendingNextChapter = null;
+      }
+    };
+
     document.getElementById('btnMiniGameHack').onclick = () => {
+      pendingNextChapter = null;
       modalHack.classList.add('open');
       startHackGame();
     };
@@ -905,7 +936,7 @@
     document.getElementById('btnRestartHack').onclick = startHackGame;
 
     /* ========================================================
-       МИНИ-ИГРА №2: КВАНТОВЫЙ ПОЛЕТ «АТЛАСА» (CANVAS 2D)
+       МИНИ-ИГРА №2: КВАНТОВЫЙ ПОЛЕТ (С ПЕРЕХОДОМ В ГЛАВУ 13)
        ======================================================== */
     const modalFlight = document.getElementById('modalFlight');
     const canvas = document.getElementById('flightCanvas');
@@ -913,6 +944,7 @@
     const hullDisplay = document.getElementById('hullDisplay');
     const distDisplay = document.getElementById('distDisplay');
     const btnStartFlight = document.getElementById('btnStartFlight');
+    const btnFlightProceed = document.getElementById('btnFlightProceed');
 
     let ship = { x: 280, y: 280, w: 32, h: 28, speed: 6 };
     let obstacles = [];
@@ -943,6 +975,7 @@
       hullIntegrity = 100;
       isFlightRunning = true;
       btnStartFlight.style.display = 'none';
+      btnFlightProceed.style.display = 'none';
       hullDisplay.innerText = '100%';
       hullDisplay.style.color = 'var(--green)';
       distDisplay.innerText = '0 / 1000m';
@@ -959,10 +992,10 @@
       if (ship.x < 10) ship.x = 10;
       if (ship.x > canvas.width - ship.w - 10) ship.x = canvas.width - ship.w - 10;
 
-      flightDist += 2;
+      flightDist += 3;
       distDisplay.innerText = `${Math.min(flightDist, 1000)} / 1000m`;
 
-      if (Math.random() < 0.06) {
+      if (Math.random() < 0.07) {
         obstacles.push({
           x: Math.random() * (canvas.width - 40),
           y: -30,
@@ -1032,18 +1065,26 @@
       if (flightDist >= 1000) {
         isFlightRunning = false;
         ctx.fillStyle = '#00ff66';
-        ctx.font = '20px Orbitron, monospace';
+        ctx.font = '18px Orbitron, monospace';
         ctx.textAlign = 'center';
         ctx.fillText('РАЗЛОМ ПРЕОДОЛЕН! ВЫХОД К ЭРИДАНУ-4', canvas.width / 2, canvas.height / 2);
-        btnStartFlight.style.display = 'inline-block';
-        btnStartFlight.innerText = 'СОВЕРШИТЬ ПОВТОРНЫЙ ВХОД';
+        btnFlightProceed.style.display = 'inline-block';
         return;
       }
 
       flightAnimation = requestAnimationFrame(flightLoop);
     }
 
+    btnFlightProceed.onclick = () => {
+      modalFlight.classList.remove('open');
+      if (pendingNextChapter !== null) {
+        renderChapter(pendingNextChapter);
+        pendingNextChapter = null;
+      }
+    };
+
     document.getElementById('btnMiniGameFlight').onclick = () => {
+      pendingNextChapter = null;
       modalFlight.classList.add('open');
       startFlightGame();
     };
@@ -1054,7 +1095,7 @@
     };
     btnStartFlight.onclick = startFlightGame;
 
-    // Старт с Главы 1
+    // Старт
     renderChapter(0);
   </script>
 </body>
