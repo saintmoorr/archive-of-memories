@@ -668,7 +668,7 @@
       </div>
       <div class="slider-container">
         <span>🔈</span>
-        <input type="range" id="sliderAmbient" min="0" max="1" step="0.05" value="0.5">
+        <input type="range" id="sliderAmbient" min="0" max="1" step="0.001" value="0.5">
       </div>
     </div>
 
@@ -700,7 +700,7 @@
           <span>ГРОМКОСТЬ САУНДТРЕКА</span>
           <span id="musicVolDisplay">70%</span>
         </div>
-        <input type="range" id="sliderMusicVol" min="0" max="1" step="0.05" value="0.7" style="width:100%;">
+        <input type="range" id="sliderMusicVol" min="0" max="1" step="0.001" value="0.7" style="width:100%;">
       </div>
 
       <div class="side-nav-item" id="menuItemCharacters"><span>👤</span> ИКОНКИ & ДОСЬЕ ГЕРОЕВ</div>
@@ -1274,9 +1274,13 @@ document.getElementById('chapContent').innerHTML = cleanContent;
       currentSoundtrackGroup = targetGroup;
       if (!isAudioActive) return;
 
-      const vol = parseFloat(document.getElementById('sliderMusicVol').value);
-      extTrack1.volume = vol;
-      extTrack2.volume = vol;
+      document.getElementById('sliderMusicVol').oninput = (e) => {
+  initAudioEngine();
+  const val = parseFloat(e.target.value);
+  document.getElementById('musicVolDisplay').innerText = `${(val * 100).toFixed(1)}%`;
+  extTrack1.volume = val;
+  extTrack2.volume = val;
+};
 
       if (currentSoundtrackGroup === 1) {
         extTrack2.pause();
