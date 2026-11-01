@@ -173,8 +173,8 @@
     .sci-sidebar {
       position: fixed;
       top: 0;
-      right: -380px;
-      width: 350px;
+      right: -390px;
+      width: 360px;
       height: 100vh;
       background: rgba(9, 16, 30, 0.96);
       backdrop-filter: blur(22px);
@@ -195,7 +195,7 @@
       align-items: center;
       border-bottom: 1px solid rgba(0, 240, 255, 0.2);
       padding-bottom: 14px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
     .sidebar-title {
       font-family: var(--font-title);
@@ -216,14 +216,14 @@
     .sidebar-nav-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
       flex: 1;
       overflow-y: auto;
     }
     .side-nav-item {
       background: rgba(0, 240, 255, 0.04);
       border: 1px solid rgba(0, 240, 255, 0.16);
-      padding: 11px 14px;
+      padding: 10px 14px;
       border-radius: var(--radius-md);
       color: var(--text-main);
       font-family: var(--font-mono);
@@ -252,7 +252,7 @@
       border: 1px solid var(--border-sci);
       padding: 12px;
       border-radius: var(--radius-md);
-      margin-top: 6px;
+      margin-top: 4px;
       font-family: var(--font-mono);
       font-size: 11px;
     }
@@ -280,6 +280,7 @@
       box-shadow: 0 12px 45px rgba(0, 0, 0, 0.75);
       position: relative;
       overflow: hidden;
+      transition: filter 0.3s ease;
     }
     article.chapter-card::before {
       content: "";
@@ -334,6 +335,8 @@
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
     }
     .chapter-heading {
       font-family: var(--font-title);
@@ -360,6 +363,25 @@
       font-family: var(--font-mono);
       font-size: 14px;
       color: #bceeff;
+    }
+
+    /* ПОДСВЕЧЕННЫЕ ПОДСКАЗКИ В ТЕКСТЕ */
+    .data-clue {
+      display: inline-block;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 0 6px;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .data-clue:hover {
+      background: var(--cyan);
+      color: #000;
+      box-shadow: 0 0 10px var(--cyan);
     }
 
     .decision-panel {
@@ -395,11 +417,18 @@
       transition: all 0.2s ease;
       line-height: 1.45;
     }
-    .decision-btn:hover {
+    .decision-btn:hover:not(.locked) {
       background: rgba(0, 240, 255, 0.16);
       border-color: var(--cyan);
       color: #fff;
       transform: translateX(4px);
+    }
+    .decision-btn.locked {
+      border-color: rgba(255, 0, 85, 0.4);
+      background: rgba(255, 0, 85, 0.08);
+      color: var(--text-dim);
+      cursor: not-allowed;
+      opacity: 0.6;
     }
     .decision-btn strong { color: var(--cyan); display: block; margin-bottom: 2px; }
     .decision-btn .pov-badge {
@@ -487,7 +516,112 @@
       font-size: 13px;
     }
 
-    /* КАРТА ВЫЛАЗКИ */
+    /* КОНСОЛЬ ПОИСКА ПО КЛЮЧЕВЫМ СЛОВАМ */
+    .cli-box {
+      background: #040914;
+      border: 1px solid var(--border-sci);
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 15px;
+    }
+    .cli-input-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .cli-input {
+      flex: 1;
+      background: rgba(0, 240, 255, 0.05);
+      border: 1px solid var(--border-sci);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      outline: none;
+    }
+    .cli-input:focus { border-color: var(--cyan); }
+    .cli-log {
+      max-height: 220px;
+      overflow-y: auto;
+      background: rgba(0,0,0,0.5);
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px dashed rgba(255,255,255,0.1);
+      line-height: 1.6;
+    }
+
+    /* МИНИ-ИГРА: НЕЙРОХИРУРГИЯ (САПЕР НА ЧИПЕ) */
+    .neuro-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      max-width: 300px;
+      margin: 15px auto;
+    }
+    .neuro-cell {
+      aspect-ratio: 1;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid var(--border-sci);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .neuro-cell:hover:not(.revealed) { background: rgba(0, 240, 255, 0.2); }
+    .neuro-cell.revealed { background: rgba(0, 0, 0, 0.6); border-color: rgba(255,255,255,0.15); cursor: default; }
+    .neuro-cell.trap { background: rgba(255, 0, 85, 0.4); border-color: var(--magenta); color: #fff; }
+    .neuro-cell.shunt { background: rgba(255, 170, 0, 0.2); border-color: var(--amber); }
+
+    /* МОБИЛЬНЫЙ И ПК QTE-ОВЕРДРАЙВ */
+    .qte-container {
+      margin: 20px auto;
+      max-width: 420px;
+      text-align: center;
+    }
+    .qte-track {
+      width: 100%;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-sci);
+      border-radius: var(--radius-sm);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+    .qte-zone {
+      position: absolute;
+      top: 0; left: 45%; width: 20%; height: 100%;
+      background: rgba(0, 255, 102, 0.35);
+      border-left: 2px solid var(--green);
+      border-right: 2px solid var(--green);
+    }
+    .qte-cursor {
+      position: absolute;
+      top: 0; left: 0; width: 8px; height: 100%;
+      background: var(--magenta);
+      box-shadow: 0 0 12px var(--magenta);
+    }
+    .btn-qte-action {
+      width: 100%;
+      background: var(--green);
+      color: #000;
+      border: none;
+      padding: 14px 20px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 15px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 0 15px var(--green);
+    }
+
     .tactical-map-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -515,37 +649,6 @@
     .tac-node h5 { color: var(--cyan); font-size: 13px; margin-bottom: 4px; }
     .tac-node p { font-size: 11px; color: var(--text-dim); line-height: 1.4; }
 
-    /* QTE ОВЕРДРАЙВ */
-    .qte-container {
-      margin: 20px auto;
-      max-width: 380px;
-      text-align: center;
-    }
-    .qte-track {
-      width: 100%;
-      height: 24px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--border-sci);
-      border-radius: var(--radius-sm);
-      position: relative;
-      overflow: hidden;
-      margin-bottom: 12px;
-    }
-    .qte-zone {
-      position: absolute;
-      top: 0; left: 45%; width: 20%; height: 100%;
-      background: rgba(0, 255, 102, 0.35);
-      border-left: 1px solid var(--green);
-      border-right: 1px solid var(--green);
-    }
-    .qte-cursor {
-      position: absolute;
-      top: 0; left: 0; width: 6px; height: 100%;
-      background: var(--magenta);
-      box-shadow: 0 0 10px var(--magenta);
-    }
-
-    /* НЕЙРО-СКРЕТЧ */
     .scratch-container {
       position: relative;
       width: 100%;
@@ -574,7 +677,6 @@
       cursor: crosshair;
     }
 
-    /* ЭКСТРЕННЫЙ ЧАТ */
     .quick-chat-wrap {
       position: fixed;
       bottom: 25px;
@@ -599,15 +701,8 @@
       margin-bottom: 12px;
       transition: width 0.1s linear;
     }
-    .quick-chat-msg {
-      font-size: 13px;
-      color: #fff;
-      margin-bottom: 10px;
-    }
-    .quick-chat-options {
-      display: flex;
-      gap: 8px;
-    }
+    .quick-chat-msg { font-size: 13px; color: #fff; margin-bottom: 10px; }
+    .quick-chat-options { display: flex; gap: 8px; }
     .btn-quick {
       flex: 1;
       background: rgba(255, 170, 0, 0.1);
@@ -618,14 +713,9 @@
       padding: 8px;
       border-radius: var(--radius-sm);
       cursor: pointer;
-      transition: all 0.2s;
     }
-    .btn-quick:hover {
-      background: var(--amber);
-      color: #000;
-    }
+    .btn-quick:hover { background: var(--amber); color: #000; }
 
-    /* ИГРЫ */
     .game-container { text-align: center; padding: 8px; font-family: var(--font-mono); }
     .game-hud {
       display: flex;
@@ -645,7 +735,6 @@
       margin: 0 auto;
       max-width: 100%;
       border-radius: var(--radius-md);
-      box-shadow: 0 0 20px rgba(0,240,255,0.15);
     }
     .hack-grid {
       display: grid;
@@ -664,7 +753,7 @@
       border-radius: var(--radius-sm);
       transition: all 0.2s;
     }
-    .hack-cell:hover { background: var(--cyan); color: #000; box-shadow: 0 0 10px var(--cyan); }
+    .hack-cell:hover { background: var(--cyan); color: #000; }
     .hack-cell.matched { border-color: var(--green); color: var(--green); background: rgba(0, 255, 102, 0.15); pointer-events: none; }
     .hack-target {
       font-size: 16px;
@@ -766,6 +855,21 @@
       <div class="side-nav-item" id="menuItemToc">
         <span>📑</span> ОГЛАВЛЕНИЕ АРХИВА (1-18)
       </div>
+      <div class="side-nav-item" id="menuItemConsole">
+        <span>💻</span> КОНСОЛЬ // АРХИВ-0
+      </div>
+      <div class="side-nav-item" id="menuItemNeuro">
+        <span>🔬</span> НЕЙРОХИРУРГИЯ (ИЗВЛЕЧЕНИЕ)
+      </div>
+      <div class="side-nav-item" id="menuItemTacticalMap">
+        <span>🗺️</span> ТАКТИЧЕСКАЯ КАРТА
+      </div>
+      <div class="side-nav-item" id="menuItemQTE">
+        <span>⚡</span> ТРЕНИРОВКА: QTE-ОВЕРДРАЙВ
+      </div>
+      <div class="side-nav-item" id="menuItemScratch">
+        <span>🔍</span> НЕЙРО-СКРЕТЧ: ПАМЯТЬ ЯНА
+      </div>
       <div class="side-nav-item" id="menuItemAudioToggle">
         <span id="iconAudioState">▶</span> <span id="labelAudioState">ВКЛЮЧИТЬ САУНДТРЕК</span>
       </div>
@@ -781,21 +885,6 @@
         <input type="range" id="sliderMusicVol" min="0" max="1" step="0.05" value="0.7" style="width:100%;">
       </div>
 
-      <div class="side-nav-item" id="menuItemTacticalMap" style="margin-top:6px;">
-        <span>🗺️</span> ТАКТИЧЕСКАЯ КАРТА ВЫЛАЗКИ
-      </div>
-      <div class="side-nav-item" id="menuItemQTE">
-        <span>⚡</span> ТРЕНИРОВКА: QTE-ОВЕРДРАЙВ
-      </div>
-      <div class="side-nav-item" id="menuItemScratch">
-        <span>🔍</span> НЕЙРО-СКРЕТЧ: ПАМЯТЬ ЯНА
-      </div>
-      <div class="side-nav-item" id="menuItemHackGame">
-        <span>💻</span> ДЕКА: ВЗЛОМ КОНТУРА
-      </div>
-      <div class="side-nav-item" id="menuItemFlightGame">
-        <span>🚀</span> СИМУЛЯТОР: ПРОРЫВ РАЗЛОМА
-      </div>
       <div class="side-nav-item" id="menuItemCharacters">
         <span>👤</span> ИКОНКИ & ДОСЬЕ ГЕРОЕВ
       </div>
@@ -805,12 +894,12 @@
     </div>
 
     <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); text-align:center; padding-top:12px; border-top:1px solid rgba(255,255,255,0.08);">
-      EXPEDITION // ERIDAN-4 // SYS V6.0
+      EXPEDITION // ERIDAN-4 // SYS V6.5
     </div>
   </aside>
 
   <main class="reader-container">
-    <article class="chapter-card">
+    <article class="chapter-card" id="mainArticle">
       <div class="ascii-art-box" id="chapterAsciiArt"></div>
 
       <div class="author-speaker-row" id="speakerRow">
@@ -821,7 +910,10 @@
         </div>
       </div>
 
-      <div class="chapter-meta-line" id="chapMeta">// ХРОНИКА // СЕКТОР 0</div>
+      <div class="chapter-meta-line">
+        <span id="chapMeta">// ХРОНИКА // СЕКТОР 0</span>
+        <span id="chapCluesInfo" style="color:var(--amber);">// АКТИВНЫХ СЛЕДОВ: 0</span>
+      </div>
       <h1 class="chapter-heading" id="chapTitle">ЗАГРУЗКА ДАННЫХ...</h1>
       <div class="chapter-content" id="chapContent"></div>
       
@@ -837,51 +929,55 @@
     </article>
   </main>
 
-  <div class="quick-chat-wrap" id="quickChatBox">
-    <div class="quick-chat-timer-bar" id="quickChatBar"></div>
-    <div class="quick-chat-msg" id="quickChatMsg">КАЙ: «Два шагохода на гребне, бью на поражение?»</div>
-    <div class="quick-chat-options">
-      <button class="btn-quick" id="btnQuick1" onclick="resolveQuickChat(1)">БЕЙ ЧЕРЕЗ КОРНИ</button>
-      <button class="btn-quick" id="btnQuick2" onclick="resolveQuickChat(2)">ДЕРЖИ ЩИТ</button>
-    </div>
-  </div>
-
-  <!-- МОДАЛЬНОЕ ОКНО: ТАКТИЧЕСКАЯ КАРТА ВЫЛАЗКИ -->
-  <div class="modal-overlay" id="modalTacticalMap">
+  <!-- МОДАЛЬНОЕ ОКНО: КОНСОЛЬ ПОИСКА ПО КЛЮЧЕВЫМ СЛОВАМ -->
+  <div class="modal-overlay" id="modalConsole">
     <div class="modal-window">
       <div class="modal-head">
-        <div>ПЛАНШЕТ ЭЛЛИ // ПЛАН ВЫЛАЗКИ К «КОВЧЕГУ»</div>
-        <button class="btn-close-menu" id="btnCloseTacMap">✕</button>
+        <div>ДЕКА НЕТРАННЕРА // ПОИСКОВАЯ КОНСОЛЬ «АРХИВ-0»</div>
+        <button class="btn-close-menu" id="btnCloseConsole">✕</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:12px; color:var(--text-dim); margin-bottom:12px;">
-          Распределите звенья перед броском через разлом. Выберите сектор проникновения:
-        </p>
-        <div class="tactical-map-grid">
-          <div class="tac-node" id="tacNode1" onclick="selectTacNode(1)">
-            <h5>СЕКТОР А</h5>
-            <p>Охладительный дренаж (Звено: Кай + Рен). Заморозка теплообменника.</p>
+        <div class="cli-box">
+          <div style="color:var(--cyan); margin-bottom:6px;">> ВВЕДИТЕ КЛЮЧЕВОЕ СЛОВО (ИЗ СЮЖЕТА ИЛИ НЕЙРОХИРУРГИИ):</div>
+          <div class="cli-log" id="cliOutput">
+            [SYS] База данных деки готова к приему команд.<br>
+            [SYS] Подсказка: слова-ключи подсвечены в тексте знаком [ ◈ ].
           </div>
-          <div class="tac-node" id="tacNode2" onclick="selectTacNode(2)">
-            <h5>СЕКТОР B</h5>
-            <p>Турельный узел перехвата. Захват управления орудиями «Вулкан».</p>
+          <div class="cli-input-row">
+            <input type="text" class="cli-input" id="cliInputField" placeholder="Например: МНЕМОЗИНА, ВЕБЕР, ЯН...">
+            <button class="btn-action" onclick="submitCliWord()">ДЕКОДИРОВАТЬ</button>
           </div>
-          <div class="tac-node" id="tacNode3" onclick="selectTacNode(3)">
-            <h5>СЕКТОР C</h5>
-            <p>Аварийный шлюз 9-й палубы (Звено: Марк + Элли). Вход к капсулам.</p>
-          </div>
-        </div>
-        <div id="tacReport" style="padding:12px; background:rgba(0,0,0,0.4); border:1px dashed var(--border-sci); border-radius:var(--radius-sm); font-size:12px; color:#bceeff;">
-          Выберите сектор для утверждения приказа командира.
-        </div>
-        <div style="margin-top:14px; text-align:center;">
-          <button class="btn-action" id="btnConfirmTacPlan" style="display:none;" onclick="confirmTacPlan()">УТВЕРДИТЬ РАССТАНОВКУ ►</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО: QTE ОВЕРДРАЙВ -->
+  <!-- МОДАЛЬНОЕ ОКНО: НЕЙРОХИРУРГИЯ (САПЕР) -->
+  <div class="modal-overlay" id="modalNeuro">
+    <div class="modal-window" style="max-width:520px;">
+      <div class="modal-head">
+        <div>МОДУЛЬ «НЕЙРОХИРУРГИЯ» // ДЕАКТИВАЦИЯ ЧИПА</div>
+        <button class="btn-close-menu" id="btnCloseNeuro">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="game-container">
+          <p style="font-size:12px; color:var(--text-dim); margin-bottom:8px;">
+            Безопасно снимите изоляцию со всех безопасных секторов. Клик — вскрытие. Правый клик / долгий тап — установка крио-шунта. Ошибка взорвет чип (-15% Резонанса).
+          </p>
+          <div class="game-hud">
+            <div>ЛОГИЧЕСКИЙ СТАТУС: <span id="neuroStatus" style="color:var(--cyan);">СКАНИРОВАНИЕ</span></div>
+            <div>ШУНТЫ: <span id="shuntsDisplay" style="color:var(--amber);">0 / 4</span></div>
+          </div>
+          <div class="neuro-grid" id="neuroGrid"></div>
+          <div style="margin-top:12px; display:flex; justify-content:center; gap:10px;">
+            <button class="btn-nav" onclick="startNeuroGame()">ПЕРЕЗАГРУЗИТЬ ЧИП</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО: QTE ОВЕРДРАЙВ (ПК + МОБИЛКИ) -->
   <div class="modal-overlay" id="modalQTE">
     <div class="modal-window" style="max-width:500px;">
       <div class="modal-head">
@@ -890,24 +986,55 @@
       </div>
       <div class="modal-body">
         <div class="qte-container">
-          <p style="font-size:12px; color:var(--text-dim); margin-bottom:10px;">
-            Поймайте бегущий импульс в зеленую зону, чтобы замкнуть сервоприводы турелей!
+          <p style="font-size:12px; color:var(--text-dim); margin-bottom:12px;">
+            Нажмите <b>ENTER</b> / <b>ПРОБЕЛ</b> на клавиатуре, кликните по бегунку или по кнопке внизу, когда импульс войдет в зеленую зону!
           </p>
-          <div class="qte-track">
+          <div class="qte-track" id="qteTrackTouch" onclick="hitQTE()">
             <div class="qte-zone"></div>
             <div class="qte-cursor" id="qteCursor"></div>
           </div>
-          <div style="display:flex; justify-content:center; gap:10px;">
-            <button class="btn-action" id="btnHitQTE" onclick="hitQTE()">ЗАМКНУТЬ [ENTER]</button>
-            <button class="btn-nav" onclick="startQTE()">СБРОС</button>
-          </div>
-          <div id="qteResult" style="margin-top:12px; font-size:13px; font-weight:700;"></div>
+          <button class="btn-qte-action" id="btnHitQTE" onclick="hitQTE()">⚡ ЗАМКНУТЬ ИМПУЛЬС</button>
+          <div id="qteResult" style="margin-top:14px; font-size:14px; font-weight:700;"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО: НЕЙРО-СКРЕТЧ -->
+  <!-- ОСТАЛЬНЫЕ МОДАЛЬНЫЕ ОКНА -->
+  <div class="modal-overlay" id="modalTacticalMap">
+    <div class="modal-window">
+      <div class="modal-head">
+        <div>ПЛАНШЕТ ЭЛЛИ // ПЛАН ВЫЛАЗКИ К «КОВЧЕГУ»</div>
+        <button class="btn-close-menu" id="btnCloseTacMap">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:12px; color:var(--text-dim); margin-bottom:12px;">
+          Распределите звенья перед броском. Выбранная тактика изменит сложность QTE-перехвата турелей:
+        </p>
+        <div class="tactical-map-grid">
+          <div class="tac-node" id="tacNode1" onclick="selectTacNode(1)">
+            <h5>СЕКТОР А</h5>
+            <p>Охладительный дренаж (Кай + Рен). Ледяной прорыв. QTE станет сложнее.</p>
+          </div>
+          <div class="tac-node" id="tacNode2" onclick="selectTacNode(2)">
+            <h5>СЕКТОР B</h5>
+            <p>Лобовой взлом турелей «Вулкан». Зеленая зона QTE расширяется.</p>
+          </div>
+          <div class="tac-node" id="tacNode3" onclick="selectTacNode(3)">
+            <h5>СЕКТОР C</h5>
+            <p>Аварийный шлюз 9-й палубы (Марк + Элли). Прямой прорыв к капсулам.</p>
+          </div>
+        </div>
+        <div id="tacReport" style="padding:12px; background:rgba(0,0,0,0.4); border:1px dashed var(--border-sci); border-radius:var(--radius-sm); font-size:12px; color:#bceeff;">
+          Выберите сектор для утверждения приказа.
+        </div>
+        <div style="margin-top:14px; text-align:center;">
+          <button class="btn-action" id="btnConfirmTacPlan" style="display:none;" onclick="confirmTacPlan()">УТВЕРДИТЬ РАССТАНОВКУ ►</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="modalScratch">
     <div class="modal-window">
       <div class="modal-head">
@@ -934,7 +1061,6 @@
     </div>
   </div>
 
-  <!-- МОДАЛЬНЫЕ ОКНА: ОГЛАВЛЕНИЕ, ВЗЛОМ, ПОЛЕТ, ДОСЬЕ, АВТОР -->
   <div class="modal-overlay" id="modalToc">
     <div class="modal-window">
       <div class="modal-head">
@@ -942,55 +1068,6 @@
         <button class="btn-close-menu" id="btnCloseToc">✕</button>
       </div>
       <div class="modal-body" id="tocList"></div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modalHack">
-    <div class="modal-window">
-      <div class="modal-head">
-        <div>ДЕКА НЕТРАННЕРА // МНОГОУРОВНЕВЫЙ ВЗЛОМ</div>
-        <button class="btn-close-menu" id="btnCloseHack">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="game-container">
-          <p style="font-size:12px; color:var(--text-dim); margin-bottom:8px;">
-            Пройдите 3 защитных контура подряд.
-          </p>
-          <div class="game-hud">
-            <div>УРОВЕНЬ: <span id="hackStageDisplay" style="color:var(--cyan); font-weight:700;">1 / 3</span></div>
-            <div>ОШИБКИ: <span id="hackErrors" style="color:var(--magenta);">0 / 3</span></div>
-          </div>
-          <div class="hack-target" id="hackTargetCode">TARGET: -- -- --</div>
-          <div style="font-size:12px; margin-bottom:8px; color:var(--amber);" id="hackStatus">ПОДБОР ШИФРА...</div>
-          <div class="hack-grid" id="hackGrid"></div>
-          <div style="margin-top:12px; display:flex; justify-content:center; gap:10px;">
-            <button class="btn-nav" id="btnRestartHack">СБРОС КОНТУРА</button>
-            <button class="btn-action" id="btnHackProceed" style="display:none;">ПРОДОЛЖИТЬ СЮЖЕТ ►</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="modalFlight">
-    <div class="modal-window" style="max-width: 680px;">
-      <div class="modal-head">
-        <div>ПРОРЫВ СКВОЗЬ КВАНТОВЫЙ ПОРТАЛ // «АТЛАС»</div>
-        <button class="btn-close-menu" id="btnCloseFlight">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="game-container">
-          <div class="game-hud">
-            <div>ПРОЧНОСТЬ: <span id="hullDisplay" style="color:var(--green);">100%</span></div>
-            <div>ДИСТАНЦИЯ: <span id="distDisplay" style="color:var(--cyan);">0 / 3000m</span></div>
-          </div>
-          <canvas id="flightCanvas" width="600" height="320"></canvas>
-          <div style="margin-top:12px; display:flex; justify-content:center; gap:10px;">
-            <button class="btn-nav" id="btnStartFlight">СТАРТ ДВИГАТЕЛЕЙ</button>
-            <button class="btn-action" id="btnFlightProceed" style="display:none;">ВЫЙТИ К ЭРИДАНУ-4 ►</button>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -1017,15 +1094,18 @@
         <p style="margin-top:12px;">
           Замысел проекта родился из любви к плотной киберпанк-эстетике, классической космической фантастике и интерактивным форматам повествования. Мне хотелось объединить атмосферу глубокого погружения в сюжет с осязаемыми технологиями: живым процедурным звуком, симулятором квантового полета, взломом терминалов и динамически меняющимся окружением.
         </p>
-        <p style="margin-top:12px;">
-          <strong>О самой игре и новелле:</strong> история Марка (Яна), Элли, Кая и Рена — это драма о людях, чью память и личности пыталась превратить в расходный материал корпоративная система «Арго-Сис». Пройдя путь от темных подвалов и портовых штормов Земли до орбитального дредноута «Мнемозина», герои совершают квантовый прыжок на дикую экзопланету Эридан-4, где правила борьбы за свободу пишутся заново.
-        </p>
       </div>
     </div>
   </div>
 
   <script>
+    /* ========================================================
+       СКВОЗНОЙ РЕЗОНАНС И АЛГОРИТМ ТЕКСТОВОГО ГЛИТЧА
+       ======================================================== */
     let synapseResonance = 80;
+    let unlockedLoreKeys = new Set();
+    let qteSpeedModifier = 3.2;
+    let qteZoneWidth = 20;
 
     function modifyResonance(delta) {
       synapseResonance = Math.max(10, Math.min(100, synapseResonance + delta));
@@ -1041,90 +1121,336 @@
       } else {
         fill.style.background = 'linear-gradient(90deg, var(--magenta), var(--amber))';
       }
+
+      applyGlitchEffect();
     }
 
+    // Текстовый глитч при падении резонанса
+    function applyGlitchEffect() {
+      const art = document.getElementById('mainArticle');
+      if (synapseResonance < 40) {
+        art.style.filter = 'drop-shadow(2px 0 0 rgba(255,0,85,0.4)) drop-shadow(-2px 0 0 rgba(0,240,255,0.4))';
+        // Подмена случайных слов
+        document.querySelectorAll('.chapter-content p').forEach(p => {
+          if (Math.random() < 0.25 && !p.dataset.origText) {
+            p.dataset.origText = p.innerHTML;
+            p.innerHTML = p.innerHTML.replace(/[аеиоу]/gi, () => Math.random() > 0.5 ? '0' : '1');
+          }
+        });
+      } else {
+        art.style.filter = 'none';
+        document.querySelectorAll('.chapter-content p').forEach(p => {
+          if (p.dataset.origText) {
+            p.innerHTML = p.dataset.origText;
+            delete p.dataset.origText;
+          }
+        });
+      }
+    }
+
+    /* ========================================================
+       КОНСОЛЬ ПОИСКА ПО КЛЮЧЕВЫМ СЛОВАМ
+       ======================================================== */
+    const secretLoreDatabase = {
+      "МНЕМОЗИНА": {
+        title: "ДОСЬЕ № 904-А // ПРОЕКТ «МНЕМОЗИНА»",
+        desc: "Ведущий нейроинженер Фогель (брат Элли) отказался стирать эмоциональные центры детей. Ликвидирован инсценировкой. Личность заархивирована в аварийный буфер мостика.",
+        effect: "Элли узнает правду о брате! Синаптический резонанс +15%. Открыт ключ спасения корабля."
+      },
+      "ВЕБЕР": {
+        title: "ЛИЧНЫЙ ДНЕВНИК // ВЕБЕР-СТАРШИЙ // ЗАПИСЬ 00",
+        desc: "Настоящий сын погиб под колесами корпоративного конвоя. Вебер пересадил внешность и имя сыну-сироте Яну, сделав из него живую мину.",
+        effect: "Иммунитет к диссоциации. Текстовый глитч снижен. Резонанс +10%."
+      },
+      "ЯН": {
+        title: "АРХИВ МУНИЦИПАЛЬНОГО ПРИЮТА № 4 // ДОСЬЕ: ЯН",
+        desc: "Биоритм мозга совпадает с кристаллическими частотами редких минералов. Марк вспоминает истинную природу своей силы.",
+        effect: "Разблокирована истинная мощь деструктора на Эридане-4!"
+      },
+      "НОРД-БЕЙ": {
+        title: "ПРОТОКОЛ ЧИСТКИ // ПОРТОВЫЙ РАЙОН НОРД-БЕЙ",
+        desc: "Мать Кая застрелена чистильщиками при попытке защитить сына. Ему внушили ложное воспоминание о шторме.",
+        effect: "Кай берет ярость под контроль. Сложность QTE-овердрайва снижена на 30%!"
+      },
+      "ОРИОН": {
+        title: "ТЕХНИЧЕСКИЙ РЕГЛАМЕНТ РЕАКТОРА «ОРИОН-КРИО»",
+        desc: "Рен способен поглощать до 1.2 ГВт тепла при психическом спокойствии. Предел: фазовый распад тканей.",
+        effect: "Рен получает защиту в дренаже дредноута. Резонанс группы максимален."
+      },
+      "ОМЕГА-16": {
+        title: "МАТРИЦА СЕРИИ «ОМЕГА» // 16 УЗЛОВ",
+        desc: "Синхронное пробуждение всех 16 узлов создает неуязвимый органический сверхразум колонии.",
+        effect: "Мгновенное бескровное пробуждение анабиозного зала в 18 главе!"
+      },
+      "КОВАЛЬСКАЯ": {
+        title: "СЕКРЕТНЫЙ ПРОТОКОЛ СОВЕТА // АВТОРИЗАЦИЯ «ЭРИДАН»",
+        desc: "Аварийный код отмены квантовой детонации дредноута: 00-OMEGA-FREE.",
+        effect: "Получен пароль отмены самоуничтожения корабля!"
+      }
+    };
+
+    function submitCliWord() {
+      const field = document.getElementById('cliInputField');
+      const val = field.value.trim().toUpperCase();
+      const out = document.getElementById('cliOutput');
+
+      if (!val) return;
+
+      if (secretLoreDatabase[val]) {
+        const item = secretLoreDatabase[val];
+        unlockedLoreKeys.add(val);
+        out.innerHTML += `<br><span style="color:var(--green)">[ДОСТУП РАЗРЕШЕН: ${val}]</span><br><strong>${item.title}</strong><br>${item.desc}<br><span style="color:var(--cyan); font-size:11px;">[ЭФФЕКТ]: ${item.effect}</span><br>`;
+        modifyResonance(10);
+      } else {
+        out.innerHTML += `<br><span style="color:var(--magenta)">[ОШИБКА 404]: Ключ «${val}» не найден в архивах «Арго-Сис».</span>`;
+      }
+      field.value = '';
+      out.scrollTop = out.scrollHeight;
+    }
+
+    document.getElementById('cliInputField').addEventListener('keydown', e => {
+      if (e.key === 'Enter') submitCliWord();
+    });
+
+    function putClueToCli(word) {
+      document.getElementById('modalConsole').classList.add('open');
+      document.getElementById('cliInputField').value = word;
+      submitCliWord();
+    }
+
+    document.getElementById('menuItemConsole').onclick = () => {
+      sciSidebar.classList.remove('open');
+      document.getElementById('modalConsole').classList.add('open');
+    };
+    document.getElementById('btnCloseConsole').onclick = () => document.getElementById('modalConsole').classList.remove('open');
+
+    /* ========================================================
+       МИНИ-ИГРА: НЕЙРОХИРУРГИЯ (САПЕР НА ЧИПЕ)
+       ======================================================== */
+    let neuroGrid = [];
+    let neuroTraps = new Set();
+    let neuroShunts = new Set();
+    let neuroRevealed = 0;
+    const neuroSize = 5;
+    const totalTraps = 4;
+
+    function startNeuroGame() {
+      const grid = document.getElementById('neuroGrid');
+      grid.innerHTML = '';
+      neuroTraps.clear();
+      neuroShunts.clear();
+      neuroRevealed = 0;
+      document.getElementById('neuroStatus').innerText = 'СКАНИРОВАНИЕ';
+      document.getElementById('neuroStatus').style.color = 'var(--cyan)';
+      document.getElementById('shuntsDisplay').innerText = `0 / ${totalTraps}`;
+
+      // Генерация ловушек
+      while (neuroTraps.size < totalTraps) {
+        neuroTraps.add(Math.floor(Math.random() * (neuroSize * neuroSize)));
+      }
+
+      for (let i = 0; i < neuroSize * neuroSize; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'neuro-cell';
+        cell.dataset.idx = i;
+        cell.onclick = () => revealNeuroCell(i, cell);
+        cell.oncontextmenu = (e) => {
+          e.preventDefault();
+          toggleShunt(i, cell);
+        };
+        grid.appendChild(cell);
+      }
+    }
+
+    function toggleShunt(idx, cell) {
+      if (cell.classList.contains('revealed')) return;
+      if (neuroShunts.has(idx)) {
+        neuroShunts.delete(idx);
+        cell.classList.remove('shunt');
+        cell.innerText = '';
+      } else {
+        if (neuroShunts.size >= totalTraps) return;
+        neuroShunts.add(idx);
+        cell.classList.add('shunt');
+        cell.innerText = '🛡️';
+      }
+      document.getElementById('shuntsDisplay').innerText = `${neuroShunts.size} / ${totalTraps}`;
+    }
+
+    function revealNeuroCell(idx, cell) {
+      if (cell.classList.contains('revealed') || neuroShunts.has(idx)) return;
+
+      if (neuroTraps.has(idx)) {
+        cell.classList.add('trap');
+        cell.innerText = '💥';
+        document.getElementById('neuroStatus').innerText = 'ЧИП ВЗОРВАН!';
+        document.getElementById('neuroStatus').style.color = 'var(--magenta)';
+        modifyResonance(-15);
+        document.querySelectorAll('.neuro-cell').forEach(c => c.style.pointerEvents = 'none');
+        return;
+      }
+
+      // Подсчет соседей
+      let r = Math.floor(idx / neuroSize);
+      let c = idx % neuroSize;
+      let count = 0;
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          let nr = r + dr, nc = c + dc;
+          if (nr >= 0 && nr < neuroSize && nc >= 0 && nc < neuroSize) {
+            if (neuroTraps.has(nr * neuroSize + nc)) count++;
+          }
+        }
+      }
+
+      cell.classList.add('revealed');
+      cell.innerText = count > 0 ? count : '';
+      neuroRevealed++;
+
+      if (neuroRevealed === (neuroSize * neuroSize - totalTraps)) {
+        document.getElementById('neuroStatus').innerText = 'ИЗОЛЯЦИЯ СНЯТА // КОД ДОБЫТ';
+        document.getElementById('neuroStatus').style.color = 'var(--green)';
+        modifyResonance(15);
+        putClueToCli("МНЕМОЗИНА");
+      }
+    }
+
+    document.getElementById('menuItemNeuro').onclick = () => {
+      sciSidebar.classList.remove('open');
+      document.getElementById('modalNeuro').classList.add('open');
+      startNeuroGame();
+    };
+    document.getElementById('btnCloseNeuro').onclick = () => document.getElementById('modalNeuro').classList.remove('open');
+
+    /* ========================================================
+       QTE-ОВЕРДРАЙВ С ПОДДЕРЖКОЙ ENTER, КЛИКОВ И ТАПОВ
+       ======================================================== */
+    let qteCursorPos = 0;
+    let qteDirection = 1;
+    let qteAnim = null;
+    let isQTEActive = false;
+
+    function startQTE() {
+      isQTEActive = true;
+      qteCursorPos = 0;
+      qteDirection = 1;
+      document.getElementById('qteResult').innerText = '';
+      cancelAnimationFrame(qteAnim);
+
+      // Адаптация сложности под выбор на карте
+      const zone = document.querySelector('.qte-zone');
+      zone.style.width = `${qteZoneWidth}%`;
+      zone.style.left = `${50 - qteZoneWidth/2}%`;
+
+      loopQTE();
+    }
+
+    function loopQTE() {
+      if (!isQTEActive) return;
+      qteCursorPos += qteSpeedModifier * qteDirection;
+      if (qteCursorPos >= 96) qteDirection = -1;
+      if (qteCursorPos <= 0) qteDirection = 1;
+
+      document.getElementById('qteCursor').style.left = `${qteCursorPos}%`;
+      qteAnim = requestAnimationFrame(loopQTE);
+    }
+
+    function hitQTE() {
+      if (!isQTEActive) return;
+      isQTEActive = false;
+      cancelAnimationFrame(qteAnim);
+
+      const zoneLeft = 50 - qteZoneWidth/2;
+      const zoneRight = 50 + qteZoneWidth/2;
+      const res = document.getElementById('qteResult');
+
+      if (qteCursorPos >= zoneLeft && qteCursorPos <= zoneRight) {
+        res.innerText = '⚡ УСПЕХ! ПРИВОДЫ ЗАМКНУТЫ // КУПОЛ СБИТ';
+        res.style.color = 'var(--green)';
+        modifyResonance(15);
+        setTimeout(() => {
+          document.getElementById('modalQTE').classList.remove('open');
+          renderChapter(16);
+        }, 800);
+      } else {
+        res.innerText = 'ОШИБКА! ТУРЕЛИ ДАЛИ ЗАЛП // УРОН СИНАПСОВ';
+        res.style.color = 'var(--magenta)';
+        modifyResonance(-10);
+      }
+    }
+
+    // Поддержка Enter и Пробела на клавиатуре
+    window.addEventListener('keydown', e => {
+      if (isQTEActive && (e.code === 'Enter' || e.code === 'Space')) {
+        e.preventDefault();
+        hitQTE();
+      }
+    });
+
+    document.getElementById('btnCloseQTE').onclick = () => {
+      document.getElementById('modalQTE').classList.remove('open');
+      isQTEActive = false;
+      cancelAnimationFrame(qteAnim);
+    };
+    document.getElementById('menuItemQTE').onclick = () => {
+      sciSidebar.classList.remove('open');
+      document.getElementById('modalQTE').classList.add('open');
+      startQTE();
+    };
+
+    /* ========================================================
+       ТАКТИЧЕСКАЯ КАРТА (ВЛИЯЕТ НА СЛОЖНОСТЬ QTE)
+       ======================================================== */
+    function selectTacNode(nodeId) {
+      document.querySelectorAll('.tac-node').forEach((el, i) => {
+        el.classList.toggle('selected', (i + 1) === nodeId);
+      });
+      const rep = document.getElementById('tacReport');
+      const btn = document.getElementById('btnConfirmTacPlan');
+      btn.style.display = 'inline-block';
+
+      if (nodeId === 1) {
+        qteSpeedModifier = 4.2;
+        qteZoneWidth = 14;
+        rep.innerHTML = '<strong>ПЛАН: ДРЕНАЖ РЕАКТОРА.</strong> Рен берет тепловой удар на себя. Турели без присмотра: QTE будет быстрее, а зеленая зона уже!';
+      } else if (nodeId === 2) {
+        qteSpeedModifier = 2.4;
+        qteZoneWidth = 28;
+        rep.innerHTML = '<strong>ПЛАН: ЛОБОВОЙ ВЗЛОМ ТУРЕЛЕЙ.</strong> Кай подключается к шине орудий. Зеленая зона QTE расширена!';
+      } else {
+        qteSpeedModifier = 3.2;
+        qteZoneWidth = 20;
+        rep.innerHTML = '<strong>ПЛАН: ШТУРМ 9-Й ПАЛУБЫ.</strong> Сбалансированный штурм.';
+      }
+    }
+
+    function confirmTacPlan() {
+      modifyResonance(10);
+      document.getElementById('modalTacticalMap').classList.remove('open');
+      renderChapter(15);
+    }
+    document.getElementById('btnCloseTacMap').onclick = () => document.getElementById('modalTacticalMap').classList.remove('open');
+    document.getElementById('menuItemTacticalMap').onclick = () => {
+      sciSidebar.classList.remove('open');
+      document.getElementById('modalTacticalMap').classList.add('open');
+    };
+
+    /* SVG ИКОНКИ */
     const characterIcons = {
-      mark: `
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="46" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4 2"/>
-          <path d="M30 75 C30 55, 70 55, 70 75" stroke="#00f0ff" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="50" cy="42" r="16" stroke="#00f0ff" stroke-width="3"/>
-          <line x1="52" y1="30" x2="62" y2="38" stroke="#ff0055" stroke-width="3" stroke-linecap="round"/>
-          <circle cx="45" cy="42" r="2.5" fill="#00f0ff"/>
-          <circle cx="55" cy="42" r="2.5" fill="#00f0ff"/>
-        </svg>
-      `,
-      ellie: `
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="46" stroke="#00f0ff" stroke-width="2"/>
-          <path d="M34 40 C34 25, 66 25, 66 40 L68 55 C68 55, 60 52, 50 52 C40 52, 32 55, 32 55 Z" stroke="#00f0ff" stroke-width="2.5"/>
-          <circle cx="50" cy="45" r="13" stroke="#00f0ff" stroke-width="2.5"/>
-          <rect x="58" y="42" width="7" height="5" rx="1" stroke="#ffaa00" stroke-width="1.5"/>
-          <circle cx="46" cy="44" r="2" fill="#00f0ff"/>
-          <path d="M30 78 C30 62, 70 62, 70 78" stroke="#00f0ff" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-      `,
-      kai: `
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="46" stroke="#00ff66" stroke-width="2"/>
-          <path d="M26 80 C26 58, 74 58, 74 80" stroke="#00ff66" stroke-width="4" stroke-linecap="round"/>
-          <rect x="36" y="28" width="28" height="30" rx="4" stroke="#00ff66" stroke-width="3"/>
-          <circle cx="62" cy="38" r="4" fill="#00ff66"/>
-        </svg>
-      `,
-      ren: `
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="46" stroke="#ffaa00" stroke-width="2" stroke-dasharray="2 3"/>
-          <path d="M32 76 C32 60, 68 60, 68 76" stroke="#ffaa00" stroke-width="2.5" stroke-linecap="round"/>
-          <circle cx="50" cy="42" r="14" stroke="#ffaa00" stroke-width="2.5"/>
-          <circle cx="45" cy="41" r="3" fill="#00f0ff"/>
-          <circle cx="55" cy="41" r="3" fill="#00f0ff"/>
-        </svg>
-      `,
-      kovalskaya: `
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="50,6 94,50 50,94 6,50" stroke="#ff0055" stroke-width="2"/>
-          <circle cx="50" cy="45" r="16" stroke="#ff0055" stroke-width="2.5"/>
-          <line x1="38" y1="44" x2="62" y2="44" stroke="#ff0055" stroke-width="3"/>
-          <path d="M30 80 C30 62, 70 62, 70 80" stroke="#ff0055" stroke-width="3"/>
-        </svg>
-      `
+      mark: `<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="#00f0ff" stroke-width="2"/><path d="M30 75 C30 55, 70 55, 70 75" stroke="#00f0ff" stroke-width="3"/><circle cx="50" cy="42" r="16" stroke="#00f0ff" stroke-width="3"/><line x1="52" y1="30" x2="62" y2="38" stroke="#ff0055" stroke-width="3"/></svg>`,
+      ellie: `<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="#00f0ff" stroke-width="2"/><circle cx="50" cy="45" r="13" stroke="#00f0ff" stroke-width="2.5"/><rect x="58" y="42" width="7" height="5" stroke="#ffaa00" stroke-width="1.5"/><path d="M30 78 C30 62, 70 62, 70 78" stroke="#00f0ff" stroke-width="3"/></svg>`,
+      kai: `<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="#00ff66" stroke-width="2"/><path d="M26 80 C26 58, 74 58, 74 80" stroke="#00ff66" stroke-width="4"/><rect x="36" y="28" width="28" height="30" stroke="#00ff66" stroke-width="3"/></svg>`,
+      ren: `<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="#ffaa00" stroke-width="2"/><circle cx="50" cy="42" r="14" stroke="#ffaa00" stroke-width="2.5"/><circle cx="45" cy="41" r="3" fill="#00f0ff"/><circle cx="55" cy="41" r="3" fill="#00f0ff"/></svg>`,
+      kovalskaya: `<svg viewBox="0 0 100 100" fill="none"><polygon points="50,6 94,50 50,94 6,50" stroke="#ff0055" stroke-width="2"/><circle cx="50" cy="45" r="16" stroke="#ff0055" stroke-width="2.5"/></svg>`
     };
 
     const asciiArtGallery = {
-      citySpire: `
-    /\\               |*    .          .       .  *
-   /  \\      .      -O-        .             .    
-  / /\\ \\             |    .        .        .     
- | |  | |     ||||           ||||       ||||      
- | |  | |  [АРГО-СИС ШПИЛЬ]  |  |       |  |      
- | |  | |     |  |           |  |       |  |      
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-... ДОЖДЬ ВЕРХНЕГО ГОРОДА // ВЫСОТА: 200 ЭТАЖ ...
-      `,
-      dreadnought: `
-   .        *        .      .          .      *
-        .       ______/=======\\______       .    
-  *           /  [ КОВЧЕГ МНЕМОЗИНЫ ] \\          
-   __________/_________________________\\_________
-  <===========|  (X)   (X)   (X)  |=============>
-              \\___________________/       .      
-        .               *             .          
-... ОРБИТАЛЬНЫЙ ДРЕДНОУТ // КВАНТОВЫЙ РАЗЛОМ ...
-      `,
-      eridanMoons: `
-      .           ( O )                  .        
-           *      ЯНТАРНАЯ ЛУНА-1                 
-   .                          .        ( o )      
-          .                           ЛУНА-2      
-   /\\_  _  /\\_      /\\_  _  /\\_      /\\_  _  /\\_  
-  /   \\/ \\/   \\    /   \\/ \\/   \\    /   \\/ \\/   \\ 
- / КРИСТАЛЛЫ   \\  /  БАЗАЛЬТ    \\  / ЭРИДАН-4    \\
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-... ЭКЗОПЛАНЕТА ЭРИДАН-4 // ДИКИЙ ГОРИЗОНТ ...
-      `
+      citySpire: `/\\        |* .   \n /  \\  -O-    \n[АРГО-СИС ШПИЛЬ]\n... ВЫСОТА 200 ЭТАЖ ...`,
+      dreadnought: `    ______/=======\\______    \n  /  [ КОВЧЕГ МНЕМОЗИНЫ ] \\  \n<===========| (X) |===========>`,
+      eridanMoons: `    ( O ) ЛУНА-1     ( o ) ЛУНА-2\n  /\\_  _  /\\_      /\\_  _  /\\_   \n / ЭРИДАН-4  \\    / КРИСТАЛЛЫ \\  `
     };
 
+    /* БАЗА ГЛАВ (1-18) С ПОДСТАВЛЕННЫМИ ДАННЫМИ ДЛЯ КЛИКОВ */
     const bookChapters = [
       {
         id: "ch1",
@@ -1133,14 +1459,11 @@
         theme: "city",
         soundtrackGroup: 1,
         art: "citySpire",
-        speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0 // Носитель архива" },
+        cluesCount: 1,
+        speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>Вкус изопропилового спирта всегда предшествовал провалу в чужую жизнь. Холодный зажим с медными контактными лепестками привычно щелкнул у основания черепа, прижавшись к порту. Резина оголовья пахла застарелым потом и паленым текстолитом — рабочий инструмент Марка не знал санитарных норм, но безотказно срезал помехи в подпольных сетях вот уже четыре года.</p>
-          <p>— Твоя температура ползет вверх, Марк. Тридцать семь и восемь. Дойдешь до сорока — я лично выдерну шину, и плевать мне на твои синапсы.</p>
-          <p>Голос Элли звучал сухо, фоном, почти теряясь за ровным шелестом клавиш. На углу стола небрежно валялся пластиковый бейдж сотрудника Отдела сетевого аудита и кибербезопасности «Арго-Сис» — легальная жизнь Элли, о которой в этом подвале напоминали только идеальная выправка и привычка дублировать протоколы.</p>
-          <p>Марк провалился сквозь защитные слои. Вместо плоских таблиц и зашифрованных финансовых транзакций архитектура сети внезапно треснула, схлопнувшись в плотный, вязкий сенсорный поток. Ледокол вскрыл не архив документов — он пробил капсулу «мнемо-слепка». Марк увидел мальчика лет шести со свежим шрамом над правой бровью и услышал надтреснутый голос мужчины: <em>«Забудь этот день. Забудь имя»</em>.</p>
-          <blockquote>СОВПАДЕНИЕ НЕЙРОПРОФИЛЯ: 99.8%<br>ИСПОЛНЯЕМЫЙ АРХИВ № 0-ВЕБЕР ОБНАРУЖЕН<br>СТАТУС: ПРИОРИТЕТ ЛИКВИДАЦИИ</blockquote>
-          <p>Периметр схлопнулся за считанные секунды. Элли подожгла термитный патрон на стойке серверов, и они выскользнули в сырой технический коллектор ливневки под гул входящих в коридор конвертопланов зачистки.</p>
+          <p>Вкус изопропилового спирта всегда предшествовал провалу в чужую жизнь. Холодный зажим щелкнул у основания черепа, прижавшись к порту. На углу стола небрежно валялся пластиковый бейдж сотрудника Отдела сетевого аудита «Арго-Сис» — легальная жизнь Элли, прикрывавшая проект <span class="data-clue" onclick="putClueToCli('МНЕМОЗИНА')">[ ◈ МНЕМОЗИНА ]</span>.</p>
+          <p>Марк провалился сквозь защитные слои: ледокол пробил капсулу «мнемо-слепка». Мальчик лет шести со свежим шрамом над бровью услышал голос: <em>«Забудь имя»</em>. Исполняемый архив № <span class="data-clue" onclick="putClueToCli('ВЕБЕР')">[ ◈ ВЕБЕР ]</span> был обнаружен.</p>
         `,
         choices: [
           { pov: "ЭЛЛИ", text: "«Марк, держись за меня. Я не позволю им сжечь твои синапсы!» (+10% Резонанса)", deltaRes: 10, target: 1 },
@@ -1154,12 +1477,10 @@
         theme: "city",
         soundtrackGroup: 1,
         art: "citySpire",
-        speaker: { id: "ellie", name: "Элли Фогель", role: "Аудитор «Арго-Сис» // Координатор" },
+        cluesCount: 0,
+        speaker: { id: "ellie", name: "Элли Фогель", role: "Аудитор" },
         content: `
-          <p>В первые месяцы после встречи под дождем они не доверяли друг другу ни на йоту. Для Элли Марк был незарегистрированной аномалией — бродячим нетраннером с грязных улиц, чьи алгоритмы обхода на удивление точно вскрывали слепые зоны «Арго-Сис». Для Марка она была опасным контролером с корпоративным значком.</p>
-          <p>Их объединяла тайна: три года назад старший брат Элли, инженер-нейросетевик, растворился в стенах корпорации после перевода на проект «Мнемозина». Официальное заключение гласило: «Внезапный коллапс нейроразъема, тело кремировано».</p>
-          <p>Перелом произошел во время рейда на узле Четвертого сектора. Высоковольтный импульс сторожевой программы выжег шейный биоинтерфейс Марка. Элли нарушила закон выживания и пришла лично: двенадцать часов на голом бетоне она хирургическим пинцетом вырезала обугленный узел из его затылочной кости, спасая парня от смерти.</p>
-          <p><em>«Я не позволю этой конторе переработать в шлак еще одного человека на моих глазах»</em>, — сказала она тогда. Ни один из них не знал, что проект «Мнемозина» и разработка архива «0-Вебер» создавались в одних и тех же боксах закрытого сектора.</p>
+          <p>Для Элли Марк был аномалией — бродячим нетраннером, вскрывавшим слепые зоны корпорации. Три года назад ее старший брат растворился в стенах «Арго-Сис» после перевода на секретный протокол. Двенадцать часов на бетоне она вырезала обугленный биоинтерфейс из затылка Марка, спасая его жизнь.</p>
         `,
         choices: [
           { pov: "МАРК", text: "«Спасибо, что вытащила меня тогда, Элли» (+5% Резонанса)", deltaRes: 5, target: 2 }
@@ -1172,15 +1493,14 @@
         theme: "city",
         soundtrackGroup: 1,
         art: "citySpire",
+        cluesCount: 0,
         speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>Чугунный люк захлопнулся с гулким металлическим стоном. Элли с силой провернула стопорный вентиль, заблокировав засов. Сканирующий импульс ищейки вслепую скользнул по внешнему контуру шахты, но наткнулся на свинцовую гидроизоляцию и рассеялся.</p>
-          <p>Они добрались до служебного вагончика в отстойнике монорельса. Элли подключила медный шлейф диагноста к деке Марка: на экране высветился единственный несжатый фрагмент метаданных, отправленный старшим научным сотрудником Вебером.</p>
-          <p>— Человек из воспоминания... Это был автор проекта. И он носил мою фамилию, — прошептал Марк.</p>
+          <p>В вагоне монорельса Элли подключила диагност к деке Марка: на экране высветился единственный фрагмент метаданных с подписью создателя проекта.</p>
         `,
         choices: [
           { pov: "ЭЛЛИ", text: "Идти по следу платежа на черный рынок «Стек» к Харону", target: 3 },
-          { pov: "МАРК", text: "Взломать локальный шлюз депо через деку [МИНИ-ИГРА]", action: "hack", nextTarget: 3 }
+          { pov: "МАРК", text: "Вскрыть деку в модуле нейрохирургии [НЕЙРОХИРУРГИЯ]", action: "neuro" }
         ]
       },
       {
@@ -1190,11 +1510,10 @@
         theme: "city",
         soundtrackGroup: 1,
         art: "citySpire",
+        cluesCount: 0,
         speaker: { id: "ellie", name: "Элли Фогель", role: "Аудитор" },
         content: `
-          <p>След теневого заказа привел их на Пятый узел — в перегруженный базар контрабанды «Стек». Там старик Харон, скупщик черного трафика с янтарным бионическим глазом, передал им тяжелый кейс с биометрическим замком старого образца.</p>
-          <p>— Старик Вебер велел отдать этот ключ, когда мальчик придет со своим токеном, — хрипел Харон. — Он укрылся в закрытой зоне карантина на минус пятом.</p>
-          <p>Спуск в клети технического подъемника в ледяной мороз карантинного яруса закончился перед выжженными дверями лаборатории. Биометрический замок кейса считал отпечаток пальца Марка, открыв индукционный инжектор с янтарной жидкостью. А из-за дверей донесся глухой выстрел чистильщиков.</p>
+          <p>Старик Харон передал кейс с биометрическим замком. Спуск в карантинный сектор закончился перед выжженными дверьми лаборатории.</p>
         `,
         choices: [
           { pov: "МАРК", text: "Немедленно ввести инжектор и шагнуть в лабораторию", target: 4 }
@@ -1207,11 +1526,10 @@
         theme: "city",
         soundtrackGroup: 1,
         art: "citySpire",
+        cluesCount: 1,
         speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>Марк не колебался: прижал инжектор к шейному порту и вдавил спуск. Янтарная эмульсия обожгла сонную артерию ледяным пламенем. Криптографическая блокировка спала: он впервые ощутил всю топологию сетей напрямую через собственный разогнанный мозг.</p>
-          <p>Войдя в лабораторию, Марк одними губами активировал встроенную команду «Забвение» — и тяжелые экзоскелеты чистильщиков заклинило от перегрузки рефлексов.</p>
-          <p>Умирающий старший Вебер успел коснуться шрама на его брови: <em>«Ты не флешка, Марк. Ты ключ зажигания. В твоей голове — протокол полной десинхронизации системы. Мой настоящий сын погиб пятнадцать лет назад... я стер твое сиротское имя и дал тебе его лицо, чтобы вернуть людям свободу»</em>.</p>
+          <p>Янтарная эмульсия обожгла сонную артерию. Марк уничтожил чистильщиков протоколом «Забвение». Умирающий доктор прошептал: <em>«Ты не флешка, Марк. Мой настоящий сын погиб... я стер твое имя, чтобы спасти мир»</em>.</p>
         `,
         choices: [
           { pov: "МАРК", text: "Подняться на грузовом экспресс-лифте к трансляционной игле", target: 5 }
@@ -1224,11 +1542,10 @@
         theme: "city",
         soundtrackGroup: 1,
         art: "citySpire",
-        speaker: { id: "ellie", name: "Элли Фогель", role: "Тактический стрелок" },
+        cluesCount: 0,
+        speaker: { id: "ellie", name: "Элли Фогель", role: "Тактик" },
         content: `
-          <p>Локальная магистраль внизу оказалась перерублена. Единственный открытый шлюз трансляции находился на 200-м этаже — в центральной трансляционной игле «Арго-Сис».</p>
-          <p>Поднявшись на грузовом экспресс-подъемнике на головокружительную высоту, Марк и Элли оказались под неоновым дождем Верхнего города. Патрульные дроны «Коршун» открыли огонь на поражение. Марк шагнул навстречу лазерам и послал в сырой воздух концентрированный микроволновой импульс «Забвения», разорвав вычислители машин.</p>
-          <p>— Твои синапсы закипят! — кричала Элли, волоча его к гермодвери узла. Но путь назад был отрезан.</p>
+          <p>На высоте двухсотого этажа Марк и Элли оказались под неоновым дождем. Марк микроволновым импульсом выжег вычислители дронов «Коршун».</p>
         `,
         choices: [
           { pov: "ЭЛЛИ", text: "Вскрыть гермодверь и начать широковещательную трансляцию", target: 6 }
@@ -1241,13 +1558,13 @@
         theme: "city",
         soundtrackGroup: 1,
         art: "citySpire",
+        cluesCount: 1,
         speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>Внутри круглого аппаратного зала Марк вогнал оптоволоконный коннектор центральной антенны прямо в затылочный разъем. Элли подключила компромат проекта «Мнемозина».</p>
-          <p>Двойной импульс ударил по частотам мегаполиса: рекламные гиганты погасли, миллионы персональных чипов освободились от принудительной синхронизации, а штурмовые конвертопланы потеряли боевую наводку. Но на мониторе медленно всплыло сообщение орбитального хаба «Атлант-9»: <em>«ПРОБУЖДЕНИЕ СУБЪЕКТОВ СЕРИИ ОМЕГА»</em>.</p>
+          <p>Импульс погасил рекламные гиганты, освободив миллионы персональных чипов. На экранах орбитального хаба вспыхнуло: <em>«ПРОБУЖДЕНИЕ СЕРИИ <span class="data-clue" onclick="putClueToCli('ОМЕГА-16')">[ ◈ ОМЕГА-16 ]</span>»</em>.</p>
         `,
         choices: [
-          { pov: "МАРК", text: "Вскрыть орбитальный шлюз «Атланта-9» и обнаружить остальных носителей", target: 7 }
+          { pov: "МАРК", text: "Вскрыть орбитальный шлюз и обнаружить остальных носителей", target: 7 }
         ]
       },
       {
@@ -1257,10 +1574,10 @@
         theme: "port",
         soundtrackGroup: 1,
         art: "citySpire",
+        cluesCount: 1,
         speaker: { id: "ellie", name: "Элли Фогель", role: "Координатор" },
         content: `
-          <p>Элли вскрыла орбитальный шлюз. На голографической карте загорелись 17 янтарных меток по всему континенту. Марк был образцом «Ноль», а остальные шестнадцать несли в себе другие модули корпоративного контроля над людьми.</p>
-          <p>Два образца просыпались прямо сейчас: Субъект-04 в порту Норд-Бей и Субъект-09 в столичном энергокластере. Принято решение немедленно двигаться на перехват Четвертого.</p>
+          <p>На карте континента загорелись 17 янтарных меток. Субъект-04 просыпался в туманном порту <span class="data-clue" onclick="putClueToCli('НОРД-БЕЙ')">[ ◈ НОРД-БЕЙ ]</span>.</p>
         `,
         choices: [
           { pov: "ЭЛЛИ", text: "Мчаться в порт Норд-Бей на перехват Кая", target: 8 }
@@ -1273,10 +1590,10 @@
         theme: "port",
         soundtrackGroup: 1,
         art: "citySpire",
-        speaker: { id: "kai", name: "Кай", role: "Субъект-04 // Конвергенция" },
+        cluesCount: 0,
+        speaker: { id: "kai", name: "Кай", role: "Субъект-04" },
         content: `
-          <p>Кай, старший смены разгрузочных кранов в туманном порту Норд-Бей, внезапно почувствовал, как затылок взрывается огнем. Орбитальный спутник «Атлант-9» закачивал в его мозг модуль принудительной конвергенции сетей.</p>
-          <p>Его воспоминания о детстве, штормах и запахе моря стирались на глазах. Докеры внизу замерли под воздействием его пробудившегося излучения, превращаясь в единый рой, а с неба уже заходил на посадку десантный транспорт Директората.</p>
+          <p>Кай почувствовал, как затылок взрывается огнем: спутник закачивал в его мозг модуль конвергенции сетей. Докеры внизу превращались в слепой рой.</p>
         `,
         choices: [
           { pov: "КАЙ", text: "Бороться с интерфейсом орбиты через физическую боль", target: 9 }
@@ -1289,10 +1606,10 @@
         theme: "port",
         soundtrackGroup: 1,
         art: "citySpire",
+        cluesCount: 0,
         speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>Пробив ограждение порта машиной, Марк взбежал на 40-метровую вышку крана. Кай, уже потерявший контроль над собой, обрушил на него манипуляторы тяжелой техники.</p>
-          <p>В отчаянном рывке Марк ударил открытым коннектором прямо в височный порт Кая. Столкнув холодный протокол орбиты с живыми воспоминаниями о шторме, Марк разорвал спутниковый захват: <em>«Ты не ретранслятор, Кай! Вспомни!»</em> Четвертый пришел в себя. Теперь их было двое.</p>
+          <p>Марк взбежал на вышку крана и ударил коннектором в порт Кая: <em>«Ты не ретранслятор, вспомни!»</em> Четвертый пришел в себя.</p>
         `,
         choices: [
           { pov: "КАЙ", text: "«Спасибо, брат... Теперь держимся вместе!» (+10% Резонанса)", deltaRes: 10, target: 10 }
@@ -1305,13 +1622,13 @@
         theme: "port",
         soundtrackGroup: 1,
         art: "citySpire",
-        speaker: { id: "kai", name: "Кай", role: "Субъект-04 // Инженер" },
+        cluesCount: 1,
+        speaker: { id: "kai", name: "Кай", role: "Инженер" },
         content: `
-          <p>Уходя от огня десанта, герои сбросились по аварийному желобу к старому рейдовому катеру «Шквал». Выход из гавани был перекрыт бонами и экранопланами.</p>
-          <p>Кай перехватил автоматику портовых кранов и обрушил многотонный контейнер прямо на нос вражеского штурмовика, открыв створные ворота залива. На деке вспыхнул сигнал Субъекта-09: мальчик Рен в энергокластере «Орион» подходил к критической точке синхронизации.</p>
+          <p>На катере «Шквал» беглецы пробили блокаду. На деке вспыхнул сигнал Субъекта-09: мальчик Рен в геотермальном кластере <span class="data-clue" onclick="putClueToCli('ОРИОН')">[ ◈ ОРИОН ]</span> подходил к точке срыва.</p>
         `,
         choices: [
-          { pov: "ЭЛЛИ", text: "Мчаться на полной скорости сквозь туман к энергокластеру «Орион»", target: 11 }
+          { pov: "ЭЛЛИ", text: "Мчаться сквозь туман к энергокластеру «Орион»", target: 11 }
         ]
       },
       {
@@ -1321,10 +1638,10 @@
         theme: "space",
         soundtrackGroup: 1,
         art: "dreadnought",
-        speaker: { id: "ren", name: "Рен", role: "Субъект-09 // Крио-модуль" },
+        cluesCount: 0,
+        speaker: { id: "ren", name: "Рен", role: "Субъект-09" },
         content: `
-          <p>Ледяные штольни энергокластера встретили их минусовой температурой. В центре зала криогенного теплообменника Рен корчился в луче орбитального спутника: корпорация принуждала его сбросить защитные клапаны и заморозить континент.</p>
-          <p>Из лифта высыпали штурмовики спецподразделения «Цербер». Кай и Элли вступили в бой, а Марк рванул прямо в смертоносный столб света к Рену.</p>
+          <p>В ледяных штольнях Рен корчился в луче спутника. Спецназ «Цербер» зажал группу в угол.</p>
         `,
         choices: [
           { pov: "РЕН", text: "«Марк, возьми мой холод! Отрази их луч!» (+10% Резонанса)", deltaRes: 10, target: 12 }
@@ -1337,10 +1654,10 @@
         theme: "space",
         soundtrackGroup: 1,
         art: "dreadnought",
+        cluesCount: 0,
         speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>Кай вывернул патрубки жидкого азота, сковав экзоскелеты «Цербера» ледяной коркой. В это время Марк замкнул свой порт с портом Рена.</p>
-          <p>Вместо гашения энергии Марк обратил криогенную дестабилизацию Рена зеркалом прямо по спутниковому лучу назад на «Атлант-9». На высоте 400 километров выгорели орбитальные приемники директоров. Рен был спасен, но Совет объявил фазу тотального уничтожения — «Орбитальная чистка».</p>
+          <p>Марк замкнул порт с Реном и послал крио-импульс прямо в спутник «Атлант-9». Приемники директоров сгорели.</p>
         `,
         choices: [
           { pov: "КАЙ", text: "Увести Рена и Марка на минус восьмой горизонт под гранитный щит", target: 13 }
@@ -1353,14 +1670,13 @@
         theme: "space",
         soundtrackGroup: 1,
         art: "dreadnought",
+        cluesCount: 0,
         speaker: { id: "ellie", name: "Элли Фогель", role: "Координатор" },
         content: `
-          <p>Кинетический вольфрамовый стержень с орбиты обратил наземные постройки «Ориона» в базальтовое месиво. Беглецы укрылись на минус восьмом горизонте под защитой магнитных руд.</p>
-          <p>Тройной контур (Марк, Кай, Рен) раскрыл тайну старшего Вебера: Земля была лишь полигоном. На орбитальной верфи завершалось строительство трехкилометрового корабля «Ковчег Мнемозины», готового совершить квантовый прыжок к девственной экзопланете Эридан-4. На десятом горизонте шахты обнаружился законсервированный суборбитальный челнок «Атлас». Решено идти на перехват прямо в космос.</p>
+          <p>Земля была лишь полигоном: дредноут «Ковчег Мнемозины» совершает прыжок к экзопланете Эридан-4. В ангаре найден челнок «Атлас».</p>
         `,
         choices: [
-          { pov: "МАРК", text: "Запустить турбины «Атласа» и прорваться сквозь разлом [МИНИ-ИГРА]", action: "flight", nextTarget: 14 },
-          { pov: "ЭЛЛИ", text: "Перейти к прыжку в автоматическом режиме", target: 14 }
+          { pov: "МАРК", text: "Запустить турбины челнока [МИНИ-ИГРА ПОЛЕТ]", action: "flight", nextTarget: 14 }
         ]
       },
       {
@@ -1370,11 +1686,10 @@
         theme: "eridan",
         soundtrackGroup: 2,
         art: "eridanMoons",
+        cluesCount: 0,
         speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>Рен разогрел реакторы «Атласа», а Кай вырвал створы шахты мощнейшим импульсом. Челнок взмыл в стратосферу за секунду до удара кинетического снаряда по плато.</p>
-          <p>На орбите «Ковчег Мнемозины» уже активировал кольца квантового двигателя. Марк перехватил протоколы стыковки и намертво приварил челнок к обшивке гиганта. Пространство треснуло, разорвав реальность на тысячи мерцающих волокон.</p>
-          <p>Выход из прыжка обернулся падением сквозь чужую плотную атмосферу. Челнок пропахал грунт равнины, заросшей фиолетовыми кристаллическими деревьями под ультрамариновым небом с двумя янтарными лунами. Эридан-4. А на горизонте уже дымился аварийный корпус «Ковчега», где Совет директоров держал остальных тринадцать носителей «Омеги».</p>
+          <p>Прорыв сквозь квантовое кольцо завершился падением на фиолетовые равнины Эридана-4. На горизонте дымится обломок дредноута.</p>
         `,
         choices: [
           { pov: "МАРК", text: "Выйти наружу и исследовать кристаллическую биосферу", target: 15 }
@@ -1387,12 +1702,11 @@
         theme: "eridan",
         soundtrackGroup: 2,
         art: "eridanMoons",
-        speaker: { id: "kovalskaya", name: "Директор Ковальская", role: "Совет директоров // Антагонист" },
+        cluesCount: 2,
+        speaker: { id: "kovalskaya", name: "Директор Ковальская", role: "Антагонист" },
         content: `
-          <p>Фиолетовый кристаллический мох под подошвами сапог не сминался — он хрустел, как битое тонкое стекло, и осыпался ультрамариновой светящейся пыльцой. Воздух Эридана-4 имел тяжелый металлический привкус, отдавая озоном, серой и жженым кремнием.</p>
-          <p>Резонанс планетарной коры пробил защитные шлюзы гиппокампа, которые старик Вебер запечатал пятнадцать лет назад. Перед глазами Марка вспыхнула залитая полуденным солнцем веранда старого дома, запах цветущей белой сирени и женский голос: <em>«Ян, не убегай к оврагу. Обед уже на столе, Ян...»</em> Кай вспомнил, что его мать не тонула в шторме — ее расстреляли бойцы «Арго-Сис» на пирсе.</p>
-          <p>Из сумрака хрустальной рощи вышли три тяжелых автоматона «Цербер-Титан» и директор Ковальская в серебристом скафандре: <em>«Совет уже развернул когнитивный купол на обломках „Ковчега“. Ваши тринадцать братьев и сестер уже подключены к первичным генераторам. Они больше не помнят Землю — они строительные блоки нашей империи»</em>.</p>
-          <p>Марк опустился на одно колено и вогнал пальцы прямо в расщелину базальтовой плиты, замкнув протокол «Забвение» на планетарную кристаллическую жилу: <em>«Вы ошиблись с планетой, директор. Этот мир живой. И прямо сейчас он слушает меня»</em>.</p>
+          <p>Кристаллы Эридана пробили блокиратор памяти. Перед глазами Марка вспыхнула веранда и голос: <em>«<span class="data-clue" onclick="putClueToCli('ЯН')">[ ◈ ЯН ]</span>, не убегай...»</em>. Директор <span class="data-clue" onclick="putClueToCli('КОВАЛЬСКАЯ')">[ ◈ КОВАЛЬСКАЯ ]</span> вывела автоматонов «Цербер-Титан»: <em>«Ваши тринадцать братьев уже подключены к энергокуполу базы!»</em>.</p>
+          <p>Марк вонзил пальцы в кварцевую жилу: <em>«Этот мир живой, и сейчас он слушает меня!»</em></p>
         `,
         choices: [
           { pov: "МАРК", text: "Активировать тактический чат деки [ЭКСТРЕННОЕ РЕШЕНИЕ]", action: "quickChat" },
@@ -1406,11 +1720,10 @@
         theme: "eridan",
         soundtrackGroup: 2,
         art: "eridanMoons",
+        cluesCount: 0,
         speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>Изумрудно-бирюзовый разряд хлестнул из-под сомкнутых пальцев Марка, уйдя вглубь базальтовой плиты со звуком расколовшегося колокола. Мир на долю секунды потерял цвет: фиолетовые кварцевые стволы вспыхнули ослепительным лазурным огнем, превратившись в трехмерную оптическую решетку. Волна биорезонанса разогнала протокол «Забвение» по капиллярам планеты со скоростью света.</p>
-          <p>Первый автоматон «Цербер-Титан» замер посреди шага: его лобовой сенсорный блок вскипел изнутри, сервоприводы левой стойки вывернуло наизнанку, и трехтонная машина рухнула на бок. Ковальская скомандовала перевести уцелевшие машины на аналоговый контур, обрушив плазменный шквал на гребень.</p>
-          <p>Рен ударил ладонями по выходу кварцевой жилы, заморозив коленные приводы второго шагохода, а Элли точным выстрелом из карабина подорвала его боекомплект. Поняв, что отряд уничтожен, директор Ковальская взмыла на заплечных двигателях: <em>«Вы все равно приползете к „Ковчегу“! Там тринадцать спящих узлов, замкнутых на реактор!»</em></p>
+          <p>Биорезонанс планеты испепелил электронику шагоходов. Ковальская отступила на ракетном ранце к дредноуту.</p>
         `,
         choices: [
           { pov: "ЭЛЛИ", text: "Открыть планшет и спланировать вылазку [ТАКТИЧЕСКАЯ КАРТА]", action: "tacMap" }
@@ -1423,11 +1736,10 @@
         theme: "eridan",
         soundtrackGroup: 2,
         art: "dreadnought",
+        cluesCount: 0,
         speaker: { id: "ellie", name: "Элли Фогель", role: "Тактик" },
         content: `
-          <p>Восемнадцать километров базальтовых пустошей между челноком и дредноутом казались мертвыми лишь на первый взгляд. «Ковчег Мнемозины» лежал в глубоком тектоническом разломе, словно исполинский выброшенный на скалы кит из черного титана. Над его носовой частью пульсировал полупрозрачный купол кубической интерференции — когнитивный щит Директората.</p>
-          <p>Периметр простреливался спаренными кинетическими турелями «Вулкан-Омега». Рен указал на охладительный дренаж реакторного отсека: <em>«Я заберу все тепло на себя и стану холоднее базальта — турели ослепнут»</em>. Кай вызвался пойти с ним, чтобы перехватить механические приводы поворота орудий.</p>
-          <p>Марк и Элли прижались к отвесному уступу скалы, выжидая момент, когда ледяной импульс Рена накроет южные генераторы базы.</p>
+          <p>Периметр дредноута прикрыт спаренными турелями «Вулкан-Омега». Рен вызвался заморозить охладитель дренажа, а Кай готовится взломать приводы орудий.</p>
         `,
         choices: [
           { pov: "КАЙ", text: "Перехватить приводы турелей «Вулкан» [QTE-ОВЕРДРАЙВ]", action: "qteGame" }
@@ -1440,11 +1752,10 @@
         theme: "space",
         soundtrackGroup: 2,
         art: "dreadnought",
+        cluesCount: 0,
         speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>Рен шагнул в жерло дренажного коллектора, превратив раскаленный газ в ледяные торосы, а Кай развернул автоматические турели и снес опорные генераторы купола. Защитный барьер лопнул. Марк и Элли сорвали деформированный шлюз девятой палубы и ворвались внутрь дредноута.</p>
-          <p>В круглом зале диаметром в пятьдесят метров в вертикальных стеклянных цилиндрах висели тринадцать детей проекта «Омега». На мониторе горело предупреждение: до полного стирания их личностей оставалось две минуты, а консоль была заперта квантовым ключом Ковальской с мостика.</p>
-          <p>Марк прижал ладонь к стеклу капсулы Субъекта-02, вспомнив запах белой сирени, тепло материнских рук и свое настоящее имя. Он ударил волной «Забвения» прямо по биокабелям: <em>«Проснись. Твое имя не „Субъект“. Вспомни, кто ты!»</em></p>
+          <p>В круглом зале в тринадцати цилиндрах висят дети проекта «Омега». Марк прижал ладонь к капсуле Субъекта-02: <em>«Проснись. Твое имя не Субъект!»</em></p>
         `,
         choices: [
           { pov: "МАРК", text: "Сорвать блокировку и завершить пробуждение Серии Омега", target: 17 }
@@ -1457,14 +1768,13 @@
         theme: "space",
         soundtrackGroup: 2,
         art: "dreadnought",
+        cluesCount: 0,
         speaker: { id: "mark", name: "Марк (Ян)", role: "Единый контур" },
         content: `
-          <p>Лазурная вспышка деструктора прокатилась по оптическим шинам анабиозного зала. Стеклянные колбы всех тринадцати капсул одновременно налились ослепительным сиянием, гель ушел через дренажные решетки, и замки отстрелили купола.</p>
-          <p>Первой поднялась девушка из второй капсулы — Лия, носитель эмпатического модуля. Вслед за ней встали остальные двенадцать: их порты больше не подчинялись орбитальным кодам корпорации, пульсируя свободной частотой на волне Марка, Кая и Рена. Шестнадцать узлов. Полная, законченная матрица восстала против своих создателей.</p>
-          <p>В зал ворвались закопченные Кай и Рен. Элли проверила карабин: <em>«Ковальская заперлась на капитанском мостике. Она запускает перегрузку квантового реактора, чтобы взорвать корабль вместе с нами»</em>. Марк посмотрел на шестнадцать свободных пар глаз: <em>«Она думает, что этот металл принадлежит ей. Покажем Совету директоров, что бывает, когда проект возвращается домой»</em>.</p>
+          <p>Все тринадцать капсул раскрылись. Первой поднялась Лия. Шестнадцать связанных узлов встали против Директората. Ковальская заперлась на мостике, готовя подрыв реактора. <em>«Она думает, что этот металл принадлежит ей. Покажем Совету, что бывает, когда проект возвращается домой»</em>.</p>
         `,
         choices: [
-          { pov: "МАРК (ЯН)", text: "Штурм мостика и финал директоров (Ожидайте Главу 19)", alert: "Хроника завершена на 18-й главе. Шестнадцать носителей готовы к решающей битве!" }
+          { pov: "МАРК (ЯН)", text: "Штурм мостика и финал (Ожидайте Главу 19)", alert: "Хроника завершена на 18-й главе. Все шестнадцать узлов в строю!" }
         ]
       }
     ];
@@ -1472,6 +1782,7 @@
     let currentChapterIndex = 0;
     let pendingNextChapter = null;
 
+    /* ФОНОВЫЙ ХОЛСТ */
     const bgCanvas = document.getElementById('bgCanvas');
     const bgCtx = bgCanvas.getContext('2d');
     let currentTheme = 'city';
@@ -1509,11 +1820,6 @@
         for (let i = 0; i < bCount; i++) {
           const h = (Math.sin(i * 1.5) * 0.2 + 0.35) * bgCanvas.height;
           bgCtx.fillRect(i * bWidth, bgCanvas.height - h, bWidth + 2, h);
-          bgCtx.fillStyle = (i % 2 === 0) ? 'rgba(0, 240, 255, 0.15)' : 'rgba(255, 0, 85, 0.1)';
-          for (let row = 0; row < 5; row++) {
-            bgCtx.fillRect(i * bWidth + 10, bgCanvas.height - h + 20 + row * 25, bWidth - 20, 10);
-          }
-          bgCtx.fillStyle = 'rgba(4, 8, 18, 0.9)';
         }
 
         bgCtx.strokeStyle = 'rgba(0, 240, 255, 0.25)';
@@ -1531,49 +1837,20 @@
       } else if (currentTheme === 'port') {
         bgCtx.fillStyle = 'rgba(5, 12, 24, 0.9)';
         bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
-
-        const time = Date.now() * 0.0015;
-        bgCtx.fillStyle = 'rgba(0, 240, 255, 0.04)';
-        for (let w = 0; w < 3; w++) {
-          bgCtx.beginPath();
-          bgCtx.moveTo(0, bgCanvas.height);
-          for (let x = 0; x <= bgCanvas.width; x += 40) {
-            const y = bgCanvas.height - 120 + Math.sin(x * 0.005 + time + w) * 30 + w * 25;
-            bgCtx.lineTo(x, y);
-          }
-          bgCtx.lineTo(bgCanvas.width, bgCanvas.height);
-          bgCtx.closePath();
-          bgCtx.fill();
-        }
-
       } else if (currentTheme === 'space') {
         bgCtx.fillStyle = '#03050c';
         bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
-
         bgParticles.forEach(p => {
           p.y += p.speed * 0.2;
           if (p.y > bgCanvas.height) p.y = 0;
           bgCtx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
           bgCtx.fillRect(p.x, p.y, p.size, p.size);
         });
-
       } else if (currentTheme === 'eridan') {
         bgCtx.fillStyle = '#050714';
         bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
-
-        bgCtx.fillStyle = 'rgba(255, 170, 0, 0.35)';
-        bgCtx.beginPath();
-        bgCtx.arc(bgCanvas.width * 0.8, 120, 42, 0, Math.PI * 2);
-        bgCtx.fill();
-
-        bgCtx.fillStyle = 'rgba(255, 170, 0, 0.25)';
-        bgCtx.beginPath();
-        bgCtx.arc(bgCanvas.width * 0.88, 70, 22, 0, Math.PI * 2);
-        bgCtx.fill();
-
         bgParticles.forEach(p => {
           p.y -= p.speed * 0.3;
-          p.x += Math.sin(p.y * 0.02) * 0.5;
           if (p.y < 0) { p.y = bgCanvas.height; p.x = Math.random() * bgCanvas.width; }
           bgCtx.fillStyle = `rgba(180, 0, 255, ${p.opacity * 0.7})`;
           bgCtx.fillRect(p.x, p.y, p.size * 1.5, p.size * 1.5);
@@ -1602,6 +1879,7 @@
       document.getElementById('speakerRole').innerText = ch.speaker.role;
 
       document.getElementById('chapMeta').innerText = ch.meta;
+      document.getElementById('chapCluesInfo').innerText = `// АКТИВНЫХ СЛЕДОВ: ${ch.cluesCount || 0}`;
       document.getElementById('chapTitle').innerText = ch.title;
       document.getElementById('chapContent').innerHTML = ch.content;
 
@@ -1611,36 +1889,45 @@
         ch.choices.forEach(c => {
           const btn = document.createElement('button');
           btn.className = 'decision-btn';
-          const povHtml = c.pov ? `<span class="pov-badge">POV: ${c.pov}</span>` : '';
-          btn.innerHTML = `${povHtml}<strong>▸ ВЫБОР:</strong> ${c.text}`;
-          btn.onclick = () => {
-            if (c.deltaRes) modifyResonance(c.deltaRes);
-            if (c.alert) {
-              alert(c.alert);
-              return;
-            }
-            if (c.action === 'hack') {
-              pendingNextChapter = (c.nextTarget !== undefined) ? c.nextTarget : (currentChapterIndex + 1);
-              modalHack.classList.add('open');
-              startHackGame();
-            } else if (c.action === 'flight') {
-              pendingNextChapter = (c.nextTarget !== undefined) ? c.nextTarget : (currentChapterIndex + 1);
-              modalFlight.classList.add('open');
-              startFlightGame();
-            } else if (c.action === 'scratch') {
-              document.getElementById('modalScratch').classList.add('open');
-              initScratchCanvas();
-            } else if (c.action === 'quickChat') {
-              triggerQuickChat();
-            } else if (c.action === 'tacMap') {
-              document.getElementById('modalTacticalMap').classList.add('open');
-            } else if (c.action === 'qteGame') {
-              document.getElementById('modalQTE').classList.add('open');
-              startQTE();
-            } else {
-              renderChapter(c.target);
-            }
-          };
+          const isLocked = (synapseResonance < 35 && c.pov === 'ЭЛЛИ');
+          if (isLocked) {
+            btn.classList.add('locked');
+            btn.innerHTML = `<span class="pov-badge">СИНАПТИЧЕСКИЙ БЛОК</span><strong>[БЛОКИРОВАНО ШУМОМ]</strong>`;
+          } else {
+            const povHtml = c.pov ? `<span class="pov-badge">POV: ${c.pov}</span>` : '';
+            btn.innerHTML = `${povHtml}<strong>▸ ВЫБОР:</strong> ${c.text}`;
+            btn.onclick = () => {
+              if (c.deltaRes) modifyResonance(c.deltaRes);
+              if (c.alert) {
+                alert(c.alert);
+                return;
+              }
+              if (c.action === 'hack') {
+                pendingNextChapter = (c.nextTarget !== undefined) ? c.nextTarget : (currentChapterIndex + 1);
+                modalHack.classList.add('open');
+                startHackGame();
+              } else if (c.action === 'flight') {
+                pendingNextChapter = (c.nextTarget !== undefined) ? c.nextTarget : (currentChapterIndex + 1);
+                modalFlight.classList.add('open');
+                startFlightGame();
+              } else if (c.action === 'neuro') {
+                document.getElementById('modalNeuro').classList.add('open');
+                startNeuroGame();
+              } else if (c.action === 'scratch') {
+                document.getElementById('modalScratch').classList.add('open');
+                initScratchCanvas();
+              } else if (c.action === 'quickChat') {
+                triggerQuickChat();
+              } else if (c.action === 'tacMap') {
+                document.getElementById('modalTacticalMap').classList.add('open');
+              } else if (c.action === 'qteGame') {
+                document.getElementById('modalQTE').classList.add('open');
+                startQTE();
+              } else {
+                renderChapter(c.target);
+              }
+            };
+          }
           decBox.appendChild(btn);
         });
         document.getElementById('decisionBlock').style.display = 'block';
@@ -1656,94 +1943,8 @@
       });
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      applyGlitchEffect();
     }
-
-    /* ТАКТИЧЕСКАЯ КАРТА ВЫЛАЗКИ */
-    let selectedTacNode = null;
-    function selectTacNode(nodeId) {
-      selectedTacNode = nodeId;
-      document.querySelectorAll('.tac-node').forEach((el, i) => {
-        el.classList.toggle('selected', (i + 1) === nodeId);
-      });
-      const rep = document.getElementById('tacReport');
-      const btn = document.getElementById('btnConfirmTacPlan');
-      btn.style.display = 'inline-block';
-
-      if (nodeId === 1) {
-        rep.innerHTML = '<strong>ПЛАН: ДРЕНАЖ РЕАКТОРА.</strong> Рен берет тепловой удар на себя, Кай страхует механику. Идеально для бесшумного снятия купола (+10% Резонанса).';
-      } else if (nodeId === 2) {
-        rep.innerHTML = '<strong>ПЛАН: ЛОБОВОЙ ПЕРЕХВАТ ТУРЕЛЕЙ.</strong> Кай подключается к силовым кабелям и вскрывает приводы. Рискованно, но вносит панику в лагерь.';
-      } else {
-        rep.innerHTML = '<strong>ПЛАН: ШТУРМ 9-Й ПАЛУБЫ.</strong> Марк и Элли пробивают гидрозамок деструктором, пока остальные связывают внешние патрули.';
-      }
-    }
-
-    function confirmTacPlan() {
-      modifyResonance(10);
-      document.getElementById('modalTacticalMap').classList.remove('open');
-      renderChapter(15);
-    }
-    document.getElementById('btnCloseTacMap').onclick = () => document.getElementById('modalTacticalMap').classList.remove('open');
-    document.getElementById('menuItemTacticalMap').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalTacticalMap').classList.add('open');
-    };
-
-    /* QTE-ОВЕРДРАЙВ ТУРЕЛЕЙ */
-    let qteCursorPos = 0;
-    let qteDirection = 1;
-    let qteAnim = null;
-    let isQTEActive = false;
-
-    function startQTE() {
-      isQTEActive = true;
-      qteCursorPos = 0;
-      qteDirection = 1;
-      document.getElementById('qteResult').innerText = '';
-      cancelAnimationFrame(qteAnim);
-      loopQTE();
-    }
-
-    function loopQTE() {
-      if (!isQTEActive) return;
-      qteCursorPos += 3.2 * qteDirection;
-      if (qteCursorPos >= 96) qteDirection = -1;
-      if (qteCursorPos <= 0) qteDirection = 1;
-
-      document.getElementById('qteCursor').style.left = `${qteCursorPos}%`;
-      qteAnim = requestAnimationFrame(loopQTE);
-    }
-
-    function hitQTE() {
-      if (!isQTEActive) return;
-      isQTEActive = false;
-      cancelAnimationFrame(qteAnim);
-
-      const res = document.getElementById('qteResult');
-      if (qteCursorPos >= 45 && qteCursorPos <= 65) {
-        res.innerText = 'УСПЕХ! ПРИВОДЫ ЗАМКНУТЫ // ТУРЕЛИ СБИЛИ КУПОЛ';
-        res.style.color = 'var(--green)';
-        modifyResonance(15);
-        setTimeout(() => {
-          document.getElementById('modalQTE').classList.remove('open');
-          renderChapter(16);
-        }, 1000);
-      } else {
-        res.innerText = 'ПРОМАХ! СИЛОВОЙ ОТКАТ // ПОЛУЧЕН УРОН СИНАПСОВ';
-        res.style.color = 'var(--magenta)';
-        modifyResonance(-10);
-      }
-    }
-    document.getElementById('btnCloseQTE').onclick = () => {
-      document.getElementById('modalQTE').classList.remove('open');
-      isQTEActive = false;
-      cancelAnimationFrame(qteAnim);
-    };
-    document.getElementById('menuItemQTE').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalQTE').classList.add('open');
-      startQTE();
-    };
 
     /* НЕЙРО-СКРЕТЧ */
     const sCanvas = document.getElementById('scratchCanvas');
@@ -1754,15 +1955,12 @@
       sCtx.globalCompositeOperation = 'source-over';
       sCtx.fillStyle = '#101c30';
       sCtx.fillRect(0, 0, sCanvas.width, sCanvas.height);
-
       sCtx.fillStyle = 'rgba(0, 240, 255, 0.25)';
       sCtx.font = '10px monospace';
       for (let y = 14; y < sCanvas.height; y += 14) {
-        let binaryStr = '';
-        for (let x = 0; x < 55; x++) {
-          binaryStr += Math.random() > 0.5 ? '1' : '0';
-        }
-        sCtx.fillText(binaryStr, 8, y);
+        let str = '';
+        for (let x = 0; x < 55; x++) str += Math.random() > 0.5 ? '1' : '0';
+        sCtx.fillText(str, 8, y);
       }
     }
 
@@ -1771,7 +1969,6 @@
       const rect = sCanvas.getBoundingClientRect();
       const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
       const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
-
       sCtx.globalCompositeOperation = 'destination-out';
       sCtx.beginPath();
       sCtx.arc(x, y, 22, 0, Math.PI * 2);
@@ -1781,7 +1978,6 @@
     sCanvas.addEventListener('mousedown', () => isDrawing = true);
     window.addEventListener('mouseup', () => isDrawing = false);
     sCanvas.addEventListener('mousemove', scratch);
-
     sCanvas.addEventListener('touchstart', (e) => { isDrawing = true; scratch(e); });
     window.addEventListener('touchend', () => isDrawing = false);
     sCanvas.addEventListener('touchmove', scratch);
@@ -1818,15 +2014,11 @@
     function resolveQuickChat(choice) {
       clearInterval(quickChatTimer);
       document.getElementById('quickChatBox').style.display = 'none';
-      if (choice === 1) {
-        modifyResonance(10);
-      } else {
-        modifyResonance(5);
-      }
+      modifyResonance(choice === 1 ? 10 : 5);
       renderChapter(14);
     }
 
-    /* Оглавление */
+    /* ОГЛАВЛЕНИЕ */
     const tocList = document.getElementById('tocList');
     bookChapters.forEach((ch, idx) => {
       const item = document.createElement('div');
@@ -1839,14 +2031,14 @@
       tocList.appendChild(item);
     });
 
-    /* Профили героев */
+    /* ПРОФИЛИ */
     const charactersList = document.getElementById('charactersList');
     const charsData = [
-      { id: "mark", name: "Марк Вебер (Ян)", role: "Субъект-0 // Носитель деструктора", desc: "Главный герой со шрамом над бровью. Носитель протокола десинхронизации «Забвение»." },
-      { id: "ellie", name: "Элли Фогель", role: "Экс-аудитор // Тактик", desc: "Специалист по кибербезопасности «Арго-Сис». Ищет правду о погибшем брате." },
-      { id: "kai", name: "Кай", role: "Субъект-04 // Модуль конвергенции", desc: "Старший смены кранов из Норд-Бей. Управляет физическими механизмами." },
-      { id: "ren", name: "Рен", role: "Субъект-09 // Крио-термический модуль", desc: "Юноша из энергокластера. Носитель чистой энергии фазового распада." },
-      { id: "kovalskaya", name: "Директор Ковальская", role: "Совет директоров // Экспедиция", desc: "Куратор колонизации Эридана-4. Заперлась на мостике дредноута." }
+      { id: "mark", name: "Марк Вебер (Ян)", role: "Субъект-0 // Деструктор", desc: "Главный герой. Носитель протокола десинхронизации «Забвение»." },
+      { id: "ellie", name: "Элли Фогель", role: "Экс-аудитор // Тактик", desc: "Специалист по кибербезопасности «Арго-Сис». Ищет правду о брате." },
+      { id: "kai", name: "Кай", role: "Субъект-04 // Конвергенция", desc: "Старший смены из Норд-Бей. Управляет физическими сетями." },
+      { id: "ren", name: "Рен", role: "Субъект-09 // Крио-модуль", desc: "Носитель фазового распада. Забирает тепло в себя." },
+      { id: "kovalskaya", name: "Директор Ковальская", role: "Директорат", desc: "Куратор колонизации Эридана-4. Заперлась на мостике." }
     ];
     charsData.forEach(c => {
       const card = document.createElement('div');
@@ -1887,20 +2079,7 @@
     };
     document.getElementById('btnCloseAbout').onclick = () => document.getElementById('modalAbout').classList.remove('open');
 
-    document.getElementById('menuItemHackGame').onclick = () => {
-      sciSidebar.classList.remove('open');
-      pendingNextChapter = null;
-      modalHack.classList.add('open');
-      startHackGame();
-    };
-    document.getElementById('menuItemFlightGame').onclick = () => {
-      sciSidebar.classList.remove('open');
-      pendingNextChapter = null;
-      modalFlight.classList.add('open');
-      startFlightGame();
-    };
-
-    /* АУДИОМОДУЛЬ */
+    /* АУДИОСИСТЕМА */
     let audioCtx = null;
     let isAudioActive = false;
     let currentSoundtrackGroup = 1;
@@ -1908,7 +2087,6 @@
     let noiseNode = null;
     let noiseFilter = null;
     let noiseGain = null;
-    let musicTimer = null;
 
     const extTrack1 = document.getElementById('externalTrack1');
     const extTrack2 = document.getElementById('externalTrack2');
@@ -1930,9 +2108,7 @@
       const bufferSize = 2 * audioCtx.sampleRate;
       const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
       const output = noiseBuffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        output[i] = Math.random() * 2 - 1;
-      }
+      for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
 
       noiseNode = audioCtx.createBufferSource();
       noiseNode.buffer = noiseBuffer;
@@ -1943,8 +2119,7 @@
       noiseFilter.frequency.setValueAtTime(700, audioCtx.currentTime);
 
       noiseGain = audioCtx.createGain();
-      const initialAmbientVol = parseFloat(document.getElementById('sliderAmbient').value) * 0.08;
-      noiseGain.gain.setValueAtTime(initialAmbientVol, audioCtx.currentTime);
+      noiseGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
 
       noiseNode.connect(noiseFilter);
       noiseFilter.connect(noiseGain);
@@ -1956,22 +2131,13 @@
       const ambText = document.getElementById('ambientStatusText');
       if (chapterIdx <= 5) {
         ambText.innerText = 'ФОН: ДОЖДЬ ГОРОДА';
-        if (noiseFilter && audioCtx) {
-          noiseFilter.type = 'lowpass';
-          noiseFilter.frequency.setTargetAtTime(650, audioCtx.currentTime, 0.5);
-        }
+        if (noiseFilter && audioCtx) noiseFilter.frequency.setTargetAtTime(650, audioCtx.currentTime, 0.5);
       } else if (chapterIdx >= 13) {
         ambText.innerText = 'ФОН: ВЕТЕР ЭРИДАНА';
-        if (noiseFilter && audioCtx) {
-          noiseFilter.type = 'bandpass';
-          noiseFilter.frequency.setTargetAtTime(320, audioCtx.currentTime, 0.8);
-        }
+        if (noiseFilter && audioCtx) noiseFilter.frequency.setTargetAtTime(320, audioCtx.currentTime, 0.8);
       } else {
         ambText.innerText = 'ФОН: ТУМАН И ГУЛ';
-        if (noiseFilter && audioCtx) {
-          noiseFilter.type = 'lowpass';
-          noiseFilter.frequency.setTargetAtTime(380, audioCtx.currentTime, 0.5);
-        }
+        if (noiseFilter && audioCtx) noiseFilter.frequency.setTargetAtTime(380, audioCtx.currentTime, 0.5);
       }
     }
 
@@ -1980,70 +2146,24 @@
       currentSoundtrackGroup = targetGroup;
       if (!isAudioActive) return;
 
-      playCurrentSoundtrack();
-    }
-
-    function playCurrentSoundtrack() {
       const vol = parseFloat(document.getElementById('sliderMusicVol').value);
       extTrack1.volume = vol;
       extTrack2.volume = vol;
 
       if (currentSoundtrackGroup === 1) {
         extTrack2.pause();
-        extTrack2.currentTime = 0;
-        extTrack1.play().catch(() => startProceduralFallback(0));
+        extTrack1.play().catch(()=>{});
       } else {
         extTrack1.pause();
-        extTrack1.currentTime = 0;
-        extTrack2.play().catch(() => startProceduralFallback(1));
+        extTrack2.play().catch(()=>{});
       }
-    }
-
-    function stopAllMusic() {
-      extTrack1.pause();
-      extTrack2.pause();
-      clearInterval(musicTimer);
-    }
-
-    function startProceduralFallback(trackType) {
-      clearInterval(musicTimer);
-      musicTimer = setInterval(() => {
-        if (!isAudioActive) return;
-        if (trackType === 0) {
-          const bass = [110, 98, 87, 82];
-          const pad = [220, 261, 329, 392];
-          playSynthTone(bass[Math.floor(Math.random()*bass.length)], 1.4, 'triangle', 0.12);
-          playSynthTone(pad[Math.floor(Math.random()*pad.length)], 0.9, 'sine', 0.05);
-        } else {
-          const bass = [130, 130, 164, 146];
-          const lead = [261, 329, 392, 523];
-          playSynthTone(bass[Math.floor(Math.random()*bass.length)], 0.5, 'sawtooth', 0.07);
-          playSynthTone(lead[Math.floor(Math.random()*lead.length)], 0.35, 'square', 0.03);
-        }
-      }, trackType === 0 ? 760 : 420);
-    }
-
-    function playSynthTone(freq, dur, type='sine', gainVal=0.08) {
-      if (!audioCtx || !isAudioActive || !musicMasterGain) return;
-      const osc = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      osc.type = type;
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      g.gain.setValueAtTime(gainVal, audioCtx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
-      osc.connect(g);
-      g.connect(musicMasterGain);
-      osc.start();
-      osc.stop(audioCtx.currentTime + dur);
     }
 
     document.getElementById('sliderAmbient').oninput = (e) => {
       initAudioEngine();
       if (!noiseNode) setupProceduralNoise();
       const val = parseFloat(e.target.value);
-      if (noiseGain && audioCtx) {
-        noiseGain.gain.setTargetAtTime(val * 0.08, audioCtx.currentTime, 0.1);
-      }
+      if (noiseGain && audioCtx) noiseGain.gain.setTargetAtTime(val * 0.08, audioCtx.currentTime, 0.1);
     };
 
     document.getElementById('sliderMusicVol').oninput = (e) => {
@@ -2052,292 +2172,33 @@
       document.getElementById('musicVolDisplay').innerText = `${Math.round(val * 100)}%`;
       extTrack1.volume = val;
       extTrack2.volume = val;
-      if (musicMasterGain && audioCtx) {
-        musicMasterGain.gain.setTargetAtTime(val, audioCtx.currentTime, 0.1);
-      }
     };
 
-    const menuItemAudioToggle = document.getElementById('menuItemAudioToggle');
-    const iconAudioState = document.getElementById('iconAudioState');
-    const labelAudioState = document.getElementById('labelAudioState');
-
-    menuItemAudioToggle.onclick = () => {
+    document.getElementById('menuItemAudioToggle').onclick = () => {
       initAudioEngine();
       if (!noiseNode) setupProceduralNoise();
       isAudioActive = !isAudioActive;
 
+      const icon = document.getElementById('iconAudioState');
+      const label = document.getElementById('labelAudioState');
+
       if (isAudioActive) {
-        iconAudioState.innerText = '⏸';
-        labelAudioState.innerText = (currentSoundtrackGroup === 1) ? 'ПАУЗА // ТРЕК 1 (МЕГАПОЛИС)' : 'ПАУЗА // ТРЕК 2 (ЭРИДАН-4)';
-        menuItemAudioToggle.classList.add('active');
-        playCurrentSoundtrack();
-        updateAmbientForChapter(currentChapterIndex);
+        icon.innerText = '⏸';
+        label.innerText = 'ПАУЗА // САУНДТРЕК';
+        syncSoundtrackWithChapter(currentSoundtrackGroup);
       } else {
-        iconAudioState.innerText = '▶';
-        labelAudioState.innerText = 'ВКЛЮЧИТЬ САУНДТРЕК';
-        menuItemAudioToggle.classList.remove('active');
-        stopAllMusic();
+        icon.innerText = '▶';
+        label.innerText = 'ВКЛЮЧИТЬ САУНДТРЕК';
+        extTrack1.pause();
+        extTrack2.pause();
       }
     };
 
     document.getElementById('menuItemTrackSwitch').onclick = () => {
-      currentSoundtrackGroup = (currentSoundtrackGroup === 1) ? 2 : 1;
-      if (isAudioActive) {
-        labelAudioState.innerText = (currentSoundtrackGroup === 1) ? 'ПАУЗА // ТРЕК 1 (МЕГАПОЛИС)' : 'ПАУЗА // ТРЕК 2 (ЭРИДАН-4)';
-        playCurrentSoundtrack();
-      }
+      syncSoundtrackWithChapter(currentSoundtrackGroup === 1 ? 2 : 1);
     };
 
-    /* ВЗЛОМ ДЕКИ */
-    const modalHack = document.getElementById('modalHack');
-    const hackGrid = document.getElementById('hackGrid');
-    const hackTargetCode = document.getElementById('hackTargetCode');
-    const hackStatus = document.getElementById('hackStatus');
-    const hackErrors = document.getElementById('hackErrors');
-    const hackStageDisplay = document.getElementById('hackStageDisplay');
-    const btnHackProceed = document.getElementById('btnHackProceed');
-
-    const hexPool = ['7A', '0F', 'E2', 'C4', '1B', '9D', '44', 'FF', '8C', '33', 'A1', '5E'];
-    let currentStage = 1;
-    let targetSeq = [];
-    let currentInputSeq = [];
-    let errorsCount = 0;
-    const maxErrors = [3, 2, 2];
-
-    function startHackGame() {
-      currentStage = 1;
-      setupHackStage(currentStage);
-    }
-
-    function setupHackStage(stage) {
-      errorsCount = 0;
-      currentInputSeq = [];
-      btnHackProceed.style.display = 'none';
-      hackStageDisplay.innerText = `${stage} / 3`;
-      hackErrors.innerText = `${errorsCount} / ${maxErrors[stage-1]}`;
-      hackStatus.innerText = `КОНТУР ${stage}: СИНХРОНИЗАЦИЯ ПАКЕТОВ...`;
-      hackStatus.style.color = 'var(--amber)';
-
-      const seqLength = stage + 2;
-      targetSeq = [];
-      for (let i = 0; i < seqLength; i++) {
-        targetSeq.push(hexPool[Math.floor(Math.random() * hexPool.length)]);
-      }
-      hackTargetCode.innerText = `ЦЕЛЬ: ${targetSeq.join(' - ')}`;
-
-      hackGrid.innerHTML = '';
-      const totalCells = stage === 3 ? 20 : 15;
-      const gridItems = [...targetSeq];
-      while (gridItems.length < totalCells) {
-        gridItems.push(hexPool[Math.floor(Math.random() * hexPool.length)]);
-      }
-      gridItems.sort(() => Math.random() - 0.5);
-
-      gridItems.forEach(code => {
-        const cell = document.createElement('div');
-        cell.className = 'hack-cell';
-        cell.innerText = code;
-        cell.onclick = () => onCellClick(cell, code);
-        hackGrid.appendChild(cell);
-      });
-    }
-
-    function onCellClick(cell, code) {
-      initAudioEngine();
-      const expected = targetSeq[currentInputSeq.length];
-      if (code === expected) {
-        cell.classList.add('matched');
-        currentInputSeq.push(code);
-
-        if (currentInputSeq.length === targetSeq.length) {
-          if (currentStage < 3) {
-            currentStage++;
-            hackStatus.innerText = `УРОВЕНЬ ${currentStage-1} ВЗЛОМАН! ПЕРЕХОД К УРОВНЮ ${currentStage}...`;
-            hackStatus.style.color = 'var(--cyan)';
-            setTimeout(() => setupHackStage(currentStage), 700);
-          } else {
-            hackStatus.innerText = 'ВСЕ 3 КОНТУРА ВЗЛОМАНЫ // ДОСТУП АКТИВИРОВАН';
-            hackStatus.style.color = 'var(--green)';
-            btnHackProceed.style.display = 'inline-block';
-          }
-        }
-      } else {
-        errorsCount++;
-        const limit = maxErrors[currentStage-1];
-        hackErrors.innerText = `${errorsCount} / ${limit}`;
-        if (errorsCount >= limit) {
-          hackStatus.innerText = `КОНТУР ${currentStage} ЗАБЛОКИРОВАН СТОРОЖЕВЫМ ИИ`;
-          hackStatus.style.color = 'var(--magenta)';
-          document.querySelectorAll('.hack-cell').forEach(c => c.style.pointerEvents = 'none');
-        }
-      }
-    }
-
-    btnHackProceed.onclick = () => {
-      modalHack.classList.remove('open');
-      if (pendingNextChapter !== null) {
-        renderChapter(pendingNextChapter);
-        pendingNextChapter = null;
-      }
-    };
-    document.getElementById('btnCloseHack').onclick = () => modalHack.classList.remove('open');
-    document.getElementById('btnRestartHack').onclick = () => setupHackStage(currentStage);
-
-    /* ПОЛЕТ ЧЕЛНОКА */
-    const modalFlight = document.getElementById('modalFlight');
-    const fCanvas = document.getElementById('flightCanvas');
-    const fCtx = fCanvas.getContext('2d');
-    const hullDisplay = document.getElementById('hullDisplay');
-    const distDisplay = document.getElementById('distDisplay');
-    const btnStartFlight = document.getElementById('btnStartFlight');
-    const btnFlightProceed = document.getElementById('btnFlightProceed');
-
-    let ship = { x: 280, y: 260, w: 32, h: 28, speed: 6 };
-    let obstacles = [];
-    let keys = {};
-    let flightDist = 0;
-    const maxFlightDist = 3000;
-    let hullIntegrity = 100;
-    let flightAnimation = null;
-    let isFlightRunning = false;
-
-    window.addEventListener('keydown', e => keys[e.code] = true);
-    window.addEventListener('keyup', e => keys[e.code] = false);
-
-    fCanvas.addEventListener('pointerdown', e => {
-      const rect = fCanvas.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      if (clickX < rect.width / 2) keys['ArrowLeft'] = true;
-      else keys['ArrowRight'] = true;
-    });
-    window.addEventListener('pointerup', () => {
-      keys['ArrowLeft'] = false;
-      keys['ArrowRight'] = false;
-    });
-
-    function startFlightGame() {
-      ship.x = 280;
-      obstacles = [];
-      flightDist = 0;
-      hullIntegrity = 100;
-      isFlightRunning = true;
-      btnStartFlight.style.display = 'none';
-      btnFlightProceed.style.display = 'none';
-      hullDisplay.innerText = '100%';
-      hullDisplay.style.color = 'var(--green)';
-      distDisplay.innerText = `0 / ${maxFlightDist}m`;
-
-      cancelAnimationFrame(flightAnimation);
-      flightLoop();
-    }
-
-    function flightLoop() {
-      if (!isFlightRunning) return;
-
-      if (keys['ArrowLeft'] || keys['KeyA']) ship.x -= ship.speed;
-      if (keys['ArrowRight'] || keys['KeyD']) ship.x += ship.speed;
-      if (ship.x < 10) ship.x = 10;
-      if (ship.x > fCanvas.width - ship.w - 10) ship.x = fCanvas.width - ship.w - 10;
-
-      const progress = flightDist / maxFlightDist;
-      const speedMult = progress > 0.5 ? 4.5 : 3.0;
-      flightDist += speedMult;
-      distDisplay.innerText = `${Math.min(Math.round(flightDist), maxFlightDist)} / ${maxFlightDist}m`;
-
-      const spawnRate = progress > 0.6 ? 0.09 : 0.06;
-      if (Math.random() < spawnRate) {
-        obstacles.push({
-          x: Math.random() * (fCanvas.width - 40),
-          y: -30,
-          w: 22 + Math.random() * 22,
-          h: 16 + Math.random() * 16,
-          speed: (3 + Math.random() * 3) * (progress > 0.5 ? 1.3 : 1.0)
-        });
-      }
-
-      fCtx.fillStyle = '#020610';
-      fCtx.fillRect(0, 0, fCanvas.width, fCanvas.height);
-
-      fCtx.strokeStyle = progress > 0.5 ? 'rgba(255, 0, 85, 0.25)' : 'rgba(0, 240, 255, 0.2)';
-      fCtx.beginPath();
-      for(let i=0; i<8; i++) {
-        let lx = (i * 80 + (flightDist % 80));
-        fCtx.moveTo(lx, 0); fCtx.lineTo(lx, fCanvas.height);
-      }
-      fCtx.stroke();
-
-      fCtx.fillStyle = '#00f0ff';
-      fCtx.beginPath();
-      fCtx.moveTo(ship.x + ship.w / 2, ship.y);
-      fCtx.lineTo(ship.x + ship.w, ship.y + ship.h);
-      fCtx.lineTo(ship.x + ship.w / 2, ship.y + ship.h - 6);
-      fCtx.lineTo(ship.x, ship.y + ship.h);
-      fCtx.closePath();
-      fCtx.fill();
-
-      fCtx.fillStyle = progress > 0.5 ? '#ff0055' : '#ffaa00';
-      fCtx.fillRect(ship.x + ship.w/2 - 3, ship.y + ship.h - 4, 6, 8 + Math.random()*8);
-
-      fCtx.fillStyle = '#ff0055';
-      for (let i = obstacles.length - 1; i >= 0; i--) {
-        let obs = obstacles[i];
-        obs.y += obs.speed;
-        fCtx.fillRect(obs.x, obs.y, obs.w, obs.h);
-
-        if (
-          ship.x < obs.x + obs.w &&
-          ship.x + ship.w > obs.x &&
-          ship.y < obs.y + obs.h &&
-          ship.y + ship.h > obs.y
-        ) {
-          hullIntegrity -= 12;
-          obstacles.splice(i, 1);
-          hullDisplay.innerText = `${Math.max(hullIntegrity, 0)}%`;
-          if (hullIntegrity <= 40) hullDisplay.style.color = 'var(--amber)';
-          if (hullIntegrity <= 20) hullDisplay.style.color = 'var(--magenta)';
-
-          if (hullIntegrity <= 0) {
-            isFlightRunning = false;
-            fCtx.fillStyle = '#ff0055';
-            fCtx.font = '20px Orbitron, monospace';
-            fCtx.textAlign = 'center';
-            fCtx.fillText('КОРПУС РАЗРУШЕН В РАЗЛОМЕ', fCanvas.width / 2, fCanvas.height / 2);
-            btnStartFlight.style.display = 'inline-block';
-            btnStartFlight.innerText = 'ПОВТОРИТЬ ПРЫЖОК';
-            return;
-          }
-        } else if (obs.y > fCanvas.height + 40) {
-          obstacles.splice(i, 1);
-        }
-      }
-
-      if (flightDist >= maxFlightDist) {
-        isFlightRunning = false;
-        fCtx.fillStyle = '#00ff66';
-        fCtx.font = '18px Orbitron, monospace';
-        fCtx.textAlign = 'center';
-        fCtx.fillText('РАЗЛОМ ПРЕОДОЛЕН! ВЫХОД К ЭРИДАНУ-4', fCanvas.width / 2, fCanvas.height / 2);
-        btnFlightProceed.style.display = 'inline-block';
-        return;
-      }
-
-      flightAnimation = requestAnimationFrame(flightLoop);
-    }
-
-    btnFlightProceed.onclick = () => {
-      modalFlight.classList.remove('open');
-      if (pendingNextChapter !== null) {
-        renderChapter(pendingNextChapter);
-        pendingNextChapter = null;
-      }
-    };
-    document.getElementById('btnCloseFlight').onclick = () => {
-      modalFlight.classList.remove('open');
-      isFlightRunning = false;
-      cancelAnimationFrame(flightAnimation);
-    };
-    btnStartFlight.onclick = startFlightGame;
-
+    // Старт
     resizeBg();
     renderBgFrame();
     renderChapter(0);
