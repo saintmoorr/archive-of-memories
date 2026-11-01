@@ -498,7 +498,7 @@
       font-size: 13px;
     }
 
-    /* ПОЛЕТ ЧЕЛНОКА */
+    /* СТИЛИ ДЛЯ ИНТЕРАКТИВОВ И ИГР */
     #flightCanvas {
       background: #020610;
       border: 1px solid var(--cyan);
@@ -508,14 +508,9 @@
       border-radius: var(--radius-md);
       box-shadow: 0 0 20px rgba(0,240,255,0.15);
     }
-    .flight-touch-controls {
-      display: flex;
-      gap: 12px;
-      margin-top: 10px;
-    }
+    .flight-touch-controls { display: flex; gap: 12px; margin-top: 10px; }
     .btn-flight-touch {
-      flex: 1;
-      padding: 12px;
+      flex: 1; padding: 12px;
       background: rgba(0, 240, 255, 0.08);
       border: 1px solid var(--border-sci);
       color: var(--cyan);
@@ -527,7 +522,6 @@
     }
     .btn-flight-touch:active { background: var(--cyan); color: #000; }
 
-    /* НЕЙРОХИРУРГИЯ */
     .neuro-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -553,15 +547,9 @@
     .neuro-cell.trap { background: rgba(255, 0, 85, 0.4); border-color: var(--magenta); color: #fff; }
     .neuro-cell.shunt { background: rgba(255, 170, 0, 0.2); border-color: var(--amber); }
 
-    /* QTE */
-    .qte-container {
-      margin: 20px auto;
-      max-width: 420px;
-      text-align: center;
-    }
+    .qte-container { margin: 20px auto; max-width: 420px; text-align: center; }
     .qte-track {
-      width: 100%;
-      height: 38px;
+      width: 100%; height: 38px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid var(--border-sci);
       border-radius: var(--radius-sm);
@@ -571,130 +559,77 @@
       cursor: pointer;
     }
     .qte-zone {
-      position: absolute;
-      top: 0; left: 45%; width: 20%; height: 100%;
+      position: absolute; top: 0; left: 45%; width: 20%; height: 100%;
       background: rgba(0, 255, 102, 0.35);
       border-left: 2px solid var(--green);
       border-right: 2px solid var(--green);
     }
     .qte-cursor {
-      position: absolute;
-      top: 0; left: 0; width: 8px; height: 100%;
+      position: absolute; top: 0; left: 0; width: 8px; height: 100%;
       background: var(--magenta);
       box-shadow: 0 0 12px var(--magenta);
     }
     .btn-qte-action {
-      width: 100%;
-      background: var(--green);
-      color: #000;
-      border: none;
-      padding: 14px 20px;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 15px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      text-transform: uppercase;
-      box-shadow: 0 0 15px var(--green);
+      width: 100%; background: var(--green); color: #000; border: none;
+      padding: 14px 20px; font-family: var(--font-mono); font-weight: 700;
+      font-size: 15px; border-radius: var(--radius-sm); cursor: pointer;
+      text-transform: uppercase; box-shadow: 0 0 15px var(--green);
     }
 
-    .tactical-map-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin: 15px 0;
-    }
+    .tactical-map-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 15px 0; }
     .tac-node {
       background: rgba(0, 240, 255, 0.05);
       border: 1px solid var(--border-sci);
-      padding: 12px;
-      border-radius: var(--radius-sm);
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
+      padding: 12px; border-radius: var(--radius-sm);
+      text-align: center; cursor: pointer; transition: all 0.2s;
     }
     .tac-node:hover {
       background: rgba(0, 240, 255, 0.15);
       border-color: var(--cyan);
       transform: translateY(-2px);
     }
-    .tac-node.selected {
-      border-color: var(--green);
-      background: rgba(0, 255, 102, 0.1);
-    }
+    .tac-node.selected { border-color: var(--green); background: rgba(0, 255, 102, 0.1); }
     .tac-node h5 { color: var(--cyan); font-size: 13px; margin-bottom: 4px; }
     .tac-node p { font-size: 11px; color: var(--text-dim); line-height: 1.4; }
 
     .quick-chat-wrap {
-      position: fixed;
-      bottom: 25px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      max-width: 520px;
-      background: rgba(8, 14, 26, 0.98);
-      border: 1px solid var(--amber);
-      border-radius: var(--radius-md);
-      box-shadow: 0 0 30px rgba(255, 170, 0, 0.45);
-      padding: 16px 20px;
-      z-index: 999;
-      font-family: var(--font-mono);
-      display: none;
+      position: fixed; bottom: 25px; left: 50%;
+      transform: translateX(-50%); width: 90%; max-width: 520px;
+      background: rgba(8, 14, 26, 0.98); border: 1px solid var(--amber);
+      border-radius: var(--radius-md); box-shadow: 0 0 30px rgba(255, 170, 0, 0.45);
+      padding: 16px 20px; z-index: 999; font-family: var(--font-mono); display: none;
     }
     .quick-chat-timer-bar {
-      height: 4px;
-      width: 100%;
-      background: var(--amber);
-      border-radius: 2px;
-      margin-bottom: 12px;
-      transition: width 0.1s linear;
+      height: 4px; width: 100%; background: var(--amber);
+      border-radius: 2px; margin-bottom: 12px; transition: width 0.1s linear;
     }
     .quick-chat-msg { font-size: 13px; color: #fff; margin-bottom: 10px; }
     .quick-chat-options { display: flex; gap: 8px; }
     .btn-quick {
-      flex: 1;
-      background: rgba(255, 170, 0, 0.1);
-      border: 1px solid var(--amber);
-      color: #fff;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      padding: 8px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
+      flex: 1; background: rgba(255, 170, 0, 0.1); border: 1px solid var(--amber);
+      color: #fff; font-family: var(--font-mono); font-size: 11px; padding: 8px;
+      border-radius: var(--radius-sm); cursor: pointer;
     }
     .btn-quick:hover { background: var(--amber); color: #000; }
 
     .btn-action {
-      background: var(--green);
-      color: #000;
-      border: none;
-      padding: 10px 22px;
-      font-family: var(--font-mono);
-      font-weight: 700;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      text-transform: uppercase;
-      box-shadow: 0 0 15px var(--green);
+      background: var(--green); color: #000; border: none; padding: 10px 22px;
+      font-family: var(--font-mono); font-weight: 700; border-radius: var(--radius-sm);
+      cursor: pointer; text-transform: uppercase; box-shadow: 0 0 15px var(--green);
     }
 
     .char-profile-card {
-      display: flex;
-      gap: 14px;
+      display: flex; gap: 14px;
       background: rgba(0, 240, 255, 0.04);
       border: 1px solid rgba(0, 240, 255, 0.15);
-      padding: 14px;
-      border-radius: var(--radius-md);
-      margin-bottom: 12px;
+      padding: 14px; border-radius: var(--radius-md); margin-bottom: 12px;
     }
     .char-profile-card .avatar-box {
       width: 52px; height: 52px;
       border: 1px solid var(--cyan);
       border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #040914;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: #040914; flex-shrink: 0;
     }
     .char-profile-card .avatar-box svg { width: 38px; height: 38px; }
 
@@ -750,27 +685,15 @@
     </div>
 
     <div class="sidebar-nav-list">
-      <div class="side-nav-item" id="menuItemToc">
-        <span>📑</span> ОГЛАВЛЕНИЕ АРХИВА (1-18)
-      </div>
-      <div class="side-nav-item" id="menuItemConsole">
-        <span>💻</span> КОНСОЛЬ // АРХИВ-0
-      </div>
-      <div class="side-nav-item" id="menuItemNeuro">
-        <span>🔬</span> НЕЙРОХИРУРГИЯ (ИЗВЛЕЧЕНИЕ)
-      </div>
-      <div class="side-nav-item" id="menuItemTacticalMap">
-        <span>🗺️</span> ТАКТИЧЕСКАЯ КАРТА
-      </div>
-      <div class="side-nav-item" id="menuItemQTE">
-        <span>⚡</span> ТРЕНИРОВКА: QTE-ОВЕРДРАЙВ
-      </div>
+      <div class="side-nav-item" id="menuItemToc"><span>📑</span> ОГЛАВЛЕНИЕ АРХИВА (1-18)</div>
+      <div class="side-nav-item" id="menuItemConsole"><span>💻</span> КОНСОЛЬ // АРХИВ-0</div>
+      <div class="side-nav-item" id="menuItemNeuro"><span>🔬</span> НЕЙРОХИРУРГИЯ (ИЗВЛЕЧЕНИЕ)</div>
+      <div class="side-nav-item" id="menuItemTacticalMap"><span>🗺️</span> ТАКТИЧЕСКАЯ КАРТА</div>
+      <div class="side-nav-item" id="menuItemQTE"><span>⚡</span> ТРЕНИРОВКА: QTE-ОВЕРДРАЙВ</div>
       <div class="side-nav-item" id="menuItemAudioToggle">
         <span id="iconAudioState">▶</span> <span id="labelAudioState">ВКЛЮЧИТЬ САУНДТРЕК</span>
       </div>
-      <div class="side-nav-item" id="menuItemTrackSwitch">
-        <span>♫</span> СМЕНИТЬ САУНДТРЕК
-      </div>
+      <div class="side-nav-item" id="menuItemTrackSwitch"><span>♫</span> СМЕНИТЬ САУНДТРЕК</div>
 
       <div class="menu-volume-box">
         <div class="menu-volume-title">
@@ -780,16 +703,12 @@
         <input type="range" id="sliderMusicVol" min="0" max="1" step="0.05" value="0.7" style="width:100%;">
       </div>
 
-      <div class="side-nav-item" id="menuItemCharacters">
-        <span>👤</span> ИКОНКИ & ДОСЬЕ ГЕРОЕВ
-      </div>
-      <div class="side-nav-item" id="menuItemAbout">
-        <span>ℹ️</span> ОБ АВТОРЕ SAINTMOOR
-      </div>
+      <div class="side-nav-item" id="menuItemCharacters"><span>👤</span> ИКОНКИ & ДОСЬЕ ГЕРОЕВ</div>
+      <div class="side-nav-item" id="menuItemAbout"><span>ℹ️</span> ОБ АВТОРЕ SAINTMOOR</div>
     </div>
 
     <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); text-align:center; padding-top:12px; border-top:1px solid rgba(255,255,255,0.08);">
-      EXPEDITION // ERIDAN-4 // SYS V8.0
+      EXPEDITION // ERIDAN-4 // SYS V8.5
     </div>
   </aside>
 
@@ -824,7 +743,7 @@
     </article>
   </main>
 
-  <!-- ЧАТ ДЕКИ -->
+  <!-- МОДАЛЬНЫЕ ОКНА ИГР И ИНТЕРАКТИВОВ -->
   <div class="quick-chat-wrap" id="quickChatBox">
     <div class="quick-chat-timer-bar" id="quickChatBar"></div>
     <div class="quick-chat-msg" id="quickChatMsg">КАЙ: «Два шагохода на гребне, бью на поражение?»</div>
@@ -834,7 +753,6 @@
     </div>
   </div>
 
-  <!-- ПОЛЕТ ЧЕЛНОКА -->
   <div class="modal-overlay" id="modalFlight">
     <div class="modal-window" style="max-width: 680px;">
       <div class="modal-head">
@@ -861,7 +779,6 @@
     </div>
   </div>
 
-  <!-- МОДАЛЬНЫЕ ОКНА: ОГЛАВЛЕНИЕ, КОНСОЛЬ, НЕЙРОХИРУРГИЯ, QTE, КАРТА, ДОСЬЕ, ОБ АВТОРЕ -->
   <div class="modal-overlay" id="modalToc">
     <div class="modal-window">
       <div class="modal-head">
@@ -999,15 +916,16 @@
     </div>
   </div>
 
-  <!-- ПОДКЛЮЧЕНИЕ ВСЕХ ПАКЕТОВ ГЛАВ (ЧИСТЫЕ ФАЙЛЫ) -->
+  <!-- ПОДКЛЮЧЕНИЕ ПАКЕТОВ ГЛАВ И ВНЕШНЕГО ИГРОВОГО МОДУЛЯ -->
   <script src="chapters_batch1.js"></script>
   <script src="chapters_batch2.js"></script>
   <script src="chapters_batch3.js"></script>
   <script src="chapters_batch4.js"></script>
   <script src="chapters_batch5.js"></script>
+  <script src="games.js"></script>
 
+  <!-- БАЗОВЫЙ ДВИЖОК СТРАНИЦЫ (ИНТЕРФЕЙС, ЧТЕНИЕ, АУДИО, ФОН) -->
   <script>
-    /* ОБЪЕДИНЕНИЕ ВСЕХ ГЛАВ В ЕДИНЫЙ МАССИВ */
     window.bookChapters = [
       ...(window.bookChaptersBatch1 || []),
       ...(window.bookChaptersBatch2 || []),
@@ -1026,21 +944,24 @@
       synapseResonance = Math.max(10, Math.min(100, synapseResonance + delta));
       const fill = document.getElementById('synapseBarFill');
       const text = document.getElementById('synapsePercent');
-      fill.style.width = `${synapseResonance}%`;
-      text.innerText = `${synapseResonance}%`;
+      if (fill) fill.style.width = `${synapseResonance}%`;
+      if (text) text.innerText = `${synapseResonance}%`;
 
-      if (synapseResonance >= 75) {
-        fill.style.background = 'linear-gradient(90deg, var(--cyan), var(--green))';
-      } else if (synapseResonance >= 40) {
-        fill.style.background = 'linear-gradient(90deg, var(--amber), var(--cyan))';
-      } else {
-        fill.style.background = 'linear-gradient(90deg, var(--magenta), var(--amber))';
+      if (fill) {
+        if (synapseResonance >= 75) {
+          fill.style.background = 'linear-gradient(90deg, var(--cyan), var(--green))';
+        } else if (synapseResonance >= 40) {
+          fill.style.background = 'linear-gradient(90deg, var(--amber), var(--cyan))';
+        } else {
+          fill.style.background = 'linear-gradient(90deg, var(--magenta), var(--amber))';
+        }
       }
       applyGlitchEffect();
     }
 
     function applyGlitchEffect() {
       const art = document.getElementById('mainArticle');
+      if (!art) return;
       if (synapseResonance < 40) {
         art.style.filter = 'drop-shadow(2px 0 0 rgba(255,0,85,0.4)) drop-shadow(-2px 0 0 rgba(0,240,255,0.4))';
       } else {
@@ -1084,428 +1005,6 @@
       ].join("\n")
     };
 
-    const secretLoreDatabase = {
-      "МНЕМОЗИНА": {
-        title: "ДОСЬЕ № 904-А // ПРОЕКТ «МНЕМОЗИНА»",
-        desc: "Ведущий нейроинженер Фогель (брат Элли) отказался стирать эмоциональные центры детей. Ликвидирован инсценировкой.",
-        effect: "Элли узнает правду о брате! Синаптический резонанс +15%."
-      },
-      "ВЕБЕР": {
-        title: "ЛИЧНЫЙ ДНЕВНИК // ВЕБЕР-СТАРШИЙ // ЗАПИСЬ 00",
-        desc: "Вебер пересадил внешность и имя погибшего сына сироте Яну, сделав из него живое оружие десинхронизации.",
-        effect: "Иммунитет к диссоциации. Резонанс +10%."
-      },
-      "ЯН": {
-        title: "АРХИВ МУНИЦИПАЛЬНОГО ПРИЮТА № 4 // ДОСЬЕ: ЯН",
-        desc: "Биоритм мозга совпадает с кристаллической решеткой недр Эридана-4.",
-        effect: "Разблокирована истинная мощь деструктора на экзопланете!"
-      },
-      "НОРД-БЕЙ": {
-        title: "ПРОТОКОЛ ЧИСТКИ // ПОРТОВЫЙ РАЙОН НОРД-БЕЙ",
-        desc: "Мать Кая застрелена чистильщиками «Арго-Сис». Ему внушили ложное воспоминание о шторме.",
-        effect: "Кай берет ярость под контроль. QTE-овердрайв облегчен на 30%!"
-      },
-      "ОРИОН": {
-        title: "ТЕХНИЧЕСКИЙ РЕГЛАМЕНТ РЕАКТОРА «ОРИОН-КРИО»",
-        desc: "Рен поглощает тепло до 1.2 ГВт при условии эмоционального покоя.",
-        effect: "Рен получает защиту в дренаже дредноута."
-      },
-      "ОМЕГА-16": {
-        title: "МАТРИЦА СЕРИИ «ОМЕГА» // 16 УЗЛОВ",
-        desc: "Синхронное пробуждение всех 16 узлов создает неуязвимый сверхразум колонии.",
-        effect: "Мгновенное пробуждение анабиозного зала в 18 главе!"
-      },
-      "КОВАЛЬСКАЯ": {
-        title: "СЕКРЕТНЫЙ ПРОТОКОЛ СОВЕТА // АВТОРИЗАЦИЯ «ЭРИДАН»",
-        desc: "Аварийный код отмены квантовой детонации дредноута: 00-OMEGA-FREE.",
-        effect: "Получен пароль отмены самоуничтожения корабля!"
-      }
-    };
-
-    function submitCliWord() {
-      const field = document.getElementById('cliInputField');
-      const val = field.value.trim().toUpperCase();
-      const out = document.getElementById('cliOutput');
-      if (!val) return;
-
-      if (secretLoreDatabase[val]) {
-        const item = secretLoreDatabase[val];
-        unlockedLoreKeys.add(val);
-        out.innerHTML += `<br><span style="color:var(--green)">[ДОСТУП РАЗРЕШЕН: ${val}]</span><br><strong>${item.title}</strong><br>${item.desc}<br><span style="color:var(--cyan); font-size:11px;">[ЭФФЕКТ]: ${item.effect}</span><br>`;
-        modifyResonance(10);
-      } else {
-        out.innerHTML += `<br><span style="color:var(--magenta)">[ОШИБКА 404]: Ключ «${val}» не найден.</span>`;
-      }
-      field.value = '';
-      out.scrollTop = out.scrollHeight;
-    }
-
-    document.getElementById('cliInputField').addEventListener('keydown', e => {
-      if (e.key === 'Enter') submitCliWord();
-    });
-
-    function putClueToCli(word) {
-      document.getElementById('modalConsole').classList.add('open');
-      document.getElementById('cliInputField').value = word;
-      submitCliWord();
-    }
-
-    document.getElementById('menuItemConsole').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalConsole').classList.add('open');
-    };
-    document.getElementById('btnCloseConsole').onclick = () => document.getElementById('modalConsole').classList.remove('open');
-
-    /* МИНИ-ИГРА: ПОЛЕТ ЧЕЛНОКА */
-    const modalFlight = document.getElementById('modalFlight');
-    const fCanvas = document.getElementById('flightCanvas');
-    const fCtx = fCanvas.getContext('2d');
-    const hullDisplay = document.getElementById('hullDisplay');
-    const distDisplay = document.getElementById('distDisplay');
-    const btnStartFlight = document.getElementById('btnStartFlight');
-    const btnFlightProceed = document.getElementById('btnFlightProceed');
-
-    let ship = { x: 280, y: 250, w: 34, h: 28, speed: 6.5 };
-    let obstacles = [];
-    let keys = {};
-    let flightDist = 0;
-    const maxFlightDist = 2000;
-    let hullIntegrity = 100;
-    let flightAnim = null;
-    let isFlightRunning = false;
-
-    window.addEventListener('keydown', e => keys[e.code] = true);
-    window.addEventListener('keyup', e => keys[e.code] = false);
-
-    const btnTouchLeft = document.getElementById('btnTouchLeft');
-    const btnTouchRight = document.getElementById('btnTouchRight');
-    btnTouchLeft.addEventListener('pointerdown', () => keys['ArrowLeft'] = true);
-    btnTouchLeft.addEventListener('pointerup', () => keys['ArrowLeft'] = false);
-    btnTouchRight.addEventListener('pointerdown', () => keys['ArrowRight'] = true);
-    btnTouchRight.addEventListener('pointerup', () => keys['ArrowRight'] = false);
-
-    function startFlightGame() {
-      ship.x = 280;
-      obstacles = [];
-      flightDist = 0;
-      hullIntegrity = 100;
-      isFlightRunning = true;
-      btnStartFlight.style.display = 'none';
-      btnFlightProceed.style.display = 'none';
-      hullDisplay.innerText = '100%';
-      hullDisplay.style.color = 'var(--green)';
-      distDisplay.innerText = `0 / ${maxFlightDist}m`;
-
-      cancelAnimationFrame(flightAnim);
-      flightLoop();
-    }
-
-    function flightLoop() {
-      if (!isFlightRunning) return;
-
-      if (keys['ArrowLeft'] || keys['KeyA']) ship.x -= ship.speed;
-      if (keys['ArrowRight'] || keys['KeyD']) ship.x += ship.speed;
-      if (ship.x < 10) ship.x = 10;
-      if (ship.x > fCanvas.width - ship.w - 10) ship.x = fCanvas.width - ship.w - 10;
-
-      flightDist += 4;
-      distDisplay.innerText = `${Math.min(flightDist, maxFlightDist)} / ${maxFlightDist}m`;
-
-      if (Math.random() < 0.08) {
-        obstacles.push({
-          x: Math.random() * (fCanvas.width - 40),
-          y: -30,
-          w: 24 + Math.random() * 20,
-          h: 18 + Math.random() * 16,
-          speed: 3.5 + Math.random() * 3
-        });
-      }
-
-      fCtx.fillStyle = '#020610';
-      fCtx.fillRect(0, 0, fCanvas.width, fCanvas.height);
-
-      fCtx.strokeStyle = 'rgba(0, 240, 255, 0.2)';
-      fCtx.beginPath();
-      for(let i = 0; i < 8; i++) {
-        let lx = (i * 80 + (flightDist % 80));
-        fCtx.moveTo(lx, 0); fCtx.lineTo(lx, fCanvas.height);
-      }
-      fCtx.stroke();
-
-      fCtx.fillStyle = '#00f0ff';
-      fCtx.beginPath();
-      fCtx.moveTo(ship.x + ship.w / 2, ship.y);
-      fCtx.lineTo(ship.x + ship.w, ship.y + ship.h);
-      fCtx.lineTo(ship.x + ship.w / 2, ship.y + ship.h - 6);
-      fCtx.lineTo(ship.x, ship.y + ship.h);
-      fCtx.closePath();
-      fCtx.fill();
-
-      fCtx.fillStyle = '#ffaa00';
-      fCtx.fillRect(ship.x + ship.w / 2 - 3, ship.y + ship.h - 4, 6, 8 + Math.random() * 8);
-
-      fCtx.fillStyle = '#ff0055';
-      for (let i = obstacles.length - 1; i >= 0; i--) {
-        let obs = obstacles[i];
-        obs.y += obs.speed;
-        fCtx.fillRect(obs.x, obs.y, obs.w, obs.h);
-
-        if (
-          ship.x < obs.x + obs.w &&
-          ship.x + ship.w > obs.x &&
-          ship.y < obs.y + obs.h &&
-          ship.y + ship.h > obs.y
-        ) {
-          hullIntegrity -= 15;
-          obstacles.splice(i, 1);
-          hullDisplay.innerText = `${Math.max(hullIntegrity, 0)}%`;
-          if (hullIntegrity <= 40) hullDisplay.style.color = 'var(--amber)';
-          if (hullIntegrity <= 20) hullDisplay.style.color = 'var(--magenta)';
-
-          if (hullIntegrity <= 0) {
-            isFlightRunning = false;
-            fCtx.fillStyle = '#ff0055';
-            fCtx.font = '18px Orbitron, monospace';
-            fCtx.textAlign = 'center';
-            fCtx.fillText('КОРПУС РАЗРУШЕН В РАЗЛОМЕ', fCanvas.width / 2, fCanvas.height / 2);
-            btnStartFlight.style.display = 'inline-block';
-            btnStartFlight.innerText = 'ПОВТОРИТЬ ПРЫЖОК';
-            return;
-          }
-        } else if (obs.y > fCanvas.height + 40) {
-          obstacles.splice(i, 1);
-        }
-      }
-
-      if (flightDist >= maxFlightDist) {
-        isFlightRunning = false;
-        fCtx.fillStyle = '#00ff66';
-        fCtx.font = '18px Orbitron, monospace';
-        fCtx.textAlign = 'center';
-        fCtx.fillText('РАЗЛОМ ПРЕОДОЛЕН! ВЫХОД К ЭРИДАНУ-4', fCanvas.width / 2, fCanvas.height / 2);
-        btnFlightProceed.style.display = 'inline-block';
-        return;
-      }
-
-      flightAnim = requestAnimationFrame(flightLoop);
-    }
-
-    btnStartFlight.onclick = startFlightGame;
-    btnFlightProceed.onclick = () => {
-      modalFlight.classList.remove('open');
-      goToChapterById("ch13");
-    };
-    document.getElementById('btnCloseFlight').onclick = () => {
-      modalFlight.classList.remove('open');
-      isFlightRunning = false;
-      cancelAnimationFrame(flightAnim);
-    };
-
-    /* НЕЙРОХИРУРГИЯ */
-    let neuroTraps = new Set();
-    let neuroShunts = new Set();
-    let neuroRevealed = 0;
-    const neuroSize = 5;
-    const totalTraps = 4;
-    const targetReveals = 5;
-
-    function startNeuroGame(applyPenalty = false) {
-      const grid = document.getElementById('neuroGrid');
-      grid.innerHTML = '';
-      neuroTraps.clear();
-      neuroShunts.clear();
-      neuroRevealed = 0;
-      document.getElementById('neuroStatus').innerText = 'СКАНИРОВАНИЕ';
-      document.getElementById('neuroStatus').style.color = 'var(--cyan)';
-      document.getElementById('shuntsDisplay').innerText = `0 / ${totalTraps}`;
-      document.getElementById('revealedDisplay').innerText = `0 / ${targetReveals}`;
-
-      if (applyPenalty) modifyResonance(-10);
-
-      while (neuroTraps.size < totalTraps) {
-        neuroTraps.add(Math.floor(Math.random() * (neuroSize * neuroSize)));
-      }
-
-      for (let i = 0; i < neuroSize * neuroSize; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'neuro-cell';
-        cell.dataset.idx = i;
-        cell.onclick = () => revealNeuroCell(i, cell);
-        cell.oncontextmenu = (e) => {
-          e.preventDefault();
-          toggleShunt(i, cell);
-        };
-        grid.appendChild(cell);
-      }
-    }
-
-    function toggleShunt(idx, cell) {
-      if (cell.classList.contains('revealed')) return;
-      if (neuroShunts.has(idx)) {
-        neuroShunts.delete(idx);
-        cell.classList.remove('shunt');
-        cell.innerText = '';
-      } else {
-        if (neuroShunts.size >= totalTraps) return;
-        neuroShunts.add(idx);
-        cell.classList.add('shunt');
-        cell.innerText = '🛡️';
-      }
-      document.getElementById('shuntsDisplay').innerText = `${neuroShunts.size} / ${totalTraps}`;
-    }
-
-    function revealNeuroCell(idx, cell) {
-      if (cell.classList.contains('revealed') || neuroShunts.has(idx)) return;
-
-      if (neuroTraps.has(idx)) {
-        cell.classList.add('trap');
-        cell.innerText = '💥';
-        document.getElementById('neuroStatus').innerText = 'ЧИП ПОВРЕЖДЕН!';
-        document.getElementById('neuroStatus').style.color = 'var(--magenta)';
-        modifyResonance(-10);
-        document.querySelectorAll('.neuro-cell').forEach(c => c.style.pointerEvents = 'none');
-        return;
-      }
-
-      let r = Math.floor(idx / neuroSize);
-      let c = idx % neuroSize;
-      let count = 0;
-      for (let dr = -1; dr <= 1; dr++) {
-        for (let dc = -1; dc <= 1; dc++) {
-          let nr = r + dr, nc = c + dc;
-          if (nr >= 0 && nr < neuroSize && nc >= 0 && nc < neuroSize) {
-            if (neuroTraps.has(nr * neuroSize + nc)) count++;
-          }
-        }
-      }
-
-      cell.classList.add('revealed');
-      cell.innerText = count > 0 ? count : '';
-      neuroRevealed++;
-      document.getElementById('revealedDisplay').innerText = `${neuroRevealed} / ${targetReveals}`;
-
-      if (neuroRevealed >= targetReveals) {
-        document.getElementById('neuroStatus').innerText = 'ИЗОЛЯЦИЯ СНЯТА // КОД ДОБЫТ';
-        document.getElementById('neuroStatus').style.color = 'var(--green)';
-        modifyResonance(15);
-        putClueToCli("МНЕМОЗИНА");
-        document.querySelectorAll('.neuro-cell').forEach(c => c.style.pointerEvents = 'none');
-      }
-    }
-
-    document.getElementById('menuItemNeuro').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalNeuro').classList.add('open');
-      startNeuroGame(false);
-    };
-    document.getElementById('btnCloseNeuro').onclick = () => document.getElementById('modalNeuro').classList.remove('open');
-
-    /* QTE-ОВЕРДРАЙВ */
-    let qteCursorPos = 0;
-    let qteDirection = 1;
-    let qteAnim = null;
-    let isQTEActive = false;
-
-    function startQTE() {
-      isQTEActive = true;
-      qteCursorPos = 0;
-      qteDirection = 1;
-      document.getElementById('qteResult').innerText = '';
-      cancelAnimationFrame(qteAnim);
-
-      const zone = document.querySelector('.qte-zone');
-      zone.style.width = `${qteZoneWidth}%`;
-      zone.style.left = `${50 - qteZoneWidth/2}%`;
-
-      loopQTE();
-    }
-
-    function loopQTE() {
-      if (!isQTEActive) return;
-      qteCursorPos += qteSpeedModifier * qteDirection;
-      if (qteCursorPos >= 96) qteDirection = -1;
-      if (qteCursorPos <= 0) qteDirection = 1;
-
-      document.getElementById('qteCursor').style.left = `${qteCursorPos}%`;
-      qteAnim = requestAnimationFrame(loopQTE);
-    }
-
-    function hitQTE() {
-      if (!isQTEActive) return;
-      isQTEActive = false;
-      cancelAnimationFrame(qteAnim);
-
-      const zoneLeft = 50 - qteZoneWidth/2;
-      const zoneRight = 50 + qteZoneWidth/2;
-      const res = document.getElementById('qteResult');
-
-      if (qteCursorPos >= zoneLeft && qteCursorPos <= zoneRight) {
-        res.innerText = '⚡ УСПЕХ! ПРИВОДЫ ЗАМКНУТЫ // КУПОЛ СБИТ';
-        res.style.color = 'var(--green)';
-        modifyResonance(15);
-        setTimeout(() => {
-          document.getElementById('modalQTE').classList.remove('open');
-          goToChapterById("ch17");
-        }, 800);
-      } else {
-        res.innerText = 'ОШИБКА! ТУРЕЛИ ДАЛИ ЗАЛП // УРОН СИНАПСОВ';
-        res.style.color = 'var(--magenta)';
-        modifyResonance(-10);
-      }
-    }
-
-    window.addEventListener('keydown', e => {
-      if (isQTEActive && (e.code === 'Enter' || e.code === 'Space')) {
-        e.preventDefault();
-        hitQTE();
-      }
-    });
-
-    document.getElementById('btnCloseQTE').onclick = () => {
-      document.getElementById('modalQTE').classList.remove('open');
-      isQTEActive = false;
-      cancelAnimationFrame(qteAnim);
-    };
-    document.getElementById('menuItemQTE').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalQTE').classList.add('open');
-      startQTE();
-    };
-
-    function selectTacNode(nodeId) {
-      document.querySelectorAll('.tac-node').forEach((el, i) => {
-        el.classList.toggle('selected', (i + 1) === nodeId);
-      });
-      const rep = document.getElementById('tacReport');
-      const btn = document.getElementById('btnConfirmTacPlan');
-      btn.style.display = 'inline-block';
-
-      if (nodeId === 1) {
-        qteSpeedModifier = 4.2;
-        qteZoneWidth = 14;
-        rep.innerHTML = '<strong>ПЛАН: ДРЕНАЖ РЕАКТОРА.</strong> Рен берет тепловой удар на себя. Турели без присмотра: QTE будет быстрее, а зеленая зона уже!';
-      } else if (nodeId === 2) {
-        qteSpeedModifier = 2.4;
-        qteZoneWidth = 28;
-        rep.innerHTML = '<strong>ПЛАН: ЛОБОВОЙ ВЗЛОМ ТУРЕЛЕЙ.</strong> Кай подключается к шине орудий. Зеленая зона QTE расширена!';
-      } else {
-        qteSpeedModifier = 3.2;
-        qteZoneWidth = 20;
-        rep.innerHTML = '<strong>ПЛАН: ШТУРМ 9-Й ПАЛУБЫ.</strong> Сбалансированный штурм.';
-      }
-    }
-
-    function confirmTacPlan() {
-      modifyResonance(10);
-      document.getElementById('modalTacticalMap').classList.remove('open');
-      goToChapterById("ch16");
-    }
-    document.getElementById('btnCloseTacMap').onclick = () => document.getElementById('modalTacticalMap').classList.remove('open');
-    document.getElementById('menuItemTacticalMap').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalTacticalMap').classList.add('open');
-    };
-
     const characterIcons = {
       mark: `<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="#00f0ff" stroke-width="2"/><path d="M30 75 C30 55, 70 55, 70 75" stroke="#00f0ff" stroke-width="3"/><circle cx="50" cy="42" r="16" stroke="#00f0ff" stroke-width="3"/><line x1="52" y1="30" x2="62" y2="38" stroke="#ff0055" stroke-width="3"/></svg>`,
       ellie: `<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="#00f0ff" stroke-width="2"/><circle cx="50" cy="45" r="13" stroke="#00f0ff" stroke-width="2.5"/><rect x="58" y="42" width="7" height="5" stroke="#ffaa00" stroke-width="1.5"/><path d="M30 78 C30 62, 70 62, 70 78" stroke="#00f0ff" stroke-width="3"/></svg>`,
@@ -1514,7 +1013,6 @@
       kovalskaya: `<svg viewBox="0 0 100 100" fill="none"><polygon points="50,6 94,50 50,94 6,50" stroke="#ff0055" stroke-width="2"/><circle cx="50" cy="45" r="16" stroke="#ff0055" stroke-width="2.5"/></svg>`
     };
 
-    /* НАВИГАЦИЯ ПО ID И ИСПРАВЛЕННЫЕ ПЕРЕХОДЫ */
     function goToChapterById(targetId) {
       const idx = window.bookChapters.findIndex(ch => ch.id === targetId);
       if (idx !== -1) {
@@ -1596,44 +1094,9 @@
       applyGlitchEffect();
     }
 
-    /* ТАКТИЧЕСКИЙ ЧАТ */
-    let quickChatTimer = null;
-    function triggerQuickChat() {
-      const box = document.getElementById('quickChatBox');
-      const bar = document.getElementById('quickChatBar');
-      if (!box || !bar) return;
-
-      box.style.display = 'block';
-      box.style.zIndex = '999';
-      bar.style.width = '100%';
-      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-      let timeLeft = 50;
-      clearInterval(quickChatTimer);
-      quickChatTimer = setInterval(() => {
-        timeLeft--;
-        bar.style.width = `${(timeLeft / 50) * 100}%`;
-        if (timeLeft <= 0) {
-          clearInterval(quickChatTimer);
-          box.style.display = 'none';
-          modifyResonance(-10);
-          goToChapterById("ch15");
-        }
-      }, 100);
-    }
-
-    function resolveQuickChat(choice) {
-      clearInterval(quickChatTimer);
-      const box = document.getElementById('quickChatBox');
-      if (box) box.style.display = 'none';
-
-      modifyResonance(choice === 1 ? 10 : 5);
-      goToChapterById("ch15");
-    }
-
-    /* ОГЛАВЛЕНИЕ */
     function populateToc() {
       const tocList = document.getElementById('tocList');
+      if (!tocList) return;
       tocList.innerHTML = '';
       window.bookChapters.forEach((ch, idx) => {
         const item = document.createElement('div');
@@ -1652,7 +1115,6 @@
       });
     }
 
-    /* ДОСЬЕ ГЕРОЕВ */
     const charactersList = document.getElementById('charactersList');
     const charsData = [
       { id: "mark", name: "Марк Вебер (Ян)", role: "Субъект-0 // Деструктор", desc: "Главный герой. Носитель протокола десинхронизации «Забвение»." },
@@ -1661,19 +1123,21 @@
       { id: "ren", name: "Рен", role: "Субъект-09 // Крио-модуль", desc: "Носитель фазового распада. Забирает тепло в себя." },
       { id: "kovalskaya", name: "Директор Ковальская", role: "Директорат", desc: "Куратор колонизации Эридана-4. Заперлась на мостике." }
     ];
-    charsData.forEach(c => {
-      const card = document.createElement('div');
-      card.className = 'char-profile-card';
-      card.innerHTML = `
-        <div class="avatar-box">${characterIcons[c.id]}</div>
-        <div>
-          <div style="color:#fff; font-weight:700; font-size:13px;">${c.name}</div>
-          <div style="color:var(--cyan); font-size:11px; margin-bottom:4px;">${c.role}</div>
-          <div style="color:var(--text-dim); font-size:12px; line-height:1.4;">${c.desc}</div>
-        </div>
-      `;
-      charactersList.appendChild(card);
-    });
+    if (charactersList) {
+      charsData.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'char-profile-card';
+        card.innerHTML = `
+          <div class="avatar-box">${characterIcons[c.id]}</div>
+          <div>
+            <div style="color:#fff; font-weight:700; font-size:13px;">${c.name}</div>
+            <div style="color:var(--cyan); font-size:11px; margin-bottom:4px;">${c.role}</div>
+            <div style="color:var(--text-dim); font-size:12px; line-height:1.4;">${c.desc}</div>
+          </div>
+        `;
+        charactersList.appendChild(card);
+      });
+    }
 
     document.getElementById('btnPrevChap').onclick = () => renderChapter(currentChapterIndex - 1);
     document.getElementById('btnNextChap').onclick = () => renderChapter(currentChapterIndex + 1);
@@ -1700,7 +1164,37 @@
     };
     document.getElementById('btnCloseAbout').onclick = () => document.getElementById('modalAbout').classList.remove('open');
 
-    /* АУДИОСИСТЕМА */
+    document.getElementById('menuItemConsole').onclick = () => {
+      sciSidebar.classList.remove('open');
+      document.getElementById('modalConsole').classList.add('open');
+    };
+    document.getElementById('btnCloseConsole').onclick = () => document.getElementById('modalConsole').classList.remove('open');
+
+    document.getElementById('menuItemNeuro').onclick = () => {
+      sciSidebar.classList.remove('open');
+      document.getElementById('modalNeuro').classList.add('open');
+      if (typeof startNeuroGame === 'function') startNeuroGame(false);
+    };
+    document.getElementById('btnCloseNeuro').onclick = () => document.getElementById('modalNeuro').classList.remove('open');
+
+    document.getElementById('menuItemQTE').onclick = () => {
+      sciSidebar.classList.remove('open');
+      document.getElementById('modalQTE').classList.add('open');
+      if (typeof startQTE === 'function') startQTE();
+    };
+    document.getElementById('btnCloseQTE').onclick = () => {
+      document.getElementById('modalQTE').classList.remove('open');
+      isQTEActive = false;
+      cancelAnimationFrame(qteAnim);
+    };
+
+    document.getElementById('menuItemTacticalMap').onclick = () => {
+      sciSidebar.classList.remove('open');
+      document.getElementById('modalTacticalMap').classList.add('open');
+    };
+    document.getElementById('btnCloseTacMap').onclick = () => document.getElementById('modalTacticalMap').classList.remove('open');
+
+    /* АУДИОМОДУЛЬ */
     let audioCtx = null;
     let isAudioActive = false;
     let currentSoundtrackGroup = 1;
@@ -1762,7 +1256,6 @@
       if (!forceRestart && currentSoundtrackGroup === targetGroup && isAudioActive && (!extTrack1.paused || !extTrack2.paused)) {
         return;
       }
-
       currentSoundtrackGroup = targetGroup;
       if (!isAudioActive) return;
 
@@ -1827,7 +1320,7 @@
       syncSoundtrackWithChapter(currentSoundtrackGroup, true);
     };
 
-    /* CANVAS ФОН */
+    /* CANVAS НЕОНОВЫЙ ФОН */
     const bgCanvas = document.getElementById('bgCanvas');
     const bgCtx = bgCanvas.getContext('2d');
     let currentTheme = 'city';
@@ -1977,7 +1470,6 @@
       requestAnimationFrame(renderBgFrame);
     }
 
-    // Инициализация
     resizeBg();
     renderBgFrame();
     populateToc();
