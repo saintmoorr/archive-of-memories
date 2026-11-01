@@ -1056,7 +1056,9 @@
       document.getElementById('chapMeta').innerText = ch.meta;
       document.getElementById('chapCluesInfo').innerText = `// АКТИВНЫХ СЛЕДОВ: ${ch.cluesCount || 0}`;
       document.getElementById('chapTitle').innerText = ch.title;
-      document.getElementById('chapContent').innerHTML = ch.content;
+    // Автоматически вычищает все из текста перед выводом на экран
+const cleanContent = (ch.content || '').replace(/\[cite:\s*[\d,\s]+\]/gi, '');
+document.getElementById('chapContent').innerHTML = cleanContent;
 
       const decBox = document.getElementById('decisionOptions');
       decBox.innerHTML = '';
