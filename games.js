@@ -324,6 +324,7 @@ function revealNeuroCell(idx, cell) {
   neuroRevealed++;
   if (rDisp) rDisp.innerText = `${neuroRevealed} / ${targetReveals}`;
 
+  // УСПЕШНОЕ ИЗВЛЕЧЕНИЕ: ПЕРЕХОД ДАЛЬШЕ
   if (neuroRevealed >= targetReveals) {
     if (nStatus) {
       nStatus.innerText = 'ИЗОЛЯЦИЯ СНЯТА // КОД ДОБЫТ';
@@ -332,6 +333,15 @@ function revealNeuroCell(idx, cell) {
     modifyResonance(15);
     putClueToCli("МНЕМОЗИНА");
     document.querySelectorAll('.neuro-cell').forEach(c => c.style.pointerEvents = 'none');
+
+    // Через 1 секунду закрываем окно и переводим на Главу 2 (Рынок «Стек»)
+    setTimeout(() => {
+      const modal = document.getElementById('modalNeuro');
+      if (modal) modal.classList.remove('open');
+      if (typeof goToChapterById === 'function') {
+        goToChapterById("ch2");
+      }
+    }, 1100);
   }
 }
 
