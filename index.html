@@ -632,7 +632,43 @@
       background: #040914; flex-shrink: 0;
     }
     .char-profile-card .avatar-box svg { width: 38px; height: 38px; }
+/* НЕОНОВАЯ ПОДСВЕТКА АБЗАЦЕВ (ПК & МОБИЛЬНЫЕ) */
+    .chapter-content p {
+      margin-bottom: 1.45em;
+      text-align: justify;
+      hyphens: auto;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      border-left: 2px solid transparent;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
 
+    /* Наведение на ПК */
+    @media (hover: hover) and (pointer: fine) {
+      .chapter-content p:hover {
+        background: rgba(0, 240, 255, 0.05);
+        border-left: 2px solid var(--cyan);
+        color: #ffffff;
+        text-shadow: 0 0 10px rgba(0, 240, 255, 0.35);
+        transform: translateX(4px);
+      }
+    }
+
+    /* Фокус при скролле на смартфонах */
+    @media (hover: none) and (pointer: coarse) {
+      .chapter-content p {
+        opacity: 0.55;
+      }
+      .chapter-content p.para-active-scan {
+        opacity: 1;
+        background: rgba(0, 240, 255, 0.07);
+        border-left: 2px solid var(--cyan);
+        color: #ffffff;
+        text-shadow: 0 0 12px rgba(0, 240, 255, 0.45);
+        box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.05);
+      }
+    }
     @media(max-width: 768px) {
       article.chapter-card { padding: 24px 18px; }
       header.sci-hud { padding: 8px 12px; }
@@ -1107,8 +1143,32 @@ document.getElementById('chapContent').innerHTML = cleanContent;
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
       applyGlitchEffect();
+      initMobileParagraphScanner();
     }
+/* МОБИЛЬНЫЙ НЕЙРО-СКАНЕР ПРИ СКРОЛЛЕ */
+    let mobileObserver = null;
+    function initMobileParagraphScanner() {
+      if (mobileObserver) mobileObserver.disconnect();
 
+      // Проверяем, мобильное ли устройство с сенсорным экраном
+      if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+        mobileObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('para-active-scan');
+            } else {
+              entry.target.classList.remove('para-active-scan');
+            }
+          });
+        }, {
+          rootMargin: '-35% 0px -35% 0px', // Фокус ровно по центру экрана
+          threshold: 0.2
+        });
+
+        const paras = document.querySelectorAll('.chapter-content p');
+        paras.forEach(p => mobileObserver.observe(p));
+      }
+    }
     function populateToc() {
       const tocList = document.getElementById('tocList');
       if (!tocList) return;
