@@ -289,20 +289,22 @@
       background: linear-gradient(180deg, var(--cyan), var(--magenta));
     }
 
+    /* ВОССТАНОВЛЕННЫЙ СТИЛЬНЫЙ ASCII БОКС */
     .ascii-art-box {
-      background: rgba(4, 9, 20, 0.85);
-      border: 1px solid rgba(0, 240, 255, 0.22);
+      background: rgba(4, 9, 20, 0.9);
+      border: 1px solid rgba(0, 240, 255, 0.28);
       border-radius: var(--radius-md);
-      padding: 12px;
+      padding: 14px;
       margin-bottom: 22px;
       font-family: var(--font-mono);
-      font-size: 11px;
-      line-height: 1.15;
+      font-size: 11.5px;
+      line-height: 1.25;
       color: #00f0ff;
       white-space: pre;
       overflow-x: auto;
       text-align: center;
-      text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+      text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+      box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.08);
     }
 
     .author-speaker-row {
@@ -365,7 +367,6 @@
       color: #bceeff;
     }
 
-    /* ПОДСВЕЧЕННЫЕ ПОДСКАЗКИ В ТЕКСТЕ */
     .data-clue {
       display: inline-block;
       background: rgba(0, 240, 255, 0.08);
@@ -516,7 +517,6 @@
       font-size: 13px;
     }
 
-    /* КОНСОЛЬ ПОИСКА ПО КЛЮЧЕВЫМ СЛОВАМ */
     .cli-box {
       background: #040914;
       border: 1px solid var(--border-sci);
@@ -551,7 +551,6 @@
       line-height: 1.6;
     }
 
-    /* МИНИ-ИГРА: НЕЙРОХИРУРГИЯ (САПЕР НА ЧИПЕ) */
     .neuro-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -577,7 +576,6 @@
     .neuro-cell.trap { background: rgba(255, 0, 85, 0.4); border-color: var(--magenta); color: #fff; }
     .neuro-cell.shunt { background: rgba(255, 170, 0, 0.2); border-color: var(--amber); }
 
-    /* МОБИЛЬНЫЙ И ПК QTE-ОВЕРДРАЙВ */
     .qte-container {
       margin: 20px auto;
       max-width: 420px;
@@ -894,7 +892,7 @@
     </div>
 
     <div style="font-family:var(--font-mono); font-size:11px; color:var(--text-dim); text-align:center; padding-top:12px; border-top:1px solid rgba(255,255,255,0.08);">
-      EXPEDITION // ERIDAN-4 // SYS V6.5
+      EXPEDITION // ERIDAN-4 // SYS V6.8
     </div>
   </aside>
 
@@ -929,7 +927,6 @@
     </article>
   </main>
 
-  <!-- МОДАЛЬНОЕ ОКНО: КОНСОЛЬ ПОИСКА ПО КЛЮЧЕВЫМ СЛОВАМ -->
   <div class="modal-overlay" id="modalConsole">
     <div class="modal-window">
       <div class="modal-head">
@@ -952,7 +949,6 @@
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО: НЕЙРОХИРУРГИЯ (САПЕР) -->
   <div class="modal-overlay" id="modalNeuro">
     <div class="modal-window" style="max-width:520px;">
       <div class="modal-head">
@@ -977,7 +973,6 @@
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО: QTE ОВЕРДРАЙВ (ПК + МОБИЛКИ) -->
   <div class="modal-overlay" id="modalQTE">
     <div class="modal-window" style="max-width:500px;">
       <div class="modal-head">
@@ -1000,7 +995,6 @@
     </div>
   </div>
 
-  <!-- ОСТАЛЬНЫЕ МОДАЛЬНЫЕ ОКНА -->
   <div class="modal-overlay" id="modalTacticalMap">
     <div class="modal-window">
       <div class="modal-head">
@@ -1099,9 +1093,6 @@
   </div>
 
   <script>
-    /* ========================================================
-       СКВОЗНОЙ РЕЗОНАНС И АЛГОРИТМ ТЕКСТОВОГО ГЛИТЧА
-       ======================================================== */
     let synapseResonance = 80;
     let unlockedLoreKeys = new Set();
     let qteSpeedModifier = 3.2;
@@ -1125,12 +1116,10 @@
       applyGlitchEffect();
     }
 
-    // Текстовый глитч при падении резонанса
     function applyGlitchEffect() {
       const art = document.getElementById('mainArticle');
       if (synapseResonance < 40) {
         art.style.filter = 'drop-shadow(2px 0 0 rgba(255,0,85,0.4)) drop-shadow(-2px 0 0 rgba(0,240,255,0.4))';
-        // Подмена случайных слов
         document.querySelectorAll('.chapter-content p').forEach(p => {
           if (Math.random() < 0.25 && !p.dataset.origText) {
             p.dataset.origText = p.innerHTML;
@@ -1148,9 +1137,43 @@
       }
     }
 
-    /* ========================================================
-       КОНСОЛЬ ПОИСКА ПО КЛЮЧЕВЫМ СЛОВАМ
-       ======================================================== */
+    /* ПОЛНЫЕ, КРАСИВЫЕ ASCII АРТЫ С ШИРОКИМ ФОРМАТИРОВАНИЕМ */
+    const asciiArtGallery = {
+      citySpire: [
+        "    /\\               |*    .          .       .  *",
+        "   /  \\      .      -O-        .             .    ",
+        "  / /\\ \\             |    .        .        .     ",
+        " | |  | |     ||||           ||||       ||||      ",
+        " | |  | |  [АРГО-СИС ШПИЛЬ]  |  |       |  |      ",
+        " | |  | |     |  |           |  |       |  |      ",
+        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+        "... ДОЖДЬ ВЕРХНЕГО ГОРОДА // ВЫСОТА: 200 ЭТАЖ ..."
+      ].join("\n"),
+
+      dreadnought: [
+        "   .        *        .      .          .      *",
+        "        .       ______/=======\\______       .    ",
+        "  *           /  [ КОВЧЕГ МНЕМОЗИНЫ ] \\          ",
+        "   __________/_________________________\\_________",
+        "  <===========|  (X)   (X)   (X)  |=============>",
+        "              \\___________________/       .      ",
+        "        .               *             .          ",
+        "... ОРБИТАЛЬНЫЙ ДРЕДНОУТ // КВАНТОВЫЙ РАЗЛОМ ..."
+      ].join("\n"),
+
+      eridanMoons: [
+        "      .           ( O )                  .        ",
+        "           *      ЯНТАРНАЯ ЛУНА-1                 ",
+        "   .                          .        ( o )      ",
+        "          .                           ЛУНА-2      ",
+        "   /\\_  _  /\\_      /\\_  _  /\\_      /\\_  _  /\\_  ",
+        "  /   \\/ \\/   \\    /   \\/ \\/   \\    /   \\/ \\/   \\ ",
+        " / КРИСТАЛЛЫ   \\  /  БАЗАЛЬТ    \\  / ЭРИДАН-4    \\",
+        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+        "... ЭКЗОПЛАНЕТА ЭРИДАН-4 // ДИКИЙ ГОРИЗОНТ ..."
+      ].join("\n")
+    };
+
     const secretLoreDatabase = {
       "МНЕМОЗИНА": {
         title: "ДОСЬЕ № 904-А // ПРОЕКТ «МНЕМОЗИНА»",
@@ -1193,7 +1216,6 @@
       const field = document.getElementById('cliInputField');
       const val = field.value.trim().toUpperCase();
       const out = document.getElementById('cliOutput');
-
       if (!val) return;
 
       if (secretLoreDatabase[val]) {
@@ -1224,10 +1246,7 @@
     };
     document.getElementById('btnCloseConsole').onclick = () => document.getElementById('modalConsole').classList.remove('open');
 
-    /* ========================================================
-       МИНИ-ИГРА: НЕЙРОХИРУРГИЯ (САПЕР НА ЧИПЕ)
-       ======================================================== */
-    let neuroGrid = [];
+    /* МИНИ-ИГРА: НЕЙРОХИРУРГИЯ */
     let neuroTraps = new Set();
     let neuroShunts = new Set();
     let neuroRevealed = 0;
@@ -1244,7 +1263,6 @@
       document.getElementById('neuroStatus').style.color = 'var(--cyan)';
       document.getElementById('shuntsDisplay').innerText = `0 / ${totalTraps}`;
 
-      // Генерация ловушек
       while (neuroTraps.size < totalTraps) {
         neuroTraps.add(Math.floor(Math.random() * (neuroSize * neuroSize)));
       }
@@ -1290,7 +1308,6 @@
         return;
       }
 
-      // Подсчет соседей
       let r = Math.floor(idx / neuroSize);
       let c = idx % neuroSize;
       let count = 0;
@@ -1322,9 +1339,7 @@
     };
     document.getElementById('btnCloseNeuro').onclick = () => document.getElementById('modalNeuro').classList.remove('open');
 
-    /* ========================================================
-       QTE-ОВЕРДРАЙВ С ПОДДЕРЖКОЙ ENTER, КЛИКОВ И ТАПОВ
-       ======================================================== */
+    /* QTE-ОВЕРДРАЙВ */
     let qteCursorPos = 0;
     let qteDirection = 1;
     let qteAnim = null;
@@ -1337,7 +1352,6 @@
       document.getElementById('qteResult').innerText = '';
       cancelAnimationFrame(qteAnim);
 
-      // Адаптация сложности под выбор на карте
       const zone = document.querySelector('.qte-zone');
       zone.style.width = `${qteZoneWidth}%`;
       zone.style.left = `${50 - qteZoneWidth/2}%`;
@@ -1379,7 +1393,6 @@
       }
     }
 
-    // Поддержка Enter и Пробела на клавиатуре
     window.addEventListener('keydown', e => {
       if (isQTEActive && (e.code === 'Enter' || e.code === 'Space')) {
         e.preventDefault();
@@ -1398,9 +1411,6 @@
       startQTE();
     };
 
-    /* ========================================================
-       ТАКТИЧЕСКАЯ КАРТА (ВЛИЯЕТ НА СЛОЖНОСТЬ QTE)
-       ======================================================== */
     function selectTacNode(nodeId) {
       document.querySelectorAll('.tac-node').forEach((el, i) => {
         el.classList.toggle('selected', (i + 1) === nodeId);
@@ -1435,7 +1445,6 @@
       document.getElementById('modalTacticalMap').classList.add('open');
     };
 
-    /* SVG ИКОНКИ */
     const characterIcons = {
       mark: `<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="#00f0ff" stroke-width="2"/><path d="M30 75 C30 55, 70 55, 70 75" stroke="#00f0ff" stroke-width="3"/><circle cx="50" cy="42" r="16" stroke="#00f0ff" stroke-width="3"/><line x1="52" y1="30" x2="62" y2="38" stroke="#ff0055" stroke-width="3"/></svg>`,
       ellie: `<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="#00f0ff" stroke-width="2"/><circle cx="50" cy="45" r="13" stroke="#00f0ff" stroke-width="2.5"/><rect x="58" y="42" width="7" height="5" stroke="#ffaa00" stroke-width="1.5"/><path d="M30 78 C30 62, 70 62, 70 78" stroke="#00f0ff" stroke-width="3"/></svg>`,
@@ -1444,13 +1453,7 @@
       kovalskaya: `<svg viewBox="0 0 100 100" fill="none"><polygon points="50,6 94,50 50,94 6,50" stroke="#ff0055" stroke-width="2"/><circle cx="50" cy="45" r="16" stroke="#ff0055" stroke-width="2.5"/></svg>`
     };
 
-    const asciiArtGallery = {
-      citySpire: `/\\        |* .   \n /  \\  -O-    \n[АРГО-СИС ШПИЛЬ]\n... ВЫСОТА 200 ЭТАЖ ...`,
-      dreadnought: `    ______/=======\\______    \n  /  [ КОВЧЕГ МНЕМОЗИНЫ ] \\  \n<===========| (X) |===========>`,
-      eridanMoons: `    ( O ) ЛУНА-1     ( o ) ЛУНА-2\n  /\\_  _  /\\_      /\\_  _  /\\_   \n / ЭРИДАН-4  \\    / КРИСТАЛЛЫ \\  `
-    };
-
-    /* БАЗА ГЛАВ (1-18) С ПОДСТАВЛЕННЫМИ ДАННЫМИ ДЛЯ КЛИКОВ */
+    /* БАЗА ГЛАВ (1-18) */
     const bookChapters = [
       {
         id: "ch1",
@@ -1462,8 +1465,8 @@
         cluesCount: 1,
         speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>Вкус изопропилового спирта всегда предшествовал провалу в чужую жизнь. Холодный зажим щелкнул у основания черепа, прижавшись к порту. На углу стола небрежно валялся пластиковый бейдж сотрудника Отдела сетевого аудита «Арго-Сис» — легальная жизнь Элли, прикрывавшая проект <span class="data-clue" onclick="putClueToCli('МНЕМОЗИНА')">[ ◈ МНЕМОЗИНА ]</span>.</p>
-          <p>Марк провалился сквозь защитные слои: ледокол пробил капсулу «мнемо-слепка». Мальчик лет шести со свежим шрамом над бровью услышал голос: <em>«Забудь имя»</em>. Исполняемый архив № <span class="data-clue" onclick="putClueToCli('ВЕБЕР')">[ ◈ ВЕБЕР ]</span> был обнаружен.</p>
+          <p>Вкус изопропилового спирта всегда предшествовал провалу в чужую жизнь[cite: 2]. Холодный зажим щелкнул у основания черепа, прижавшись к порту[cite: 2]. На углу стола небрежно валялся пластиковый бейдж сотрудника Отдела сетевого аудита «Арго-Сис» — легальная жизнь Элли, прикрывавшая проект <span class="data-clue" onclick="putClueToCli('МНЕМОЗИНА')">[ ◈ МНЕМОЗИНА ]</span>[cite: 2].</p>
+          <p>Марк провалился сквозь защитные слои: ледокол пробил капсулу «мнемо-слепка»[cite: 2]. Мальчик лет шести со свежим шрамом над бровью услышал голос: <em>«Забудь имя»</em>[cite: 2]. Исполняемый архив № <span class="data-clue" onclick="putClueToCli('ВЕБЕР')">[ ◈ ВЕБЕР ]</span> был обнаружен[cite: 2].</p>
         `,
         choices: [
           { pov: "ЭЛЛИ", text: "«Марк, держись за меня. Я не позволю им сжечь твои синапсы!» (+10% Резонанса)", deltaRes: 10, target: 1 },
@@ -1496,7 +1499,7 @@
         cluesCount: 0,
         speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>В вагоне монорельса Элли подключила диагност к деке Марка: на экране высветился единственный фрагмент метаданных с подписью создателя проекта.</p>
+          <p>В вагоне монорельса Элли подключила диагност к деке Марка: на экране высветился единственный фрагмент метаданных с подписью создателя проекта[cite: 1].</p>
         `,
         choices: [
           { pov: "ЭЛЛИ", text: "Идти по следу платежа на черный рынок «Стек» к Харону", target: 3 },
@@ -1641,7 +1644,7 @@
         cluesCount: 0,
         speaker: { id: "ren", name: "Рен", role: "Субъект-09" },
         content: `
-          <p>В ледяных штольнях Рен корчился в луче спутника. Спецназ «Цербер» зажал группу в угол.</p>
+          <p>В ледяных штольнях Рен корчился в луче спутника[cite: 4]. Спецназ «Цербер» зажал группу в угол[cite: 4].</p>
         `,
         choices: [
           { pov: "РЕН", text: "«Марк, возьми мой холод! Отрази их луч!» (+10% Резонанса)", deltaRes: 10, target: 12 }
@@ -1657,7 +1660,7 @@
         cluesCount: 0,
         speaker: { id: "mark", name: "Марк Вебер", role: "Субъект-0" },
         content: `
-          <p>Марк замкнул порт с Реном и послал крио-импульс прямо в спутник «Атлант-9». Приемники директоров сгорели.</p>
+          <p>Марк замкнул порт с Реном и послал крио-импульс прямо в спутник «Атлант-9»[cite: 5]. Приемники директоров сгорели[cite: 5].</p>
         `,
         choices: [
           { pov: "КАЙ", text: "Увести Рена и Марка на минус восьмой горизонт под гранитный щит", target: 13 }
@@ -1782,79 +1785,167 @@
     let currentChapterIndex = 0;
     let pendingNextChapter = null;
 
-    /* ФОНОВЫЙ ХОЛСТ */
+    /* ПОЛНОСТЬЮ ПЕРЕРАБОТАННЫЙ НЕОНОВЫЙ CANVAS ФОН ДЛЯ ВСЕХ ГЛАВ */
     const bgCanvas = document.getElementById('bgCanvas');
     const bgCtx = bgCanvas.getContext('2d');
     let currentTheme = 'city';
     let bgParticles = [];
+    let bgCityWindows = [];
 
     function resizeBg() {
       bgCanvas.width = window.innerWidth;
       bgCanvas.height = window.innerHeight;
-      initBgParticles();
+      initBgScene();
     }
     window.addEventListener('resize', resizeBg);
 
-    function initBgParticles() {
+    function initBgScene() {
       bgParticles = [];
-      const count = currentTheme === 'city' ? 80 : 60;
+      bgCityWindows = [];
+
+      // Генерация динамических неоновых окон небоскребов
+      for (let i = 0; i < 70; i++) {
+        bgCityWindows.push({
+          xRatio: Math.random(),
+          yRatio: 0.4 + Math.random() * 0.55,
+          w: 8 + Math.random() * 14,
+          h: 4 + Math.random() * 6,
+          color: Math.random() > 0.4 ? 'rgba(0,240,255,' : (Math.random() > 0.5 ? 'rgba(255,0,85,' : 'rgba(255,170,0,'),
+          baseAlpha: 0.2 + Math.random() * 0.6,
+          blinkSpeed: 0.02 + Math.random() * 0.05
+        });
+      }
+
+      // Частицы фона (дождь / пыльца / звезды)
+      const count = 90;
       for (let i = 0; i < count; i++) {
         bgParticles.push({
           x: Math.random() * bgCanvas.width,
           y: Math.random() * bgCanvas.height,
-          speed: 1 + Math.random() * 4,
-          len: 8 + Math.random() * 14,
-          size: 1 + Math.random() * 3,
-          opacity: 0.2 + Math.random() * 0.6
+          speed: 1.5 + Math.random() * 3.5,
+          len: 12 + Math.random() * 18,
+          size: 1.5 + Math.random() * 3,
+          color: Math.random() > 0.5 ? '#00f0ff' : '#ff0055',
+          opacity: 0.25 + Math.random() * 0.7,
+          angle: Math.random() * Math.PI * 2
         });
       }
     }
 
     function renderBgFrame() {
       bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      const time = Date.now() * 0.002;
 
       if (currentTheme === 'city') {
-        bgCtx.fillStyle = 'rgba(4, 8, 18, 0.9)';
-        const bCount = 10;
+        // 1. Глубокий градиент ночного мегаполиса
+        const grad = bgCtx.createLinearGradient(0, 0, 0, bgCanvas.height);
+        grad.addColorStop(0, '#040711');
+        grad.addColorStop(0.7, '#081122');
+        grad.addColorStop(1, '#0e1c36');
+        bgCtx.fillStyle = grad;
+        bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+        // 2. Силуэты небоскребов заднего плана
+        bgCtx.fillStyle = 'rgba(6, 12, 25, 0.9)';
+        const bCount = 9;
         const bWidth = bgCanvas.width / bCount;
         for (let i = 0; i < bCount; i++) {
-          const h = (Math.sin(i * 1.5) * 0.2 + 0.35) * bgCanvas.height;
+          const h = (Math.sin(i * 1.8) * 0.18 + 0.42) * bgCanvas.height;
           bgCtx.fillRect(i * bWidth, bgCanvas.height - h, bWidth + 2, h);
         }
 
-        bgCtx.strokeStyle = 'rgba(0, 240, 255, 0.25)';
-        bgCtx.lineWidth = 1;
+        // 3. Неоновые светящиеся окна и вывески
+        bgCityWindows.forEach(w => {
+          const alpha = w.baseAlpha + Math.sin(time * 3 + w.xRatio * 10) * 0.2;
+          bgCtx.fillStyle = `${w.color}${Math.max(0.1, alpha)})`;
+          bgCtx.shadowColor = w.color.includes('240') ? '#00f0ff' : '#ff0055';
+          bgCtx.shadowBlur = 8;
+          bgCtx.fillRect(w.xRatio * bgCanvas.width, w.yRatio * bgCanvas.height, w.w, w.h);
+        });
+        bgCtx.shadowBlur = 0;
+
+        // 4. Неоновые линии дождя Верхнего города
+        bgCtx.strokeStyle = 'rgba(0, 240, 255, 0.4)';
+        bgCtx.lineWidth = 1.2;
         bgCtx.beginPath();
         bgParticles.forEach(p => {
-          p.y += p.speed * 2.5;
-          p.x += 0.5;
+          p.y += p.speed * 2.8;
+          p.x += 0.8;
           if (p.y > bgCanvas.height) { p.y = -20; p.x = Math.random() * bgCanvas.width; }
           bgCtx.moveTo(p.x, p.y);
-          bgCtx.lineTo(p.x + 1, p.y + p.len);
+          bgCtx.lineTo(p.x + 1.2, p.y + p.len);
         });
         bgCtx.stroke();
 
       } else if (currentTheme === 'port') {
-        bgCtx.fillStyle = 'rgba(5, 12, 24, 0.9)';
+        // Порт Норд-Бей: темный туман и неоновые волны
+        bgCtx.fillStyle = '#040816';
         bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+        for (let w = 0; w < 4; w++) {
+          bgCtx.beginPath();
+          bgCtx.moveTo(0, bgCanvas.height);
+          for (let x = 0; x <= bgCanvas.width; x += 30) {
+            const y = bgCanvas.height - 140 + Math.sin(x * 0.006 + time + w * 1.5) * (20 + w * 8) + w * 30;
+            bgCtx.lineTo(x, y);
+          }
+          bgCtx.lineTo(bgCanvas.width, bgCanvas.height);
+          bgCtx.closePath();
+          bgCtx.fillStyle = (w % 2 === 0) ? 'rgba(0, 240, 255, 0.06)' : 'rgba(0, 255, 102, 0.04)';
+          bgCtx.shadowColor = '#00f0ff';
+          bgCtx.shadowBlur = 15;
+          bgCtx.fill();
+        }
+        bgCtx.shadowBlur = 0;
+
       } else if (currentTheme === 'space') {
-        bgCtx.fillStyle = '#03050c';
+        // Космос и квантовое кольцо
+        bgCtx.fillStyle = '#02040b';
         bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+        // Мерцающие разноцветные звезды
         bgParticles.forEach(p => {
-          p.y += p.speed * 0.2;
+          p.y += p.speed * 0.15;
           if (p.y > bgCanvas.height) p.y = 0;
-          bgCtx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+          bgCtx.fillStyle = p.color;
+          bgCtx.shadowColor = p.color;
+          bgCtx.shadowBlur = 6;
           bgCtx.fillRect(p.x, p.y, p.size, p.size);
         });
+        bgCtx.shadowBlur = 0;
+
       } else if (currentTheme === 'eridan') {
-        bgCtx.fillStyle = '#050714';
+        // Эридан-4: Две светящиеся янтарные луны и кристаллическая пыльца
+        bgCtx.fillStyle = '#050614';
         bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+        // Янтарная Луна 1 (Большая с неоновым ореолом)
+        bgCtx.shadowColor = '#ffaa00';
+        bgCtx.shadowBlur = 30;
+        bgCtx.fillStyle = 'rgba(255, 170, 0, 0.4)';
+        bgCtx.beginPath();
+        bgCtx.arc(bgCanvas.width * 0.78, 130, 48, 0, Math.PI * 2);
+        bgCtx.fill();
+
+        // Янтарная Луна 2 (Малая)
+        bgCtx.fillStyle = 'rgba(255, 190, 50, 0.3)';
+        bgCtx.shadowBlur = 20;
+        bgCtx.beginPath();
+        bgCtx.arc(bgCanvas.width * 0.88, 75, 24, 0, Math.PI * 2);
+        bgCtx.fill();
+        bgCtx.shadowBlur = 0;
+
+        // Фиолетовая и лазурная био-пыльца
         bgParticles.forEach(p => {
-          p.y -= p.speed * 0.3;
+          p.y -= p.speed * 0.35;
+          p.x += Math.sin(p.y * 0.02 + time) * 0.8;
           if (p.y < 0) { p.y = bgCanvas.height; p.x = Math.random() * bgCanvas.width; }
-          bgCtx.fillStyle = `rgba(180, 0, 255, ${p.opacity * 0.7})`;
-          bgCtx.fillRect(p.x, p.y, p.size * 1.5, p.size * 1.5);
+          bgCtx.fillStyle = (p.opacity > 0.5) ? 'rgba(0, 240, 255, 0.7)' : 'rgba(210, 0, 255, 0.6)';
+          bgCtx.shadowColor = '#d200ff';
+          bgCtx.shadowBlur = 8;
+          bgCtx.fillRect(p.x, p.y, p.size * 1.6, p.size * 1.6);
         });
+        bgCtx.shadowBlur = 0;
       }
 
       requestAnimationFrame(renderBgFrame);
@@ -1867,11 +1958,13 @@
 
       if (ch.theme !== currentTheme) {
         currentTheme = ch.theme;
-        initBgParticles();
+        initBgScene();
       }
 
       updateAmbientForChapter(index);
-      syncSoundtrackWithChapter(ch.soundtrackGroup);
+      if (isAudioActive) {
+        syncSoundtrackWithChapter(ch.soundtrackGroup, false);
+      }
 
       document.getElementById('chapterAsciiArt').innerText = asciiArtGallery[ch.art] || asciiArtGallery.citySpire;
       document.getElementById('speakerAvatarFrame').innerHTML = characterIcons[ch.speaker.id] || characterIcons.mark;
@@ -2079,11 +2172,10 @@
     };
     document.getElementById('btnCloseAbout').onclick = () => document.getElementById('modalAbout').classList.remove('open');
 
-    /* АУДИОСИСТЕМА */
+    /* НАДЕЖНЫЙ АУДИОМОДУЛЬ (МГНОВЕННЫЙ СТАРТ ПО КЛИКУ) */
     let audioCtx = null;
     let isAudioActive = false;
     let currentSoundtrackGroup = 1;
-    let musicMasterGain = null;
     let noiseNode = null;
     let noiseFilter = null;
     let noiseGain = null;
@@ -2094,9 +2186,6 @@
     function initAudioEngine() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        musicMasterGain = audioCtx.createGain();
-        musicMasterGain.gain.setValueAtTime(0.7, audioCtx.currentTime);
-        musicMasterGain.connect(audioCtx.destination);
       }
       if (audioCtx.state === 'suspended') {
         audioCtx.resume();
@@ -2141,8 +2230,11 @@
       }
     }
 
-    function syncSoundtrackWithChapter(targetGroup) {
-      if (currentSoundtrackGroup === targetGroup && isAudioActive) return;
+    function syncSoundtrackWithChapter(targetGroup, forceRestart = false) {
+      if (!forceRestart && currentSoundtrackGroup === targetGroup && isAudioActive && (!extTrack1.paused || !extTrack2.paused)) {
+        return;
+      }
+
       currentSoundtrackGroup = targetGroup;
       if (!isAudioActive) return;
 
@@ -2152,10 +2244,12 @@
 
       if (currentSoundtrackGroup === 1) {
         extTrack2.pause();
-        extTrack1.play().catch(()=>{});
+        extTrack2.currentTime = 0;
+        extTrack1.play().catch(e => console.log('Audio autoplay prevented:', e));
       } else {
         extTrack1.pause();
-        extTrack2.play().catch(()=>{});
+        extTrack1.currentTime = 0;
+        extTrack2.play().catch(e => console.log('Audio autoplay prevented:', e));
       }
     }
 
@@ -2174,6 +2268,7 @@
       extTrack2.volume = val;
     };
 
+    // Исправленный старт музыки с первого клика
     document.getElementById('menuItemAudioToggle').onclick = () => {
       initAudioEngine();
       if (!noiseNode) setupProceduralNoise();
@@ -2185,7 +2280,7 @@
       if (isAudioActive) {
         icon.innerText = '⏸';
         label.innerText = 'ПАУЗА // САУНДТРЕК';
-        syncSoundtrackWithChapter(currentSoundtrackGroup);
+        syncSoundtrackWithChapter(currentSoundtrackGroup, true);
       } else {
         icon.innerText = '▶';
         label.innerText = 'ВКЛЮЧИТЬ САУНДТРЕК';
@@ -2195,10 +2290,17 @@
     };
 
     document.getElementById('menuItemTrackSwitch').onclick = () => {
-      syncSoundtrackWithChapter(currentSoundtrackGroup === 1 ? 2 : 1);
+      initAudioEngine();
+      currentSoundtrackGroup = (currentSoundtrackGroup === 1 ? 2 : 1);
+      if (!isAudioActive) {
+        isAudioActive = true;
+        document.getElementById('iconAudioState').innerText = '⏸';
+        document.getElementById('labelAudioState').innerText = 'ПАУЗА // САУНДТРЕК';
+      }
+      syncSoundtrackWithChapter(currentSoundtrackGroup, true);
     };
 
-    // Старт
+    // Запуск приложения
     resizeBg();
     renderBgFrame();
     renderChapter(0);
