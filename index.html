@@ -10,12 +10,11 @@
   <style>
     :root {
       --bg-dark: #060913;
-      --card-bg: rgba(9, 15, 28, 0.78);
-      --card-border: rgba(56, 189, 248, 0.22);
+      --card-bg: rgba(9, 15, 28, 0.85);
+      --card-border: rgba(56, 189, 248, 0.25);
       --cyan-neon: #00f0ff;
       --cyan-bright: #38bdf8;
       --cyan-glow: rgba(0, 240, 255, 0.45);
-      --blue-btn: #0284c7;
       --magenta: #f43f5e;
       --amber: #f59e0b;
       --green: #10b981;
@@ -27,7 +26,7 @@
       --font-mono: 'Fira Code', monospace;
       --radius-sm: 8px;
       --radius-md: 14px;
-      --radius-lg: 22px;
+      --radius-lg: 24px;
       --radius-pill: 9999px;
       --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -56,7 +55,7 @@
       letter-spacing: -0.01em;
     }
 
-    /* ФОН: КОСМИЧЕСКИЕ ТУМАННОСТИ И ТАКТИЧЕСКАЯ СЕТКА (КАК НА МОНИТОРЕ) */
+    /* ФОНОВЫЕ СЛОИ (ПОЛНОСТЬЮ ОТКЛЮЧЕН ПЕРЕХВАТ КЛИКОВ) */
     .bg-nebula-left {
       position: fixed;
       top: 5%;
@@ -65,7 +64,7 @@
       height: 700px;
       background: radial-gradient(circle, rgba(2, 132, 199, 0.32) 0%, rgba(0, 240, 255, 0.12) 40%, transparent 70%);
       filter: blur(85px);
-      pointer-events: none;
+      pointer-events: none !important;
       z-index: 0;
     }
     .bg-nebula-right {
@@ -76,7 +75,7 @@
       height: 750px;
       background: radial-gradient(circle, rgba(217, 119, 6, 0.28) 0%, rgba(244, 63, 94, 0.1) 45%, transparent 70%);
       filter: blur(95px);
-      pointer-events: none;
+      pointer-events: none !important;
       z-index: 0;
     }
     .bg-tactical-grid {
@@ -87,33 +86,33 @@
         linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
       background-size: 70px 70px;
-      pointer-events: none;
-      z-index: 1;
+      pointer-events: none !important;
+      z-index: 0;
     }
 
     #bgCanvas {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      z-index: 1;
-      pointer-events: none;
+      z-index: 0;
+      pointer-events: none !important;
       opacity: 0.45;
     }
 
-    /* ВЕРХНЯЯ ШАПКА HUD (ТОЧНО КАК НА МОНИТОРЕ) */
+    /* ШАПКА HUD */
     .header-container {
       position: sticky;
       top: 12px;
-      z-index: 100;
+      z-index: 50;
       max-width: 1240px;
       margin: 0 auto;
       padding: 0 20px;
     }
     header.sci-hud {
-      background: rgba(9, 15, 28, 0.85);
+      background: rgba(9, 15, 28, 0.88);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: var(--radius-pill);
       box-shadow: 0 12px 36px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.15);
       padding: 10px 24px;
@@ -124,7 +123,6 @@
       position: relative;
     }
 
-    /* БРЕНД СЛЕВА */
     .brand-group {
       display: flex;
       align-items: center;
@@ -139,7 +137,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
+      flex-shrink: 0;
     }
     .brand-orb::after {
       content: "";
@@ -155,17 +153,17 @@
       letter-spacing: 0.5px;
       color: #fff;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
-    /* ЦЕНТРАЛЬНЫЕ ВКЛАДКИ НАВИГАЦИИ */
     .hud-nav-tabs {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 12px;
     }
     .hud-tab-item {
       display: inline-block;
-      margin: 0 14px;
+      margin: 0 10px;
       font-family: var(--font-title);
       font-size: 12px;
       font-weight: 600;
@@ -175,7 +173,8 @@
       text-transform: uppercase;
       transition: var(--transition-smooth);
       position: relative;
-      padding: 4px 0;
+      padding: 6px 4px;
+      user-select: none;
     }
     .hud-tab-item:hover, .hud-tab-item.active {
       color: #fff;
@@ -189,7 +188,6 @@
       box-shadow: 0 0 8px var(--cyan-neon);
     }
 
-    /* ПРАВАЯ ЧАСТЬ: РЕЗОНАНС И КНОПКА МЕНЮ */
     .hud-right-group {
       display: flex;
       align-items: center;
@@ -203,6 +201,7 @@
       font-size: 12px;
       font-weight: 600;
       color: var(--cyan-bright);
+      white-space: nowrap;
     }
     .resonance-track {
       width: 76px;
@@ -227,7 +226,7 @@
       font-family: var(--font-title);
       font-size: 12px;
       font-weight: 700;
-      padding: 7px 18px;
+      padding: 8px 20px;
       border-radius: var(--radius-pill);
       cursor: pointer;
       display: inline-flex;
@@ -236,6 +235,8 @@
       box-shadow: 0 4px 18px rgba(2, 132, 199, 0.45);
       transition: var(--transition-smooth);
       letter-spacing: 0.5px;
+      white-space: nowrap;
+      user-select: none;
     }
     .btn-header-menu:hover {
       background: linear-gradient(135deg, #0ea5e9, #38bdf8);
@@ -243,25 +244,24 @@
       transform: translateY(-1px);
     }
 
-    /* НЕОНОВАЯ ЛИНИЯ ПОД ШАПКОЙ (ТОЧНО КАК НА СКРИНЕ) */
     .hud-neon-line {
       height: 2px;
       width: 100%;
       background: linear-gradient(90deg, transparent 0%, var(--cyan-neon) 20%, var(--cyan-neon) 80%, transparent 100%);
       box-shadow: 0 0 14px var(--cyan-neon);
       margin-top: 10px;
+      pointer-events: none;
     }
 
-    /* ОСНОВНАЯ ОБЛАСТЬ ЧТЕНИЯ */
+    /* ОСНОВНОЙ КОНТЕЙНЕР ЧТЕНИЯ */
     main.reader-container {
       max-width: 940px;
-      margin: 28px auto 60px auto;
+      margin: 28px auto 40px auto;
       padding: 0 20px;
       position: relative;
       z-index: 10;
     }
 
-    /* КАРТОЧКА ГЛАВЫ */
     article.chapter-card {
       background: var(--card-bg);
       backdrop-filter: blur(28px);
@@ -273,7 +273,6 @@
       position: relative;
     }
 
-    /* ЛЕВАЯ ВЕРТИКАЛЬНАЯ СВЕТОВАЯ ПОЛОСА СО СВЕТЯЩЕЙСЯ ТОЧКОЙ */
     .card-left-rail {
       position: absolute;
       top: 36px;
@@ -283,6 +282,7 @@
       background: linear-gradient(180deg, var(--cyan-neon), rgba(0, 240, 255, 0.2));
       box-shadow: 0 0 12px var(--cyan-neon);
       border-radius: 3px;
+      pointer-events: none;
     }
     .card-left-dot {
       position: absolute;
@@ -293,9 +293,9 @@
       border-radius: 50%;
       background: var(--cyan-neon);
       box-shadow: 0 0 16px var(--cyan-neon), 0 0 6px #fff;
+      pointer-events: none;
     }
 
-    /* ASCII АРТ */
     .ascii-art-box {
       background: rgba(3, 7, 16, 0.92);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -312,7 +312,6 @@
       text-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
     }
 
-    /* АВАТАР И СПИКЕР */
     .author-speaker-row {
       display: flex;
       align-items: center;
@@ -369,7 +368,6 @@
       line-height: 1.25;
     }
 
-    /* АБЗАЦЫ И АКТИВНЫЙ ФОКУС (ТОЧНО КАК НА МОНИТОРЕ) */
     .chapter-content p {
       margin-bottom: 1.45em;
       text-align: justify;
@@ -381,8 +379,6 @@
       position: relative;
     }
     .chapter-content p:last-child { margin-bottom: 0; }
-
-    /* Активный блок сканера (как на мониторе: мягкая плашка с бирюзовой границей) */
     .chapter-content p.para-active-scan,
     .chapter-content p:hover {
       background: rgba(0, 240, 255, 0.07);
@@ -412,7 +408,6 @@
       transform: translateY(-1px);
     }
 
-    /* ПАНЕЛЬ ВЫБОРА */
     .decision-panel {
       margin-top: 36px;
       padding: 24px;
@@ -433,8 +428,6 @@
       gap: 6px;
     }
     .decision-options { display: flex; flex-direction: column; gap: 10px; }
-
-    /* КНОПКА ВЫБОРА (СОЧНАЯ СИНЯЯ КАПСУЛА КАК НА ЭКРАНЕ) */
     .decision-btn {
       background: linear-gradient(135deg, rgba(2, 132, 199, 0.85), rgba(37, 99, 235, 0.85));
       border: 1px solid rgba(255, 255, 255, 0.25);
@@ -471,7 +464,6 @@
       font-weight: 700;
     }
 
-    /* ПЛАВАЮЩИЕ НАВИГАЦИОННЫЕ КНОПКИ ВНИЗУ (КАК НА СКРИНЕ) */
     .bottom-nav-container {
       max-width: 940px;
       margin: 20px auto 40px auto;
@@ -511,74 +503,16 @@
       cursor: not-allowed;
     }
 
-    /* МОДАЛЬНЫЕ ОКНА */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(3, 5, 12, 0.92);
-      backdrop-filter: blur(20px);
-      z-index: 300;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal-window {
-      background: #091222;
-      border: 1px solid rgba(0, 240, 255, 0.35);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 240, 255, 0.2);
-      max-width: 680px;
-      width: 100%;
-      max-height: 85vh;
-      display: flex;
-      flex-direction: column;
-      border-radius: 20px;
-      overflow: hidden;
-      animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.96); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    .modal-head {
-      padding: 16px 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--font-title);
-      color: var(--cyan-bright);
-      font-size: 13.5px;
-      font-weight: 700;
-    }
-    .btn-close-menu {
-      background: transparent;
-      border: none;
-      color: var(--text-dim);
-      font-family: var(--font-mono);
-      font-size: 18px;
-      cursor: pointer;
-      padding: 4px 8px;
-    }
-    .btn-close-menu:hover { color: var(--magenta); }
-    .modal-body {
-      padding: 24px;
-      overflow-y: auto;
-      font-family: var(--font-mono);
-      font-size: 13px;
-    }
-
-    /* БОКОВОЕ МЕНЮ */
+    /* БОКОВОЕ МЕНЮ (САМЫЙ ВЫСОКИЙ СЛОЙ Z-INDEX) */
     .sci-sidebar {
       position: fixed;
-      top: 0; right: -400px;
+      top: 0; right: -420px;
       width: 360px; height: 100vh;
       background: rgba(9, 15, 28, 0.98);
       backdrop-filter: blur(28px);
       border-left: 1px solid rgba(0, 240, 255, 0.25);
       box-shadow: -20px 0 60px rgba(0,0,0,0.9);
-      z-index: 200;
+      z-index: 9999;
       transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
@@ -645,7 +579,65 @@
       justify-content: space-between;
     }
 
-    /* ИНТЕРАКТИВНЫЕ МОДУЛИ */
+    /* МОДАЛЬНЫЕ ОКНА */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(3, 5, 12, 0.92);
+      backdrop-filter: blur(20px);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-window {
+      background: #091222;
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 240, 255, 0.2);
+      max-width: 680px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px;
+      overflow: hidden;
+      animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-head {
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-title);
+      color: var(--cyan-bright);
+      font-size: 13.5px;
+      font-weight: 700;
+    }
+    .btn-close-menu {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+    .btn-close-menu:hover { color: var(--magenta); }
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+
+    /* ИНТЕРАКТИВЫ */
     #flightCanvas {
       background: #020610;
       border: 1px solid var(--cyan-neon);
@@ -784,13 +776,12 @@
       .chapter-heading { font-size: 22px; }
       .tactical-map-grid { grid-template-columns: 1fr; }
       .bottom-nav-container { padding: 0 14px; }
-      .card-left-rail { display: none; }
+      .card-left-rail, .card-left-dot { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ФОНОВЫЕ ТУМАННОСТИ И ТАКТИЧЕСКАЯ СЕТКА -->
   <div class="bg-nebula-left"></div>
   <div class="bg-nebula-right"></div>
   <div class="bg-tactical-grid"></div>
@@ -800,7 +791,7 @@
   <audio id="externalTrack1" src="track1.mp3" loop preload="auto"></audio>
   <audio id="externalTrack2" src="track2.mp3" loop preload="auto"></audio>
 
-  <!-- ШАПКА HUD КАК НА МОНИТОРЕ -->
+  <!-- ШАПКА HUD -->
   <div class="header-container">
     <header class="sci-hud">
       <div class="brand-group">
@@ -809,10 +800,10 @@
       </div>
 
       <nav class="hud-nav-tabs">
-        <div class="hud-tab-item active" id="tabChronicles" onclick="document.getElementById('menuItemToc').click()">ХРОНИКИ</div>
-        <div class="hud-tab-item" id="tabDeck" onclick="document.getElementById('menuItemConsole').click()">ДЕКА</div>
-        <div class="hud-tab-item" id="tabTactics" onclick="document.getElementById('menuItemTacticalMap').click()">ТАКТИКА</div>
-        <div class="hud-tab-item" id="tabProfiles" onclick="document.getElementById('menuItemCharacters').click()">ПРОФИЛИ</div>
+        <div class="hud-tab-item active" id="tabChronicles" onclick="openModalById('modalToc')">ХРОНИКИ</div>
+        <div class="hud-tab-item" id="tabDeck" onclick="openModalById('modalConsole')">ДЕКА</div>
+        <div class="hud-tab-item" id="tabTactics" onclick="openModalById('modalTacticalMap')">ТАКТИКА</div>
+        <div class="hud-tab-item" id="tabProfiles" onclick="openModalById('modalCharacters')">ПРОФИЛИ</div>
       </nav>
 
       <div class="hud-right-group">
@@ -833,7 +824,7 @@
     <div class="hud-neon-line"></div>
   </div>
 
-  <!-- БОКОВОЕ МЕНЮ СИСТЕМЫ -->
+  <!-- БОКОВОЕ МЕНЮ -->
   <aside class="sci-sidebar" id="sciSidebar">
     <div class="sidebar-head">
       <div class="sidebar-title">СИСТЕМА // НАВИГАЦИЯ</div>
@@ -906,13 +897,13 @@
     </article>
   </main>
 
-  <!-- ПЛАВАЮЩИЕ НАВИГАЦИОННЫЕ КНОПКИ ВНИЗУ (КАК НА СКРИНЕ) -->
+  <!-- НАВИГАЦИЯ ВНИЗУ -->
   <div class="bottom-nav-container">
     <button class="btn-float-nav" id="btnPrevChap">◄ ПРЕДЫДУЩАЯ</button>
     <button class="btn-float-nav" id="btnNextChap">СЛЕДУЮЩАЯ ►</button>
   </div>
 
-  <!-- МОДАЛЬНЫЕ ОКНА ИГР И ИНТЕРАКТИВОВ -->
+  <!-- МОДАЛЬНЫЕ ОКНА -->
   <div class="quick-chat-wrap" id="quickChatBox">
     <div class="quick-chat-timer-bar" id="quickChatBar"></div>
     <div class="quick-chat-msg" id="quickChatMsg">КАЙ: «Два шагохода на гребне, бью на поражение?»</div>
@@ -926,7 +917,7 @@
     <div class="modal-window" style="max-width: 680px;">
       <div class="modal-head">
         <div>ПРОРЫВ СКВОЗЬ КВАНТОВЫЙ ПОРТАЛ // «АТЛАС»</div>
-        <button class="btn-close-menu" id="btnCloseFlight">✕</button>
+        <button class="btn-close-menu" onclick="closeModalById('modalFlight')">✕</button>
       </div>
       <div class="modal-body">
         <div class="game-container" style="text-align:center;">
@@ -952,7 +943,7 @@
     <div class="modal-window">
       <div class="modal-head">
         <div>СПИСОК ФРАГМЕНТОВ АРХИВА</div>
-        <button class="btn-close-menu" id="btnCloseToc">✕</button>
+        <button class="btn-close-menu" onclick="closeModalById('modalToc')">✕</button>
       </div>
       <div class="modal-body" id="tocList"></div>
     </div>
@@ -962,7 +953,7 @@
     <div class="modal-window">
       <div class="modal-head">
         <div>ДЕКА НЕТРАННЕРА // ПОИСКОВАЯ КОНСОЛЬ «АРХИВ-0»</div>
-        <button class="btn-close-menu" id="btnCloseConsole">✕</button>
+        <button class="btn-close-menu" onclick="closeModalById('modalConsole')">✕</button>
       </div>
       <div class="modal-body">
         <div style="background:#070d18; border:1px solid rgba(255,255,255,0.08); padding:16px; border-radius:12px;">
@@ -983,7 +974,7 @@
     <div class="modal-window" style="max-width:520px;">
       <div class="modal-head">
         <div>МОДУЛЬ «НЕЙРОХИРУРГИЯ» // ДЕАКТИВАЦИЯ ЧИПА</div>
-        <button class="btn-close-menu" id="btnCloseNeuro">✕</button>
+        <button class="btn-close-menu" onclick="closeModalById('modalNeuro')">✕</button>
       </div>
       <div class="modal-body">
         <div style="text-align:center;">
@@ -1006,7 +997,7 @@
     <div class="modal-window" style="max-width:500px;">
       <div class="modal-head">
         <div>ПЕРЕХВАТ ПРИВОДА // QTE-ОВЕРДРАЙВ</div>
-        <button class="btn-close-menu" id="btnCloseQTE">✕</button>
+        <button class="btn-close-menu" onclick="closeModalById('modalQTE')">✕</button>
       </div>
       <div class="modal-body">
         <div class="qte-container">
@@ -1028,7 +1019,7 @@
     <div class="modal-window">
       <div class="modal-head">
         <div>ПЛАНШЕТ ЭЛЛИ // ПЛАН ВЫЛАЗКИ К «КОВЧЕГУ»</div>
-        <button class="btn-close-menu" id="btnCloseTacMap">✕</button>
+        <button class="btn-close-menu" onclick="closeModalById('modalTacticalMap')">✕</button>
       </div>
       <div class="modal-body">
         <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
@@ -1062,7 +1053,7 @@
     <div class="modal-window">
       <div class="modal-head">
         <div>ПРОФИЛИ & ИКОНКИ ПЕРСОНАЖЕЙ</div>
-        <button class="btn-close-menu" id="btnCloseCharacters">✕</button>
+        <button class="btn-close-menu" onclick="closeModalById('modalCharacters')">✕</button>
       </div>
       <div class="modal-body" id="charactersList"></div>
     </div>
@@ -1072,7 +1063,7 @@
     <div class="modal-window">
       <div class="modal-head">
         <div>ПРОТОКОЛ АВТОРА // SAINTMOOR</div>
-        <button class="btn-close-menu" id="btnCloseAbout">✕</button>
+        <button class="btn-close-menu" onclick="closeModalById('modalAbout')">✕</button>
       </div>
       <div class="modal-body" style="line-height:1.75;">
         <h3 style="color:#fff; font-family:var(--font-title); font-size:16px; margin-bottom:8px;">КИРИЛЛ (SAINTMOOR), 22 ГОДА</h3>
@@ -1083,11 +1074,7 @@
         </p>
         
         <p style="margin-bottom:14px;">
-          Замысел проекта родился из любви к плотной киберпанк-эстетике, классической космической фантастике и интерактивным форматам повествования. Мне хотелось объединить атмосферу глубокого погружения в сюжет с осязаемыми технологиями: живым процедурным звуком, симулятором квантового полета, взломом терминалов и динамически меняющимся окружением.
-        </p>
-
-        <p style="margin-bottom:14px;">
-          <strong>О самой игре и новелле:</strong> история Марка (Яна), Элли, Кая и Рена — это драма о людях, чью память и личности пыталась превратить в расходный материал корпоративная система «Арго-Сис». Пройдя путь от темных подвалов и портовых штормов Земли до орбитального дредноута «Мнемозина», герои совершают квантовый прыжок на дикую экзопланету Эридан-4, где правила борьбы за свободу пишутся заново.
+          Замысел проекта родился из любви к плотной киберпанк-эстетике, классической космической фантастике и интерактивным форматам повествования.
         </p>
 
         <div style="border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 12px; margin-top: 12px; font-size: 12px; color: var(--text-muted);">
@@ -1098,7 +1085,7 @@
     </div>
   </div>
 
-  <!-- ПОДКЛЮЧЕНИЕ ПАКЕТОВ ГЛАВ И ВНЕШНЕГО ИГРОВОГО МОДУЛЯ -->
+  <!-- ПОДКЛЮЧЕНИЕ ПАКЕТОВ ГЛАВ И ИГРОВОГО МОДУЛЯ -->
   <script src="chapters_batch1.js"></script>
   <script src="chapters_batch2.js"></script>
   <script src="chapters_batch3.js"></script>
@@ -1106,7 +1093,6 @@
   <script src="chapters_batch5.js"></script>
   <script src="games.js"></script>
 
-  <!-- БАЗОВЫЙ ДВИЖОК СТРАНИЦЫ (ИНТЕРФЕЙС, ЧТЕНИЕ, АУДИО, ФОН) -->
   <script>
     window.bookChapters = [
       ...(window.bookChaptersBatch1 || []),
@@ -1121,6 +1107,23 @@
     let unlockedLoreKeys = new Set();
     let qteSpeedModifier = 3.2;
     let qteZoneWidth = 20;
+
+    function openModalById(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('open');
+      document.getElementById('sciSidebar').classList.remove('open');
+      if (id === 'modalNeuro' && typeof startNeuroGame === 'function') startNeuroGame(false);
+      if (id === 'modalQTE' && typeof startQTE === 'function') startQTE();
+    }
+
+    function closeModalById(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('open');
+      if (id === 'modalQTE') {
+        isQTEActive = false;
+        cancelAnimationFrame(qteAnim);
+      }
+    }
 
     function modifyResonance(delta) {
       synapseResonance = Math.max(10, Math.min(100, synapseResonance + delta));
@@ -1153,9 +1156,9 @@
 
     const asciiArtGallery = {
       citySpire: [
-        "    /\               |*    .          .       .  *",
-        "   /  \      .      -O-        .             .    ",
-        "  / /\ \             |    .        .        .     ",
+        "    /\\               |*    .          .       .  *",
+        "   /  \\      .      -O-        .             .    ",
+        "  / /\\ \\             |    .        .        .     ",
         " | |  | |     ||||           ||||       ||||      ",
         " | |  | |  [АРГО-СИС ШПИЛЬ]  |  |       |  |      ",
         " | |  | |     |  |           |  |       |  |      ",
@@ -1165,11 +1168,11 @@
 
       dreadnought: [
         "   .        *        .      .          .      *",
-        "        .       ______/=======\______       .    ",
-        "  *           /  [ КОВЧЕГ МНЕМОЗИНЫ ] \          ",
-        "   __________/_________________________\_________",
+        "        .       ______/=======\\______       .    ",
+        "  *           /  [ КОВЧЕГ МНЕМОЗИНЫ ] \\          ",
+        "   __________/_________________________\\_________",
         "  <===========|  (X)   (X)   (X)  |=============>",
-        "              \___________________/       .      ",
+        "              \\___________________/       .      ",
         "        .               *             .          ",
         "... ОРБИТАЛЬНЫЙ ДРЕДНОУТ // КВАНТОВЫЙ РАЗЛОМ ..."
       ].join("\n"),
@@ -1179,9 +1182,9 @@
         "           *      ЯНТАРНАЯ ЛУНА-1                 ",
         "   .                          .        ( o )      ",
         "          .                           ЛУНА-2      ",
-        "   /\_  _  /\_      /\_  _  /\_      /\_  _  /\_  ",
-        "  /   \/ \/   \    /   \/ \/   \    /   \/ \/   \ ",
-        " / КРИСТАЛЛЫ   \  /  БАЗАЛЬТ    \  / ЭРИДАН-4    \",
+        "   /\\_  _  /\\_      /\\_  _  /\\_      /\\_  _  /\\_  ",
+        "  /   \\/ \\/   \\    /   \\/ \\/   \\    /   \\/ \\/   \\ ",
+        " / КРИСТАЛЛЫ   \\  /  БАЗАЛЬТ    \\  / ЭРИДАН-4    \\",
         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
         "... ЭКЗОПЛАНЕТА ЭРИДАН-4 // ДИКИЙ ГОРИЗОНТ ..."
       ].join("\n")
@@ -1244,18 +1247,16 @@
               return;
             }
             if (c.action === 'flight') {
-              modalFlight.classList.add('open');
+              openModalById('modalFlight');
               startFlightGame();
             } else if (c.action === 'neuro') {
-              document.getElementById('modalNeuro').classList.add('open');
-              startNeuroGame(false);
+              openModalById('modalNeuro');
             } else if (c.action === 'quickChat') {
               triggerQuickChat();
             } else if (c.action === 'tacMap') {
-              document.getElementById('modalTacticalMap').classList.add('open');
+              openModalById('modalTacticalMap');
             } else if (c.action === 'qteGame') {
-              document.getElementById('modalQTE').classList.add('open');
-              startQTE();
+              openModalById('modalQTE');
             } else if (c.nextId) {
               goToChapterById(c.nextId);
             }
@@ -1320,7 +1321,7 @@
         item.onmouseleave = () => item.style.background = 'transparent';
         item.onclick = () => {
           renderChapter(idx);
-          document.getElementById('modalToc').classList.remove('open');
+          closeModalById('modalToc');
         };
         tocList.appendChild(item);
       });
@@ -1357,53 +1358,13 @@
     document.getElementById('btnOpenSidebar').onclick = () => sciSidebar.classList.add('open');
     document.getElementById('btnCloseSidebar').onclick = () => sciSidebar.classList.remove('open');
 
-    document.getElementById('menuItemToc').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalToc').classList.add('open');
-    };
-    document.getElementById('btnCloseToc').onclick = () => document.getElementById('modalToc').classList.remove('open');
-
-    document.getElementById('menuItemCharacters').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalCharacters').classList.add('open');
-    };
-    document.getElementById('btnCloseCharacters').onclick = () => document.getElementById('modalCharacters').classList.remove('open');
-
-    document.getElementById('menuItemAbout').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalAbout').classList.add('open');
-    };
-    document.getElementById('btnCloseAbout').onclick = () => document.getElementById('modalAbout').classList.remove('open');
-
-    document.getElementById('menuItemConsole').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalConsole').classList.add('open');
-    };
-    document.getElementById('btnCloseConsole').onclick = () => document.getElementById('modalConsole').classList.remove('open');
-
-    document.getElementById('menuItemNeuro').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalNeuro').classList.add('open');
-      if (typeof startNeuroGame === 'function') startNeuroGame(false);
-    };
-    document.getElementById('btnCloseNeuro').onclick = () => document.getElementById('modalNeuro').classList.remove('open');
-
-    document.getElementById('menuItemQTE').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalQTE').classList.add('open');
-      if (typeof startQTE === 'function') startQTE();
-    };
-    document.getElementById('btnCloseQTE').onclick = () => {
-      document.getElementById('modalQTE').classList.remove('open');
-      isQTEActive = false;
-      cancelAnimationFrame(qteAnim);
-    };
-
-    document.getElementById('menuItemTacticalMap').onclick = () => {
-      sciSidebar.classList.remove('open');
-      document.getElementById('modalTacticalMap').classList.add('open');
-    };
-    document.getElementById('btnCloseTacMap').onclick = () => document.getElementById('modalTacticalMap').classList.remove('open');
+    document.getElementById('menuItemToc').onclick = () => openModalById('modalToc');
+    document.getElementById('menuItemCharacters').onclick = () => openModalById('modalCharacters');
+    document.getElementById('menuItemAbout').onclick = () => openModalById('modalAbout');
+    document.getElementById('menuItemConsole').onclick = () => openModalById('modalConsole');
+    document.getElementById('menuItemNeuro').onclick = () => openModalById('modalNeuro');
+    document.getElementById('menuItemQTE').onclick = () => openModalById('modalQTE');
+    document.getElementById('menuItemTacticalMap').onclick = () => openModalById('modalTacticalMap');
 
     /* АУДИОМОДУЛЬ */
     let audioCtx = null;
@@ -1531,7 +1492,7 @@
       syncSoundtrackWithChapter(currentSoundtrackGroup, true);
     };
 
-    /* CANVAS НЕОНОВЫЙ ФОН */
+    /* CANVAS ФОН */
     const bgCanvas = document.getElementById('bgCanvas');
     const bgCtx = bgCanvas.getContext('2d');
     let currentTheme = 'city';
